@@ -97,7 +97,7 @@
 <meta property="og:url" content="https://gikey.github.io/2017/05/23/gulp/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Gulp.js 是一个自动化构建工具，开发者可以使用它在项目开发过程中自动执行常见任务。Gulp.js 是基于 Node.js 构建的，利用 Node.js 流的威力，你可以快速构建项目并减少频繁的 IO 操作。Gulp.js 源文件和你用来定义任务的 Gulp 文件都是通过 JavaScript（或者 CoffeeScript ）源码来实现的。gulp官网。 安装 1.安装Node.js安装gu">
-<meta property="og:updated_time" content="2017-05-23T12:34:40.000Z">
+<meta property="og:updated_time" content="2017-05-23T12:51:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="gulp的基本使用">
 <meta name="twitter:description" content="Gulp.js 是一个自动化构建工具，开发者可以使用它在项目开发过程中自动执行常见任务。Gulp.js 是基于 Node.js 构建的，利用 Node.js 流的威力，你可以快速构建项目并减少频繁的 IO 操作。Gulp.js 源文件和你用来定义任务的 Gulp 文件都是通过 JavaScript（或者 CoffeeScript ）源码来实现的。gulp官网。 安装 1.安装Node.js安装gu">
@@ -476,7 +476,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install --save-dev babel-core</div></pre></td></tr></table></figure>
 <p>然后，创建一个.babelrc文件来使用es2015 preset：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim .babelrc</div></pre></td></tr></table></figure>
-<p>写入如下内容：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  "presets": ["es2015"]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>写入如下内容：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  "presets": ["es2015"]</div></pre></td></tr></table></figure></p>
 <p>接下来就可以使用es6语法重写gulpfile了。首先，重命名gulpfile.js为gulpfile.babel.js，这样gulp执行前会自动调用babel转换文件：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mv gulpfile.js gulpfile.babel.js</div></pre></td></tr></table></figure>
 <p>gulpfile.babel.js文件：</p>
