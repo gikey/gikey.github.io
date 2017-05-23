@@ -103,7 +103,7 @@
 <meta property="og:url" content="https://gikey.github.io/2017/05/23/apply-call-bind/index.html">
 <meta property="og:site_name" content="lingfeng&#39;blog">
 <meta property="og:description" content="ECAMScript 3给Function的原型定义了Function.prototype.call和Function.prototype.apply两个方法，其实它们的作用一模一样，区别仅仅在于传入参数的形式。 applyapply接受两个参数，第一个参数制定了函数体内this对象的指向，第二个参数为一个带下标的集合，这个集合可以为数组，也可以为类数组，applay方法把这个集合中的元素作为参数">
-<meta property="og:updated_time" content="2017-05-23T13:45:43.000Z">
+<meta property="og:updated_time" content="2017-05-23T13:47:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript中apply和call的区别">
 <meta name="twitter:description" content="ECAMScript 3给Function的原型定义了Function.prototype.call和Function.prototype.apply两个方法，其实它们的作用一模一样，区别仅仅在于传入参数的形式。 applyapply接受两个参数，第一个参数制定了函数体内this对象的指向，第二个参数为一个带下标的集合，这个集合可以为数组，也可以为类数组，applay方法把这个集合中的元素作为参数">
@@ -345,9 +345,8 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span>(<span class="params">a,b,c</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span> === <span class="built_in">window</span>); <span class="comment">//输出：true</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line">func.apply(<span class="literal">null</span>,[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]);</div></pre></td></tr></table></figure>
 <p>然而在strict模式下，函数体内的this还依然是null:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span>(<span class="params">a,b,c</span>)</span>&#123;</div><div class="line"><span class="meta">    'use strict'</span></div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span> === <span class="literal">null</span>); <span class="comment">//输出：true</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line">func.apply(<span class="literal">null</span>,[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]);</div></pre></td></tr></table></figure>
-<p>有时候我们使用call或者apply的目的不在于指定this指向，而是另有用途，比如借用其他对象的方法。那么我们可以传入null来代替某个具体的对象：</p>
-<pre><code>Math.max.apply( null, [ 1, 2, 5, 3, 4 ] )    // 输出：5
-</code></pre>
+<p>有时候我们使用call或者apply的目的不在于指定this指向，而是另有用途，比如借用其他对象的方法。那么我们可以传入null来代替某个具体的对象：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Math</span>.max.apply( <span class="literal">null</span>, [ <span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">4</span> ] )    <span class="comment">// 输出：5</span></div></pre></td></tr></table></figure></p>
+
       
     </div>
 
