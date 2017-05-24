@@ -96,17 +96,17 @@
 
 
 
-<meta name="description" content="基本概念docker 镜像docker 容器docker 仓库安装 dockerUbuntu 14.04Ubuntu 14.04 官方软件源中已经自带了docker包，可以直接安装： 1sudo apt-get update &amp;amp;&amp;amp; sudo apt-get install -y docker.io 也可以使用下面的方法从官方源安装最新版本docker: 123456# 添加官方源s">
+<meta name="description" content="基本概念docker 镜像docker 镜像（image）类似于虚拟机镜像， 可以将它理解为一个面向 docker 引擎的只读模板。docker 镜像是一个特殊的文件系统，除了提供容器运行时所需的程序、库、资源、配置等文件外，还包含了一些为运行时准备的一些配置参数（如匿名卷、环境变量、用户等）。镜像不包含任何动态数据，其内容在构建之后也不会被改变。 docker 容器docker 镜像（image">
 <meta name="keywords" content="docker,operations">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker 简单使用">
 <meta property="og:url" content="https://gikey.github.io/2017/05/24/docker/index.html">
 <meta property="og:site_name" content="lingfeng&#39;blog">
-<meta property="og:description" content="基本概念docker 镜像docker 容器docker 仓库安装 dockerUbuntu 14.04Ubuntu 14.04 官方软件源中已经自带了docker包，可以直接安装： 1sudo apt-get update &amp;amp;&amp;amp; sudo apt-get install -y docker.io 也可以使用下面的方法从官方源安装最新版本docker: 123456# 添加官方源s">
-<meta property="og:updated_time" content="2017-05-24T09:57:38.000Z">
+<meta property="og:description" content="基本概念docker 镜像docker 镜像（image）类似于虚拟机镜像， 可以将它理解为一个面向 docker 引擎的只读模板。docker 镜像是一个特殊的文件系统，除了提供容器运行时所需的程序、库、资源、配置等文件外，还包含了一些为运行时准备的一些配置参数（如匿名卷、环境变量、用户等）。镜像不包含任何动态数据，其内容在构建之后也不会被改变。 docker 容器docker 镜像（image">
+<meta property="og:updated_time" content="2017-05-24T10:12:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker 简单使用">
-<meta name="twitter:description" content="基本概念docker 镜像docker 容器docker 仓库安装 dockerUbuntu 14.04Ubuntu 14.04 官方软件源中已经自带了docker包，可以直接安装： 1sudo apt-get update &amp;amp;&amp;amp; sudo apt-get install -y docker.io 也可以使用下面的方法从官方源安装最新版本docker: 123456# 添加官方源s">
+<meta name="twitter:description" content="基本概念docker 镜像docker 镜像（image）类似于虚拟机镜像， 可以将它理解为一个面向 docker 引擎的只读模板。docker 镜像是一个特殊的文件系统，除了提供容器运行时所需的程序、库、资源、配置等文件外，还包含了一些为运行时准备的一些配置参数（如匿名卷、环境变量、用户等）。镜像不包含任何动态数据，其内容在构建之后也不会被改变。 docker 容器docker 镜像（image">
 
 
 
@@ -324,7 +324,10 @@
       
 
       
-        <h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><h4 id="docker-镜像"><a href="#docker-镜像" class="headerlink" title="docker 镜像"></a>docker 镜像</h4><h4 id="docker-容器"><a href="#docker-容器" class="headerlink" title="docker 容器"></a>docker 容器</h4><h4 id="docker-仓库"><a href="#docker-仓库" class="headerlink" title="docker 仓库"></a>docker 仓库</h4><h3 id="安装-docker"><a href="#安装-docker" class="headerlink" title="安装 docker"></a>安装 docker</h3><h4 id="Ubuntu-14-04"><a href="#Ubuntu-14-04" class="headerlink" title="Ubuntu 14.04"></a>Ubuntu 14.04</h4><p>Ubuntu 14.04 官方软件源中已经自带了docker包，可以直接安装：</p>
+        <h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><h4 id="docker-镜像"><a href="#docker-镜像" class="headerlink" title="docker 镜像"></a>docker 镜像</h4><p>docker 镜像（image）类似于虚拟机镜像， 可以将它理解为一个面向 docker 引擎的只读模板。docker 镜像是一个特殊的文件系统，除了提供容器运行时所需的程序、库、资源、配置等文件外，还包含了一些为运行时准备的一些配置参数（如匿名卷、环境变量、用户等）。镜像不包含任何动态数据，其内容在构建之后也不会被改变。</p>
+<h4 id="docker-容器"><a href="#docker-容器" class="headerlink" title="docker 容器"></a>docker 容器</h4><p>docker 镜像（image）和 docker 容器（container）的关系，就像是面向对象程序设计中的类和实例一样，镜像是静态的定义，容器是镜像运行时的实体。容器都是相互隔离、互不可见的，可以启动、开始、停止、删除等。</p>
+<h4 id="docker-仓库"><a href="#docker-仓库" class="headerlink" title="docker 仓库"></a>docker 仓库</h4><p>docker 仓库（repository）类似于代码仓库，是 docker 集中存放镜像文件的地方。</p>
+<h3 id="安装-docker"><a href="#安装-docker" class="headerlink" title="安装 docker"></a>安装 docker</h3><h4 id="Ubuntu-14-04"><a href="#Ubuntu-14-04" class="headerlink" title="Ubuntu 14.04"></a>Ubuntu 14.04</h4><p>Ubuntu 14.04 官方软件源中已经自带了docker包，可以直接安装：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get update &amp;&amp; sudo apt-get install -y docker.io</div></pre></td></tr></table></figure>
 <p>也可以使用下面的方法从官方源安装最新版本docker:</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 添加官方源</span></div><div class="line">sudo apt-get install apt-transport-https</div><div class="line">sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9</div><div class="line">sudo bash -c <span class="string">"echo deb https://get.docker.io/ubuntu docker main &gt; /etc/apt/sources.list.d/docker.list"</span></div><div class="line"><span class="comment"># 安装docker</span></div><div class="line">sudo apt-get update &amp;&amp; sudo apt-get install -y lxc-docker</div></pre></td></tr></table></figure>
