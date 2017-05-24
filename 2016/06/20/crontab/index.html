@@ -80,7 +80,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="crontab,linux," />
+  <meta name="keywords" content="linux,crontab," />
 
 
 
@@ -97,7 +97,7 @@
 
 
 <meta name="description" content="crontab 是用来让使用者在固定时间或固定间隔执行程序之用，换句话说，也就是类似使用者的时程表。通过crontab 命令，我们可以在固定的间隔时间执行指定的系统指令或 shell script脚本。时间间隔的单位可以是分钟、小时、日、月、周及以上的任意组合。这个命令非常适合周期性的日志分析或数据备份等工作。 命令格式1crontab [-u user] [ -e | -l | -r ] 命令参">
-<meta name="keywords" content="crontab,linux">
+<meta name="keywords" content="linux,crontab">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Crontab定时任务">
 <meta property="og:url" content="https://gikey.github.io/2016/06/20/crontab/index.html">
@@ -354,11 +354,11 @@
 <li>第6列要运行的命令</li>
 </ul>
 <h3 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h3><h4 id="列出crontab文件"><a href="#列出crontab文件" class="headerlink" title="列出crontab文件"></a>列出crontab文件</h4><p>使用-l参数列出crontab文件:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> crontab -l</div><div class="line">0,15,30,45,18-06 * * * /bin/echo `date` &gt; dev/tty1</div></pre></td></tr></table></figure>
-<p>可以使用这种方法在$HOME目录中对crontab文件做一备份:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> crontab -l &gt; $HOME/mycron</div></pre></td></tr></table></figure></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> crontab <span class="_">-l</span></span></div><div class="line">0,15,30,45,18-06 * * * /bin/echo `date` &gt; dev/tty1</div></pre></td></tr></table></figure>
+<p>可以使用这种方法在$HOME目录中对crontab文件做一备份:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> crontab <span class="_">-l</span> &gt; <span class="variable">$HOME</span>/mycron</span></div></pre></td></tr></table></figure></p>
 <p>这样，一旦不小心误删了crontab文件，可以用上一节所讲述的方法迅速恢复。</p>
-<h4 id="编辑crontab文件"><a href="#编辑crontab文件" class="headerlink" title="编辑crontab文件"></a>编辑crontab文件</h4><p>如果希望添加、删除或编辑crontab文件中的条目，而EDITOR环境变量又设置为vi，那么就可以用vi来编辑crontab文件:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> crontab -e</div></pre></td></tr></table></figure></p>
-<h4 id="删除crontab文件"><a href="#删除crontab文件" class="headerlink" title="删除crontab文件"></a>删除crontab文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span>crontab -r</div></pre></td></tr></table></figure>
+<h4 id="编辑crontab文件"><a href="#编辑crontab文件" class="headerlink" title="编辑crontab文件"></a>编辑crontab文件</h4><p>如果希望添加、删除或编辑crontab文件中的条目，而EDITOR环境变量又设置为vi，那么就可以用vi来编辑crontab文件:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> crontab <span class="_">-e</span></span></div></pre></td></tr></table></figure></p>
+<h4 id="删除crontab文件"><a href="#删除crontab文件" class="headerlink" title="删除crontab文件"></a>删除crontab文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash">crontab -r</span></div></pre></td></tr></table></figure>
 <h3 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h3><p>实例1：每1分钟执行一次myCommand<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">* * * * * myCommand</div></pre></td></tr></table></figure></p>
 <p>实例2：每小时的第3和第15分钟执行<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">    3,15 * * * * myCommand</div><div class="line">实例3：在上午8点到11点的第3和第15分钟执行</div><div class="line">```shell</div><div class="line">    3,15 8-11 * * * myCommand</div></pre></td></tr></table></figure></p>
 <p>实例4：每隔两天的上午8点到11点的第3和第15分钟执行<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">3,15 8-11 */2  *  * myCommand</div></pre></td></tr></table></figure></p>
@@ -399,9 +399,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/crontab/" rel="tag"># crontab</a>
-          
             <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/crontab/" rel="tag"># crontab</a>
           
         </div>
       
