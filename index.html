@@ -325,8 +325,9 @@
       
         
           
-            <h4 id="1-安装uwsgi"><a href="#1-安装uwsgi" class="headerlink" title="1.安装uwsgi"></a>1.安装uwsgi</h4><pre><code>$ sudo pip install uwsgi
-</code></pre><h4 id="2-配置uwsgi"><a href="#2-配置uwsgi" class="headerlink" title="2.配置uwsgi"></a>2.配置uwsgi</h4><p>新建一个uwsgi.ini文件并将其放在项目根目录下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[uwsgi]</div><div class="line">socket = 127.0.0.1:8000</div><div class="line">chdir = /var/www/blog/</div><div class="line">wsgi-file = blog/wsgi.py</div><div class="line">processes = 4</div><div class="line">threads = 2</div><div class="line">stats = 127.0.0.1:9191</div><div class="line">daemonize = /var/log/uwsgi.log</div></pre></td></tr></table></figure></p>
+            <h4 id="1-安装uwsgi"><a href="#1-安装uwsgi" class="headerlink" title="1.安装uwsgi"></a>1.安装uwsgi</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install uwsgi</div></pre></td></tr></table></figure>
+<h4 id="2-配置uwsgi"><a href="#2-配置uwsgi" class="headerlink" title="2.配置uwsgi"></a>2.配置uwsgi</h4><p>新建一个uwsgi.ini文件并将其放在项目根目录下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[uwsgi]</div><div class="line">socket = 127.0.0.1:8000</div><div class="line">chdir = /var/www/blog/</div><div class="line">wsgi-file = blog/wsgi.py</div><div class="line">processes = 4</div><div class="line">threads = 2</div><div class="line">stats = 127.0.0.1:9191</div><div class="line">daemonize = /var/log/uwsgi.log</div></pre></td></tr></table></figure>
 <blockquote>
 <p>常用的配置参数</p>
 </blockquote>
@@ -348,25 +349,25 @@
 <li>procname-prefix-spaced=xxx # 指定工作进程名称的前缀</li>
 </ul>
 <p>详细配置项查看：<a href="http://www.cnblogs.com/zhouej/archive/2012/03/25/2379646.html" target="_blank" rel="external">http://www.cnblogs.com/zhouej/archive/2012/03/25/2379646.html</a></p>
-<h4 id="3-配置nginx"><a href="#3-配置nginx" class="headerlink" title="3.配置nginx"></a>3.配置nginx</h4><p>在nginx中配置一个新的server：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">server&#123;</div><div class="line">    listen 80;</div><div class="line">    server_name  www.example.com;</div><div class="line">    charset utf-8;</div><div class="line"></div><div class="line">    location /&#123;</div><div class="line">        include /etc/nginx/uwsgi_params;</div><div class="line">        uwsgi_pass 127.0.0.1:8000;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="3-配置nginx"><a href="#3-配置nginx" class="headerlink" title="3.配置nginx"></a>3.配置nginx</h4><p>在nginx中配置一个新的server：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">server&#123;</div><div class="line">    listen 80;</div><div class="line">    server_name  www.example.com;</div><div class="line">    charset utf-8;</div><div class="line"></div><div class="line">    location /&#123;</div><div class="line">        include /etc/nginx/uwsgi_params;</div><div class="line">        uwsgi_pass 127.0.0.1:8000;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>重启nginx。</p>
-<h4 id="4-启动uwsgi"><a href="#4-启动uwsgi" class="headerlink" title="4.启动uwsgi"></a>4.启动uwsgi</h4><pre><code>$ uwsgi uwsgi.ini
-</code></pre><blockquote>
+<h4 id="4-启动uwsgi"><a href="#4-启动uwsgi" class="headerlink" title="4.启动uwsgi"></a>4.启动uwsgi</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">uwsgi uwsgi.ini</div></pre></td></tr></table></figure>
+<blockquote>
 <p>启动 uwsgi之前一定要先关掉 selinux！！！</p>
 </blockquote>
 <h5 id="查看SELinux状态："><a href="#查看SELinux状态：" class="headerlink" title="查看SELinux状态："></a>查看SELinux状态：</h5><p>1、/usr/sbin/sestatus -v   //如果SELinux status参数为enabled即为开启状态</p>
 <p>SELinux status: enabled</p>
 <p>2、getenforce   //也可以用这个命令检查</p>
 <h5 id="关闭SELinux："><a href="#关闭SELinux：" class="headerlink" title="关闭SELinux："></a>关闭SELinux：</h5><p>1、临时关闭（不用重启机器）：</p>
-<pre><code>setenforce 0  //设置SELinux 成为permissive模式
-// setenforce 1 设置SELinux 成为enforcing模式
-</code></pre><p>2、修改配置文件需要重启机器(修改完后重启机器)：</p>
-<p>修改/etc/selinux/config 文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">setenforce 0  //设置SELinux 成为permissive模式</div><div class="line">// setenforce 1 设置SELinux 成为enforcing模式</div></pre></td></tr></table></figure>
+<p>2、修改配置文件需要重启机器(修改完后重启机器)：</p>
+<p>修改 <code>/etc/selinux/config</code> 文件</p>
 <p>将</p>
-<pre><code>SELINUX=enforcing
-</code></pre><p>改为</p>
-<pre><code>SELINUX=disabled
-</code></pre><p>从此django项目启动了可以通过域名访问啦啦啦。。。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SELINUX=enforcing</div></pre></td></tr></table></figure>
+<p>改为</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SELINUX=disabled</div></pre></td></tr></table></figure>
+<p>从此django项目启动了可以通过域名访问啦啦啦。。。</p>
 
           
         
