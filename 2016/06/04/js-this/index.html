@@ -367,7 +367,7 @@
 <p>假如修改为如下方式就会出现问题：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> getId = <span class="built_in">document</span>.getElementById；</div><div class="line">getId(<span class="string">'header'</span>);</div></pre></td></tr></table></figure>
 <p>将如下这段代码在浏览器中执行：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;html&gt;</div><div class="line">  &lt;body&gt;</div><div class="line">    &lt;div id="header"&gt;&lt;/div&gt;</div><div class="line">    &lt;script&gt;</div><div class="line">      var getId = document.getElementById；</div><div class="line">      getId('header');</div><div class="line">    &lt;/script&gt;</div><div class="line">  &lt;/body&gt;</div><div class="line">&lt;<span class="regexp">/html&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;html&gt;</div><div class="line">  <span class="xml"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"header"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line">      <span class="keyword">var</span> getId = <span class="built_in">document</span>.getElementById；</div><div class="line">      getId(<span class="string">'header'</span>);</div><div class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line">&lt;<span class="regexp">/html&gt;</span></div></pre></td></tr></table></figure>
 <p>运行后就会抛出一个异常。这是因为许多引擎的<code>document.getElementById</code>方法的内部实现中需要用到<code>this</code>。这个this本来被期望指向<code>document</code>，当<code>getElementById</code>方法作为<code>document</code>对象的属性被调用时，方法内部的this确实是指向<code>document</code>的。</p>
 <p>但当用<code>getId</code>来引用<code>document.getElementById</code>之后，再调用<code>getId</code>，此时就成了普通函数调用，函数内部的<code>this</code>指向了<code>window</code>，而不是原来的<code>document</code>，所以抛出异常。</p>
 <p>如果将代码改成：</p>
@@ -415,8 +415,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/05/26/frontend-rule/" rel="next" title="前端编码规范">
-                <i class="fa fa-chevron-left"></i> 前端编码规范
+              <a href="/2016/05/30/svn-server/" rel="next" title="Linux 下搭建 svn 服务器">
+                <i class="fa fa-chevron-left"></i> Linux 下搭建 svn 服务器
               </a>
             
           </div>
@@ -501,7 +501,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
