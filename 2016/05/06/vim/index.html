@@ -103,7 +103,7 @@
 <meta property="og:url" content="https://gikey.github.io/2016/05/06/vim/index.html">
 <meta property="og:site_name" content="lingfeng&#39;blog">
 <meta property="og:description" content="vim 是从 vi 发展出来的一个文本编辑器。代码补完、编译及错误跳转等方便编程的功能特别丰富，在程序员中被广泛使用。和 Emacs 并列成为类 Unix 系统用户最喜欢的编辑器。 安装Ubuntu和Debian系统： 1apt-get intall vim Centos系统： 1yum install vim OSX系统不需要安装，系统自带了 vim。 配置1.语法高亮 linux 下默认是开启">
-<meta property="og:updated_time" content="2017-05-24T03:17:43.000Z">
+<meta property="og:updated_time" content="2017-05-24T09:27:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vim 编辑器的使用">
 <meta name="twitter:description" content="vim 是从 vi 发展出来的一个文本编辑器。代码补完、编译及错误跳转等方便编程的功能特别丰富，在程序员中被广泛使用。和 Emacs 并列成为类 Unix 系统用户最喜欢的编辑器。 安装Ubuntu和Debian系统： 1apt-get intall vim Centos系统： 1yum install vim OSX系统不需要安装，系统自带了 vim。 配置1.语法高亮 linux 下默认是开启">
@@ -336,14 +336,14 @@
       
         <p>vim 是从 vi 发展出来的一个文本编辑器。代码补完、编译及错误跳转等方便编程的功能特别丰富，在程序员中被广泛使用。和 Emacs 并列成为类 Unix 系统用户最喜欢的编辑器。</p>
 <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>Ubuntu和Debian系统：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get intall vim</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get intall vim</div></pre></td></tr></table></figure>
 <p>Centos系统：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install vim</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install vim</div></pre></td></tr></table></figure>
 <p>OSX系统不需要安装，系统自带了 vim。</p>
 <h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><h4 id="1-语法高亮"><a href="#1-语法高亮" class="headerlink" title="1.语法高亮"></a>1.语法高亮</h4><blockquote>
 <p>linux 下默认是开启语法高亮的, centos 的vimrc 文件在 /etc/vimrc。下面是 osx 系统的配置：</p>
 </blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> sudo cp /usr/share/vim/vimrc ~/vimrc</span></div><div class="line"><span class="meta">$</span><span class="bash"> vim ~/.vimrc</span></div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ sudo cp /usr/share/vim/vimrc ~/vimrc</div><div class="line">$ vim ~/.vimrc</div></pre></td></tr></table></figure>
 <p>在最后添加<code>syntax on</code>即可开启语法高亮。</p>
 <h4 id="2-插件安装"><a href="#2-插件安装" class="headerlink" title="2.插件安装"></a>2.插件安装</h4><ul>
 <li><p>NERDTree</p>
@@ -756,9 +756,9 @@
 <h4 id="3-命令模式"><a href="#3-命令模式" class="headerlink" title="3. 命令模式"></a>3. 命令模式</h4><ul>
 <li>打开、保存、退出</li>
 </ul>
-<p>在已经启动的 vim 中打开一个文件需要用 :e 命令：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:e path_to_file/filename</div></pre></td></tr></table></figure></p>
-<p>保存当前编辑的文件需要用 :w 命令（单词 write 的缩写）：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:w</div></pre></td></tr></table></figure></p>
-<p>将当前文件另存为 file_temp 则：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:w file_temp</div></pre></td></tr></table></figure></p>
+<p>在已经启动的 vim 中打开一个文件需要用 :e 命令：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:e path_to_file/filename</div></pre></td></tr></table></figure></p>
+<p>保存当前编辑的文件需要用 :w 命令（单词 write 的缩写）：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:w</div></pre></td></tr></table></figure></p>
+<p>将当前文件另存为 file_temp 则：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:w file_temp</div></pre></td></tr></table></figure></p>
 <table>
 <thead>
 <tr>
@@ -888,8 +888,8 @@
 <ul>
 <li>vim中的正则表达式</li>
 </ul>
-<p>搜索行的开始包含 struct<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:/^struct/</div></pre></td></tr></table></figure></p>
-<p>搜索行的末尾包含 struct<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:/struct$/</div></pre></td></tr></table></figure></p>
+<p>搜索行的开始包含 struct<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:/^struct/</div></pre></td></tr></table></figure></p>
+<p>搜索行的末尾包含 struct<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:/struct$/</div></pre></td></tr></table></figure></p>
 <table>
 <thead>
 <tr>
@@ -984,7 +984,7 @@
 <li>s 表示后面跟着一串替换的命令；</li>
 <li>% 表示替换范围是所有行，即全文。</li>
 </ol>
-<p>另外一个实用的命令，在vim中统计当前文件中字符串 str1 出现的次数，可用替换命令的变形：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:%s/str1/&amp;/gn</div></pre></td></tr></table></figure></p>
+<p>另外一个实用的命令，在vim中统计当前文件中字符串 str1 出现的次数，可用替换命令的变形：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:%s/str1/&amp;/gn</div></pre></td></tr></table></figure></p>
 <ul>
 <li>删除正文</li>
 </ul>
@@ -1037,7 +1037,7 @@
 <ul>
 <li>选项设置</li>
 </ul>
-<p>:set 命令可以设置选项：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:set option        设置选项 option</div></pre></td></tr></table></figure></p>
+<p>:set 命令可以设置选项：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:<span class="built_in">set</span> option        设置选项 option</div></pre></td></tr></table></figure></p>
 <p>常见的功能选项：</p>
 <table>
 <thead>
@@ -1082,8 +1082,8 @@
 <h6 id="分屏与标签页"><a href="#分屏与标签页" class="headerlink" title="分屏与标签页"></a>分屏与标签页</h6><ul>
 <li>分屏</li>
 </ul>
-<p>vim的分屏，主要有两种方式：上下分屏（水平分屏）和左右分屏（垂直分屏），在命令模式分别敲入以下命令即可：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">:split（可用缩写 :sp）            上下分屏</div><div class="line">:vsplit（可用缩写 :vsp）          左右分屏</div></pre></td></tr></table></figure></p>
-<p>另外，也可以在终端里启动 vim 时就开启分屏操作：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">vim -On file1 file2...   打开 file1 和 file2 ，垂直分屏</div><div class="line">vim -on file1 file2...   打开 file1 和 file2 ，水平分屏</div></pre></td></tr></table></figure></p>
+<p>vim的分屏，主要有两种方式：上下分屏（水平分屏）和左右分屏（垂直分屏），在命令模式分别敲入以下命令即可：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">:split（可用缩写 :sp）            上下分屏</div><div class="line">:vsplit（可用缩写 :vsp）          左右分屏</div></pre></td></tr></table></figure></p>
+<p>另外，也可以在终端里启动 vim 时就开启分屏操作：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">vim -On file1 file2...   打开 file1 和 file2 ，垂直分屏</div><div class="line">vim -on file1 file2...   打开 file1 和 file2 ，水平分屏</div></pre></td></tr></table></figure></p>
 <p>切换屏幕键盘快捷键：</p>
 <table>
 <thead>
@@ -1137,8 +1137,8 @@
 <ul>
 <li>标签页</li>
 </ul>
-<p>在vim中新建一个标签的命令是：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:tabnew</div></pre></td></tr></table></figure></p>
-<p>如果要在新建标签页的同时打开一个文件，则可以在命令后面直接附带文件路径：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:tabnew filename</div></pre></td></tr></table></figure></p>
+<p>在vim中新建一个标签的命令是：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:tabnew</div></pre></td></tr></table></figure></p>
+<p>如果要在新建标签页的同时打开一个文件，则可以在命令后面直接附带文件路径：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:tabnew filename</div></pre></td></tr></table></figure></p>
 <p>其他命令：</p>
 <table>
 <thead>
@@ -1209,14 +1209,14 @@
 <h5 id="其他工具"><a href="#其他工具" class="headerlink" title="其他工具"></a>其他工具</h5><ul>
 <li>diff</li>
 </ul>
-<p>在终端里可以直接输入命令 vimdiff，后面跟两个文件名作为参数：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vimdiff file1 file2</div></pre></td></tr></table></figure></p>
-<p>即可在vim里分屏显示两个文件内容的对比结果，对文件内容差异部分进行高亮标记，还可以同步滚动两个文件内容，更可以实时修改文件内容，方便程度和用户体验大大提高。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vimdiff a.txt b.txt</div></pre></td></tr></table></figure></p>
-<p>如果直接给 -d 选项是一样的<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim -d a.txt b.txt</div></pre></td></tr></table></figure></p>
+<p>在终端里可以直接输入命令 vimdiff，后面跟两个文件名作为参数：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vimdiff file1 file2</div></pre></td></tr></table></figure></p>
+<p>即可在vim里分屏显示两个文件内容的对比结果，对文件内容差异部分进行高亮标记，还可以同步滚动两个文件内容，更可以实时修改文件内容，方便程度和用户体验大大提高。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vimdiff a.txt b.txt</div></pre></td></tr></table></figure></p>
+<p>如果直接给 -d 选项是一样的<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim <span class="_">-d</span> a.txt b.txt</div></pre></td></tr></table></figure></p>
 <p>除了在终端里开启 vimdiff 功能，也可以在打开vim后，在 vim 的命令模式输入相关命令来开启 vimdiff 功能：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:diffsplit abc.txt</div></pre></td></tr></table></figure>
-<p>如果你现在已经开启了一个文件，想 vim 帮你区分你的文件跟 abc.txt 有什么区别，可以在vim中用 diffsplit 的方式打开第二个文件，这个时 候vim会用 split（分上下两屏）的方式开启第二个文件，并且通过颜色，fold 来显示两个文件的区别<br>这样 vim 就会用颜色帮你区分开2个文件的区别。如果文件比较大（源码）重复的部分会帮你折叠起来。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:diffpatch filename</div></pre></td></tr></table></figure></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:diffsplit abc.txt</div></pre></td></tr></table></figure>
+<p>如果你现在已经开启了一个文件，想 vim 帮你区分你的文件跟 abc.txt 有什么区别，可以在vim中用 diffsplit 的方式打开第二个文件，这个时 候vim会用 split（分上下两屏）的方式开启第二个文件，并且通过颜色，fold 来显示两个文件的区别<br>这样 vim 就会用颜色帮你区分开2个文件的区别。如果文件比较大（源码）重复的部分会帮你折叠起来。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:diffpatch filename</div></pre></td></tr></table></figure></p>
 <p>通过 <code>:diffpatch</code> 你的patch的文件名，就可以以当前文件加上你的 patch 来显示。vim 会 split 一个新的屏，显示 patch 后的信息并且用颜色标明区别。<br>如果不喜欢上下对比，喜欢左右（比较符合视觉）可以在前面加 <code>vert</code> ，例如：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">:vert diffsplit abc.txt</div><div class="line">:vert diffpatch abc.txt</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">:vert diffsplit abc.txt</div><div class="line">:vert diffpatch abc.txt</div></pre></td></tr></table></figure>
 <p>看完diff，用 <code>:only</code> 回到原本编辑的文件，觉得 diff 的讨厌颜色还是在哪里，只要用 <code>:diffoff</code> 关闭就好了。<br>还有个常用的 diff 中的就是 <code>:diffu</code> ,这个是 <code>:diffupdate</code> 的简写，更新的时候用。</p>
 
       
