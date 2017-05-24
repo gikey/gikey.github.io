@@ -103,7 +103,7 @@
 <meta property="og:url" content="https://gikey.github.io/2016/05/06/vim/index.html">
 <meta property="og:site_name" content="lingfeng&#39;blog">
 <meta property="og:description" content="Vim 是从 vi 发展出来的一个文本编辑器。代码补完、编译及错误跳转等方便编程的功能特别丰富，在程序员中被广泛使用。和 Emacs 并列成为类Unix系统用户最喜欢的编辑器。 安装Ubuntu和Debian系统： 1apt-get intall vim Centos系统： 1yum install vim OSX系统不需要安装，系统自带了 Vim。 配置1.语法高亮 linux下默认是开启语法高">
-<meta property="og:updated_time" content="2017-05-24T03:10:58.000Z">
+<meta property="og:updated_time" content="2017-05-24T03:13:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vim 编辑器的使用">
 <meta name="twitter:description" content="Vim 是从 vi 发展出来的一个文本编辑器。代码补完、编译及错误跳转等方便编程的功能特别丰富，在程序员中被广泛使用。和 Emacs 并列成为类Unix系统用户最喜欢的编辑器。 安装Ubuntu和Debian系统： 1apt-get intall vim Centos系统： 1yum install vim OSX系统不需要安装，系统自带了 Vim。 配置1.语法高亮 linux下默认是开启语法高">
@@ -343,7 +343,7 @@
 <h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><h4 id="1-语法高亮"><a href="#1-语法高亮" class="headerlink" title="1.语法高亮"></a>1.语法高亮</h4><blockquote>
 <p>linux下默认是开启语法高亮的,centos的vimrc文件在/etc/vimrc。下面是osx系统的配置：</p>
 </blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> sudo cp /usr/share/vim/vimrc ~/vimrc</div><div class="line"><span class="meta">$</span> vim ~/.vimrc</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> sudo cp /usr/share/vim/vimrc ~/vimrc</span></div><div class="line"><span class="meta">$</span><span class="bash"> vim ~/.vimrc</span></div></pre></td></tr></table></figure>
 <p>在最后添加<code>syntax on</code>即可开启语法高亮。</p>
 <h4 id="2-插件安装"><a href="#2-插件安装" class="headerlink" title="2.插件安装"></a>2.插件安装</h4><ul>
 <li><p>NERDTree</p>
@@ -359,10 +359,136 @@
 </ul>
 <h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><hr>
 <h4 id="1-编辑模式"><a href="#1-编辑模式" class="headerlink" title="1. 编辑模式"></a>1. 编辑模式</h4><ul>
-<li><p>游标移动<br>|按键|说明|<br>|—|—|<br>|<code class="custom-code-key">k</code>|<span class="custom-table-font">上移</span>|<br>|<code class="custom-code-key">j</code>|<span class="custom-table-font">下移</span>|<br>|<code class="custom-code-key">h</code>|<span class="custom-table-font">左移</span>|<br>|<code class="custom-code-key">l</code>|<span class="custom-table-font">右移</span>|<br>|<code class="custom-code-key">ctrl+f</code>|<span class="custom-table-font">在文件中前移一页（相当于 page down）</span>|<br>|<code class="custom-code-key">ctrl+b</code>|<span class="custom-table-font">在文件中后移一页（相当于 page up）</span>|<br>|<code class="custom-code-key"><em></em></code>|<span class="custom-table-font">当光标停留在一个单词上， 键会在文件内搜索该单词，并跳转到下一处</span>|<br>|<code class="custom-code-key">#</code>|<span class="custom-table-font">当光标停留在一个单词上，# 在文件内搜索该单词，并跳转到上一处</span>|<br>|<code class="custom-code-key">(/)</code>|<span class="custom-table-font">移动到 前/后 句 的开始</span>|<br>|<code class="custom-code-key">{/}</code>|<span class="custom-table-font">跳转到 当前/下一个 段落 的开始</span>|<br>|<code class="custom-code-key">g_</code>|<span class="custom-table-font">    到本行最后一个不是 blank 字符的位置</span>|<br>|<code class="custom-code-key">fa</code>|<span class="custom-table-font">    到下一个为 a 的字符处，你也可以fs到下一个为s的字符</span>|<br>|<code class="custom-code-key">t,</code>|<span class="custom-table-font">到逗号前的第一个字符。逗号可以变成其它字符</span>|<br>|<code class="custom-code-key">3fa</code>|<span class="custom-table-font">    在当前行查找第三个出现的 a</span>|<br>|<code class="custom-code-key">F/T</code>|<span class="custom-table-font">和 f 和 t 一样，只不过是相反方向</span>|<br>|<code class="custom-code-key">gg</code>|<span class="custom-table-font">将光标定位到文件第一行起始位置</span>|<br>|<code class="custom-code-key">G</code>|<span class="custom-table-font">将光标定位到文件最后一行起始位置</span>|<br>|<code class="custom-code-key">NG或Ngg</code>|<span class="custom-table-font">将光标定位到第 N 行的起始位置</span>|<br>|<code class="custom-code-key">H</code>|<span class="custom-table-font">将光标移到屏幕上的起始行（或最上行）</span>|<br>|<code class="custom-code-key">NH</code>|<span class="custom-table-font">将光标移到屏幕的第N行</span>|<br>|<code class="custom-code-key">M</code>|<span class="custom-table-font">将光标移到屏幕中间</span>|<br>|<code class="custom-code-key">L</code>|<span class="custom-table-font">将光标移到屏幕最后一行</span>|<br>|<code class="custom-code-key">NL</code>|<span class="custom-table-font">将光标移到屏幕的倒数第N行</span>|<br>|<code class="custom-code-key">w</code>|<span class="custom-table-font">右移光标到下一个字的开头</span>|<br>|<code class="custom-code-key">e</code>|<span class="custom-table-font">右移光标到一个字的末尾</span>|<br>|<code class="custom-code-key">b</code>|<span class="custom-table-font">左移光标到前一个字的开头</span>|<br>|<code class="custom-code-key">0</code>|<span class="custom-table-font">数字０，左移光标到本行的开始</span>|<br>|<code class="custom-code-key">$</code>|<span class="custom-table-font">右移光标，到本行的末尾</span>|<br>|<code class="custom-code-key">^</code>|<span class="custom-table-font">移动光标，到本行的第一个非空字符</span>|</p>
-</li>
-<li><p>搜索匹配</p>
-</li>
+<li>游标移动</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="custom-code-key">k</code></td>
+<td><span class="custom-table-font">上移</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">j</code></td>
+<td><span class="custom-table-font">下移</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">h</code></td>
+<td><span class="custom-table-font">左移</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">l</code></td>
+<td><span class="custom-table-font">右移</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">ctrl+f</code></td>
+<td><span class="custom-table-font">在文件中前移一页（相当于 page down）</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">ctrl+b</code></td>
+<td><span class="custom-table-font">在文件中后移一页（相当于 page up）</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">*</code></td>
+<td><span class="custom-table-font">当光标停留在一个单词上，* 键会在文件内搜索该单词，并跳转到下一处</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">#</code></td>
+<td><span class="custom-table-font">当光标停留在一个单词上，# 在文件内搜索该单词，并跳转到上一处</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">(/)</code></td>
+<td><span class="custom-table-font">移动到 前/后 句 的开始</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">{/}</code></td>
+<td><span class="custom-table-font">跳转到 当前/下一个 段落 的开始</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">g_</code></td>
+<td><span class="custom-table-font">    到本行最后一个不是 blank 字符的位置</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">fa</code></td>
+<td><span class="custom-table-font">    到下一个为 a 的字符处，你也可以fs到下一个为s的字符</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">t,</code></td>
+<td><span class="custom-table-font">到逗号前的第一个字符。逗号可以变成其它字符</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">3fa</code></td>
+<td><span class="custom-table-font">    在当前行查找第三个出现的 a</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">F/T</code></td>
+<td><span class="custom-table-font">和 f 和 t 一样，只不过是相反方向</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">gg</code></td>
+<td><span class="custom-table-font">将光标定位到文件第一行起始位置</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">G</code></td>
+<td><span class="custom-table-font">将光标定位到文件最后一行起始位置</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">NG或Ngg</code></td>
+<td><span class="custom-table-font">将光标定位到第 N 行的起始位置</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">H</code></td>
+<td><span class="custom-table-font">将光标移到屏幕上的起始行（或最上行）</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">NH</code></td>
+<td><span class="custom-table-font">将光标移到屏幕的第N行</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">M</code></td>
+<td><span class="custom-table-font">将光标移到屏幕中间</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">L</code></td>
+<td><span class="custom-table-font">将光标移到屏幕最后一行</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">NL</code></td>
+<td><span class="custom-table-font">将光标移到屏幕的倒数第N行</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">w</code></td>
+<td><span class="custom-table-font">右移光标到下一个字的开头</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">e</code></td>
+<td><span class="custom-table-font">右移光标到一个字的末尾</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">b</code></td>
+<td><span class="custom-table-font">左移光标到前一个字的开头</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">0</code></td>
+<td><span class="custom-table-font">数字０，左移光标到本行的开始</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">$</code></td>
+<td><span class="custom-table-font">右移光标，到本行的末尾</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">^</code></td>
+<td><span class="custom-table-font">移动光标，到本行的第一个非空字符</span></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>搜索匹配</li>
 </ul>
 <table>
 <thead>
@@ -958,7 +1084,33 @@
 </ul>
 <p>Vim的分屏，主要有两种方式：上下分屏（水平分屏）和左右分屏（垂直分屏），在命令模式分别敲入以下命令即可：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">:split（可用缩写 :sp）            上下分屏</div><div class="line">:vsplit（可用缩写 :vsp）          左右分屏</div></pre></td></tr></table></figure></p>
 <p>另外，也可以在终端里启动vim时就开启分屏操作：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">vim -On file1 file2...   打开 file1 和 file2 ，垂直分屏</div><div class="line">vim -on file1 file2...   打开 file1 和 file2 ，水平分屏</div></pre></td></tr></table></figure></p>
-<p>切换屏幕键盘快捷键：<br>|按键/命令|说明|<br>|—|—|<br>|<code class="custom-code-key">Ctrl+w+h</code>|<span class="custom-table-font">切换到当前分屏的左边一屏</span>|<br>|<code class="custom-code-key">Ctrl+w+l</code>|<span class="custom-table-font">切换到当前分屏的右边一屏</span>|<br>|<code class="custom-code-key">Ctrl+w+j</code>|<span class="custom-table-font">切换到当前分屏的下方一屏</span>|<br>|<code class="custom-code-key">Ctrl+w+k</code>|<span class="custom-table-font">切换到当前分屏的上方一屏</span>|</p>
+<p>切换屏幕键盘快捷键：</p>
+<table>
+<thead>
+<tr>
+<th>按键/命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="custom-code-key">Ctrl+w+h</code></td>
+<td><span class="custom-table-font">切换到当前分屏的左边一屏</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">Ctrl+w+l</code></td>
+<td><span class="custom-table-font">切换到当前分屏的右边一屏</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">Ctrl+w+j</code></td>
+<td><span class="custom-table-font">切换到当前分屏的下方一屏</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">Ctrl+w+k</code></td>
+<td><span class="custom-table-font">切换到当前分屏的上方一屏</span></td>
+</tr>
+</tbody>
+</table>
 <p>即键盘上的<code>h</code>,<code>j</code>,<code>k</code>,<code>l</code> 四个Vim专用方向键，配合<code>Ctrl</code>键和<code>w</code>键（window的缩写），就能跳转到目标分屏。另外，也可以直接按 <code>Ctrl+w+w</code> 来跳转分屏，不过跳转方向则是在当前Vim窗口所有分屏中，按照逆时针方向跳转。<br>下面是改变尺寸的一些操作，主要是高度，对于宽度你可以使用 <code>[Ctrl+W &lt;]</code>或是 <code>[Ctrl+W &gt;]</code> ，但这可能需要最新的版本才支持。</p>
 <table>
 <thead>
@@ -987,7 +1139,73 @@
 </ul>
 <p>在Vim中新建一个标签的命令是：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:tabnew</div></pre></td></tr></table></figure></p>
 <p>如果要在新建标签页的同时打开一个文件，则可以在命令后面直接附带文件路径：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:tabnew filename</div></pre></td></tr></table></figure></p>
-<p>其他命令：<br>|按键/命令|说明|<br>|—|—|<br>|<code class="custom-code-key">:tN[ext]</code>|<span class="custom-table-font">跳转到上一个匹配的标签</span>|<br>|<code class="custom-code-key">:tabN[ext]</code>|<span class="custom-table-font">跳到上一个标签页</span>|<br>|<code class="custom-code-key">:tabc[lose]</code>|<span class="custom-table-font">关闭当前标签页</span>|<br>|<code class="custom-code-key">:tabdo</code>|<span class="custom-table-font">为每个标签页执行命令</span>|<br>|<code class="custom-code-key">:tabe[dit]</code>|<span class="custom-table-font">在新标签页里编辑文件</span>|<br>|<code class="custom-code-key">:tabf[ind]</code>|<span class="custom-table-font">寻找 ‘path’ 里的文件，在新标签页里编辑之</span>|<br>|<code class="custom-code-key">:tabfir[st]</code>|<span class="custom-table-font">转到第一个标签页</span>|<br>|<code class="custom-code-key">:tabl[ast]</code>|<span class="custom-table-font">转到最后一个标签页</span>|<br>|<code class="custom-code-key">:tabm[ove]  N</code>|<span class="custom-table-font">把标签页移到序号为N位置</span>|<br>|<code class="custom-code-key">:tabnew [filename]</code>|<span class="custom-table-font">在新标签页里编辑文件</span>|<br>|<code class="custom-code-key">:tabn[ext]</code>|<span class="custom-table-font">转到下一个标签页</span>|<br>|<code class="custom-code-key">:tabo[nly]</code>|<span class="custom-table-font">关闭所有除了当前标签页以外的所有标签页</span>|<br>|<code class="custom-code-key">:tabp[revious]</code>|<span class="custom-table-font">转到前一个标签页</span>|<br>|<code class="custom-code-key">:tabr[ewind]</code>|<span class="custom-table-font">转到第一个标签页</span>|</p>
+<p>其他命令：</p>
+<table>
+<thead>
+<tr>
+<th>按键/命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="custom-code-key">:tN[ext]</code></td>
+<td><span class="custom-table-font">跳转到上一个匹配的标签</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">:tabN[ext]</code></td>
+<td><span class="custom-table-font">跳到上一个标签页</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">:tabc[lose]</code></td>
+<td><span class="custom-table-font">关闭当前标签页</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">:tabdo</code></td>
+<td><span class="custom-table-font">为每个标签页执行命令</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">:tabe[dit]</code></td>
+<td><span class="custom-table-font">在新标签页里编辑文件</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">:tabf[ind]</code></td>
+<td><span class="custom-table-font">寻找 ‘path’ 里的文件，在新标签页里编辑之</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">:tabfir[st]</code></td>
+<td><span class="custom-table-font">转到第一个标签页</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">:tabl[ast]</code></td>
+<td><span class="custom-table-font">转到最后一个标签页</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">:tabm[ove]  N</code></td>
+<td><span class="custom-table-font">把标签页移到序号为N位置</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">:tabnew [filename]</code></td>
+<td><span class="custom-table-font">在新标签页里编辑文件</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">:tabn[ext]</code></td>
+<td><span class="custom-table-font">转到下一个标签页</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">:tabo[nly]</code></td>
+<td><span class="custom-table-font">关闭所有除了当前标签页以外的所有标签页</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">:tabp[revious]</code></td>
+<td><span class="custom-table-font">转到前一个标签页</span></td>
+</tr>
+<tr>
+<td><code class="custom-code-key">:tabr[ewind]</code></td>
+<td><span class="custom-table-font">转到第一个标签页</span></td>
+</tr>
+</tbody>
+</table>
 <h5 id="其他工具"><a href="#其他工具" class="headerlink" title="其他工具"></a>其他工具</h5><ul>
 <li>diff</li>
 </ul>
