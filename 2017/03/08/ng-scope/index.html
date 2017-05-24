@@ -1,0 +1,789 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Monaco:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="angular," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="什么是隔离 ScopeAngularJS 的 directive 默认能共享父 scope 中定义的属性，例如在模版中直接使用父 scope 中的对象和属性。通常使用这种直接共享的方式可以实现一些简单的 directive 功能。当你需要创建一个可重复使用的 directive，只是偶尔需要访问或者修改父 scope 的数据，就需要使用隔离 scope。当使用隔离 scope 的时候，direct">
+<meta name="keywords" content="angular">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AngularJS Directive 隔离 Scope 数据交互">
+<meta property="og:url" content="https://gikey.github.io/2017/03/08/ng-scope/index.html">
+<meta property="og:site_name" content="lingfeng&#39;blog">
+<meta property="og:description" content="什么是隔离 ScopeAngularJS 的 directive 默认能共享父 scope 中定义的属性，例如在模版中直接使用父 scope 中的对象和属性。通常使用这种直接共享的方式可以实现一些简单的 directive 功能。当你需要创建一个可重复使用的 directive，只是偶尔需要访问或者修改父 scope 的数据，就需要使用隔离 scope。当使用隔离 scope 的时候，direct">
+<meta property="og:image" content="http://7u2kz7.com1.z0.glb.clouddn.com/6502f268-800e-4874-8443-d7bebf1b12f0.png">
+<meta property="og:updated_time" content="2017-05-24T01:56:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AngularJS Directive 隔离 Scope 数据交互">
+<meta name="twitter:description" content="什么是隔离 ScopeAngularJS 的 directive 默认能共享父 scope 中定义的属性，例如在模版中直接使用父 scope 中的对象和属性。通常使用这种直接共享的方式可以实现一些简单的 directive 功能。当你需要创建一个可重复使用的 directive，只是偶尔需要访问或者修改父 scope 的数据，就需要使用隔离 scope。当使用隔离 scope 的时候，direct">
+<meta name="twitter:image" content="http://7u2kz7.com1.z0.glb.clouddn.com/6502f268-800e-4874-8443-d7bebf1b12f0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://gikey.github.io/2017/03/08/ng-scope/"/>
+
+
+
+
+
+  <title>AngularJS Directive 隔离 Scope 数据交互 | lingfeng'blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">lingfeng'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://gikey.github.io/2017/03/08/ng-scope/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="凌峰">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lingfeng'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">AngularJS Directive 隔离 Scope 数据交互</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-08T11:39:09+08:00">
+                2017-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/03/08/ng-scope/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="什么是隔离-Scope"><a href="#什么是隔离-Scope" class="headerlink" title="什么是隔离 Scope"></a>什么是隔离 Scope</h3><p>AngularJS 的 directive 默认能共享父 scope 中定义的属性，例如在模版中直接使用父 scope 中的对象和属性。通常使用这种直接共享的方式可以实现一些简单的 directive 功能。当你需要创建一个可重复使用的 directive，只是偶尔需要访问或者修改父 scope 的数据，就需要使用隔离 scope。当使用隔离 scope 的时候，directive 会创建一个没有依赖父 scope 的 scope，并提供一些访问父 scope 的方式。</p>
+<h3 id="为什么使用隔离-Scope"><a href="#为什么使用隔离-Scope" class="headerlink" title="为什么使用隔离 Scope"></a>为什么使用隔离 Scope</h3><p>当你想要写一个可重复使用的 directive，不能再依赖父 scope，这时候就需要使用隔离 scope 代替。共享 scope 可以直接共享父 scope，而隔离 scope 无法共享父scope。下图解释共享 scope 和隔离 scope 的区别：</p>
+<p><img src="http://7u2kz7.com1.z0.glb.clouddn.com/6502f268-800e-4874-8443-d7bebf1b12f0.png" alt=""></p>
+<h4 id="共享-scope"><a href="#共享-scope" class="headerlink" title="共享 scope"></a>共享 scope</h4><p>使用共享 scope 的时候，可以直接从父 scope 中共享属性。因此下面示例可以将那么属性的值输出出来。使用的是父 scope 中定义的值。</p>
+<p>js代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">app.controller(<span class="string">"myController"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$scope</span>) </span>&#123;</div><div class="line">    $scope.name = <span class="string">"hello world"</span>;</div><div class="line">&#125;).directive(<span class="string">"shareDirective"</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        <span class="attr">template</span>: <span class="string">'Say:&#123;&#123;name&#125;&#125;'</span></div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>html代码:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-controller</span>=<span class="string">"myController"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">share-directive</span>=<span class="string">""</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Say:hello world</div></pre></td></tr></table></figure>
+<h4 id="隔离-scope"><a href="#隔离-scope" class="headerlink" title="隔离 scope"></a>隔离 scope</h4><p>使用隔离 scope 的时候，无法从父 scope 中共享属性。因此下面示例无法输出父 scope 中定义的 name 属性值。</p>
+<p>js代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">app.controller(<span class="string">"myController"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$scope</span>) </span>&#123;</div><div class="line">    $scope.name = <span class="string">"hello world"</span>;</div><div class="line">&#125;).directive(<span class="string">"isolatedDirective"</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        <span class="attr">scope</span>: &#123;&#125;,</div><div class="line">        <span class="attr">template</span>: <span class="string">'Say:&#123;&#123;name&#125;&#125;'</span></div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>html代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-controller</span>=<span class="string">"myController"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">isolated-directive</span>=<span class="string">""</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Say:</div></pre></td></tr></table></figure>
+<p>从上图可以看出共享 scope 允许从父 scope 渗入到 directive 中，而隔离 scope 不能，在隔离 scope 下，给 directive 创造了一堵墙，使得父 scope 无法渗入到 directive 中。</p>
+<p>具体文档可以参考：<a href="https://docs.angularjs.org/guide/directive#isolating-the-scope-of-a-directive" target="_blank" rel="external">https://docs.angularjs.org/guide/directive#isolating-the-scope-of-a-directive</a></p>
+<h3 id="如何在-directive-中创建隔离-scope"><a href="#如何在-directive-中创建隔离-scope" class="headerlink" title="如何在 directive 中创建隔离 scope"></a>如何在 directive 中创建隔离 scope</h3><p>在 Directive 中创建隔离 scope 很简单，只需要定义一个 scope 属性即可，这样，这个 directive 的 scope 将会创建一个新的 scope，如果多个 directive 定义在同一个元素上，只会创建一个新的 scope。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'app'</span>).controller(<span class="string">"myController"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$scope</span>) </span>&#123;</div><div class="line">    $scope.user = &#123;</div><div class="line">        <span class="attr">id</span>:<span class="number">1</span>,</div><div class="line">        <span class="attr">name</span>:<span class="string">"hello world"</span></div><div class="line">    &#125;;</div><div class="line">&#125;).directive(<span class="string">'isolatedScope'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        <span class="attr">scope</span>: &#123;&#125;,</div><div class="line">        <span class="attr">template</span>: <span class="string">'Name: &#123;&#123;user.name&#125;&#125; Street: &#123;&#123;user.addr&#125;&#125;'</span></div><div class="line">    &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>现在 scope 是隔离的，user 对象将无法从父 scope 中访问，因此，在 directive 渲染的时候 user 对象的占位将不会输出内容。</p>
+<h3 id="隔离-scope-和父-scope-如何交互"><a href="#隔离-scope-和父-scope-如何交互" class="headerlink" title="隔离 scope 和父 scope 如何交互"></a>隔离 scope 和父 scope 如何交互</h3><p>directive 在使用隔离 scope 的时候，提供了三种方法同隔离之外的地方交互。这三种分别是:</p>
+<ul>
+<li><code>@</code> 绑定一个局部 scope 属性到当前 dom 节点的属性值。结果总是一个字符串，因为 dom 属性是字符串。</li>
+<li><code>&amp;</code> 提供一种方式执行一个表达式在父 scope 的上下文中。如果没有指定 attr 名称，则属性名称为相同的本地名称。</li>
+<li><code>=</code> 通过 directive 的 attr 属性的值在局部 scope 的属性和父 scope 属性名之间建立双向绑定。</li>
+</ul>
+<h4 id="局部-scope-属性"><a href="#局部-scope-属性" class="headerlink" title="@ 局部 scope 属性"></a>@ 局部 scope 属性</h4><p><code>@</code> 方式局部属性用来访问 directive 外部环境定义的字符串值，主要是通过 directive 所在的标签属性绑定外部字符串值。这种绑定是单向的，即父 scope 的绑定变化，directive 中的 scope 的属性会同步变化，而隔离 scope 中的绑定变化，父 scope 是不知道的。</p>
+<p>如下示例：directive 声明未隔离 scope 类型，并且使用<code>@</code>绑定 name 属性，在 directive 中使用 name 属性绑定父 scope 中的属性。当改变父 scope 中属性的值的时候，directive 会同步更新值，当改变 directive 的 scope 的属性值时，父 scope 无法同步更新值。</p>
+<p>js 代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">app.controller(<span class="string">"myController"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$scope</span>) </span>&#123;</div><div class="line">     $scope.name = <span class="string">"hello world"</span>;</div><div class="line">&#125;).directive(<span class="string">"isolatedDirective"</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        <span class="attr">scope</span>: &#123;</div><div class="line">            <span class="attr">name</span>: <span class="string">"@"</span></div><div class="line">        &#125;,</div><div class="line">        <span class="attr">template</span>: <span class="string">'Say：&#123;&#123;name&#125;&#125; &lt;br&gt;改变隔离scope的name：&lt;input type="buttom" value="" ng-model="name" class="ng-pristine ng-valid"&gt;'</span></div><div class="line">    &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>html 代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-controller</span>=<span class="string">"myController"</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"result"</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">div</span>&gt;</span>父scope：</div><div class="line">           <span class="tag">&lt;<span class="name">div</span>&gt;</span>Say：&#123;&#123;name&#125;&#125;<span class="tag">&lt;<span class="name">br</span>&gt;</span>改变父scope的name：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">value</span>=<span class="string">""</span> <span class="attr">ng-model</span>=<span class="string">"name"</span>/&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">       <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">div</span>&gt;</span>隔离scope：</div><div class="line">           <span class="tag">&lt;<span class="name">div</span> <span class="attr">isolated-directive</span> <span class="attr">name</span>=<span class="string">"&#123;&#123;name&#125;&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">       <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span>隔离scope（不使用&#123;&#123;name&#125;&#125;）：</div><div class="line">             <span class="tag">&lt;<span class="name">div</span> <span class="attr">isolated-directive</span> <span class="attr">name</span>=<span class="string">"name"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">         <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">   <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="局部-scope-属性-1"><a href="#局部-scope-属性-1" class="headerlink" title="= 局部 scope 属性"></a>= 局部 scope 属性</h4><p><code>=</code> 通过 directive 的 attr 属性的值在局部 scope 的属性和父 scope 属性名之间建立双向绑定。<br>意思是，当你想要一个双向绑定的属性的时候，你可以使用<code>=</code>来引入外部属性。无论是改变父 scope 还是隔离 scope 里的属性，父 scope 和隔离 scope 都会同时更新属性值，因为它们是双向绑定的关系。</p>
+<p>js 代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">app.controller(<span class="string">"myController"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$scope</span>) </span>&#123;</div><div class="line">    $scope.user = &#123;</div><div class="line">        <span class="attr">name</span>: <span class="string">'hello'</span>,</div><div class="line">        <span class="attr">id</span>: <span class="number">1</span></div><div class="line">    &#125;;</div><div class="line">&#125;).directive(<span class="string">"isolatedDirective"</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        <span class="attr">scope</span>: &#123;</div><div class="line">            <span class="attr">user</span>: <span class="string">"="</span></div><div class="line">        &#125;,</div><div class="line">        <span class="attr">template</span>: <span class="string">'Say：&#123;&#123;user.name&#125;&#125; &lt;br&gt;改变隔离scope的name：&lt;input type="buttom" value="" ng-model="user.name"/&gt;'</span></div><div class="line">     &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>html 代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-controller</span>=<span class="string">"myController"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>父scope：</div><div class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span>Say：&#123;&#123;user.name&#125;&#125;<span class="tag">&lt;<span class="name">br</span>&gt;</span>改变父scope的name：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">value</span>=<span class="string">""</span> <span class="attr">ng-model</span>=<span class="string">"user.name"</span>/&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>隔离scope：</div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">isolated-directive</span> <span class="attr">user</span>=<span class="string">"user"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>隔离scope（使用&#123;&#123;name&#125;&#125;）：</div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">isolated-directive</span> <span class="attr">user</span>=<span class="string">"&#123;&#123;user&#125;&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="amp-局部-scope-属性"><a href="#amp-局部-scope-属性" class="headerlink" title="&amp; 局部 scope 属性"></a>&amp; 局部 scope 属性</h4><p><code>&amp;</code> 方式提供一种途经是 directive 能在父 scope 的上下文中执行一个表达式。此表达式可以是一个 function。<br>比如当你写了一个 directive，当用户点击按钮时，directive 想要通知 controller，controller 无法知道 directive 中发生了什么，也许你可以通过使用 angular 中的 event 广播来做到，但是必须要在 controller 中增加一个事件监听方法。<br>最好的方法就是让 directive 可以通过一个父 scope 中的 function，当 directive 中有什么动作需要更新到父 scope 中的时候，可以在父 scope 上下文中执行一段代码或者一个函数。</p>
+<p>如下示例在 directive 中执行父 scope 的 function。</p>
+<p>js代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">app.controller(<span class="string">"myController"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$scope</span>) </span>&#123;</div><div class="line">    $scope.value = <span class="string">"hello world"</span>;</div><div class="line">    $scope.click = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        $scope.value = <span class="built_in">Math</span>.random();</div><div class="line">    &#125;;</div><div class="line">&#125;).directive(<span class="string">"isolatedDirective"</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        <span class="attr">scope</span>: &#123;</div><div class="line">            <span class="attr">action</span>: <span class="string">"&amp;"</span></div><div class="line">        &#125;,</div><div class="line">        <span class="attr">template</span>: <span class="string">'&lt;input type="button" value="在directive中执行父scope定义的方法" ng-click="action()"/&gt;'</span></div><div class="line">     &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>html 代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"> <span class="tag">&lt;<span class="name">div</span>  <span class="attr">ng-controller</span>=<span class="string">"myController"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span>父scope：</div><div class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span>Say：&#123;&#123;value&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span>隔离scope：</div><div class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">isolated-directive</span> <span class="attr">action</span>=<span class="string">"click()"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>以上内容转自：<a href="https://blog.coding.net/blog/angularjs-directive-isolate-scope" target="_blank" rel="external">https://blog.coding.net/blog/angularjs-directive-isolate-scope</a></p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>相信关于隔离 scope 和父 scope 如何交互的三种方法已经介绍得非常清楚了，最后发现stackoverflow上面有个更加简单直接的解释，原文如下：</p>
+<p>All three bindings are ways of passing data from your parent scope to your directive’s isolated scope through the element’s attributes:</p>
+<blockquote>
+<ol>
+<li><p><code>@</code> binding is for passing strings. These strings support <code>{{}}</code> expressions for interpolated values. For example: . The interpolated expression is evaluated against directive’s parent scope.</p>
+</li>
+<li><p><code>=</code> binding is for two-way model binding. The model in parent scope is linked to the model in the directive’s isolated scope. Changes to one model affects the other, and vice versa.</p>
+</li>
+<li><p><code>&amp;</code> binding is for passing a method into your directive’s scope so that it can be called within your directive. The method is pre-bound to the directive’s parent scope, and supports arguments. For example if the method is hello(name) in parent scope, then in order to execute the method from inside your directive, you must call $scope.hello({name:’world’})</p>
+</li>
+</ol>
+</blockquote>
+<p>I find that it’s easier to remember these differences by referring to the scope bindings by a shorter description:</p>
+<ul>
+<li><code>@</code> Attribute string binding</li>
+<li><code>=</code> Two-way model binding</li>
+<li><code>&amp;</code> Callback method binding</li>
+</ul>
+<p>The symbols also make it clearer as to what the scope variable represents inside of your directive’s implementation:</p>
+<ul>
+<li><code>@</code> string</li>
+<li><code>=</code> model</li>
+<li><code>&amp;</code> method</li>
+</ul>
+<p>In order of usefulness (for me anyways):</p>
+<ul>
+<li><code>=</code></li>
+<li><code>@</code></li>
+<li><code>&amp;</code></li>
+</ul>
+<p>更多请参考API文档：<a href="https://docs.angularjs.org/api/ng/service/$compile" target="_blank" rel="external">https://docs.angularjs.org/api/ng/service/$compile</a> 。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/angular/" rel="tag"># angular</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/04/hexo/" rel="next" title="github+hexo搭建静态博客">
+                <i class="fa fa-chevron-left"></i> github+hexo搭建静态博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="凌峰" />
+          <p class="site-author-name" itemprop="name">凌峰</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/gikey" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="1580039649" target="_blank" title="QQ">
+                  
+                    <i class="fa fa-fw fa-qq"></i>
+                  
+                  QQ
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="xlp4366@gmail.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是隔离-Scope"><span class="nav-number">1.</span> <span class="nav-text">什么是隔离 Scope</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么使用隔离-Scope"><span class="nav-number">2.</span> <span class="nav-text">为什么使用隔离 Scope</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#共享-scope"><span class="nav-number">2.1.</span> <span class="nav-text">共享 scope</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#隔离-scope"><span class="nav-number">2.2.</span> <span class="nav-text">隔离 scope</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何在-directive-中创建隔离-scope"><span class="nav-number">3.</span> <span class="nav-text">如何在 directive 中创建隔离 scope</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隔离-scope-和父-scope-如何交互"><span class="nav-number">4.</span> <span class="nav-text">隔离 scope 和父 scope 如何交互</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#局部-scope-属性"><span class="nav-number">4.1.</span> <span class="nav-text">@ 局部 scope 属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#局部-scope-属性-1"><span class="nav-number">4.2.</span> <span class="nav-text">= 局部 scope 属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-局部-scope-属性"><span class="nav-number">4.3.</span> <span class="nav-text">& 局部 scope 属性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">5.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">凌峰</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "d301a3abd7fe44b88fa7f5c0f05628bc",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
