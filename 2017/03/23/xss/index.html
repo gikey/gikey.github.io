@@ -103,7 +103,7 @@
 <meta property="og:url" content="https://gikey.github.io/2017/03/23/xss/index.html">
 <meta property="og:site_name" content="lingfeng&#39;blog">
 <meta property="og:description" content="XSS (Cross-site scripting) 即跨站脚本，发生在目标网站中目标用户的浏览器层面上，当浏览器渲染整个 HTML 页面的过程中出现了不被预期的脚本指令并执行时，XSS就会发生。 XSS 类型1. 反射型 XSS发出请求时，XSS 代码出现在URL中，作为输入提交到服务端，服务端解析后响应，在响应内容中出现这段 XSS 代码，最后浏览器解析执行。这个过程就像一次反射，故称为反射型">
-<meta property="og:updated_time" content="2017-06-09T09:07:47.000Z">
+<meta property="og:updated_time" content="2017-06-09T09:10:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="XSS 攻击">
 <meta name="twitter:description" content="XSS (Cross-site scripting) 即跨站脚本，发生在目标网站中目标用户的浏览器层面上，当浏览器渲染整个 HTML 页面的过程中出现了不被预期的脚本指令并执行时，XSS就会发生。 XSS 类型1. 反射型 XSS发出请求时，XSS 代码出现在URL中，作为输入提交到服务端，服务端解析后响应，在响应内容中出现这段 XSS 代码，最后浏览器解析执行。这个过程就像一次反射，故称为反射型">
@@ -330,7 +330,7 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">  <span class="keyword">echo</span> $_GET[<span class="string">'x'</span>];</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
 <p>这里将输入的x值未经任何过滤就直接输出，于是可以提交：</p>
 <p><code>http://www.xss.com/reflect.php?x=&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;</code></p>
-<p>服务端解析的时候，将获取到的<code>&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;</code>完整输出到响应体中，浏览器解析执行后就出发了 XSS。</p>
+<p>服务端解析的时候，将获取到的<code>&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;</code>完整输出到响应体中，浏览器解析执行后就触发了 XSS。</p>
 <h4 id="2-存储型XSS"><a href="#2-存储型XSS" class="headerlink" title="2. 存储型XSS"></a>2. 存储型XSS</h4><p>存储型 XSS 是讲 XSS 代码存储在服务器的数据库、内存或者文件系统中，下次请求目标页面时后不需要再次注入 XSS 代码。最典型的存储型 XSS 就是留言板，用户提交了一段带有XSS代码的留言存储到数据库，其他用户再次查看时，带有 XSS 代码的留言直接当做普通 HTML、JS 进行解析从而触发 XSS 攻击。</p>
 <p>存储型的XSS攻击是最隐蔽的。</p>
 <h4 id="3-DOM-XSS"><a href="#3-DOM-XSS" class="headerlink" title="3. DOM XSS"></a>3. DOM XSS</h4><p>DOM XSS 型 XSS 代码并不需要服务器解析响应直接参与，只要靠浏览器解析 DOM 就可以触发 DOM XSS ，完全在客户端可以完成。</p>
