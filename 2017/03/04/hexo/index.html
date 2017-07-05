@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="lingfeng&#39;blog">
 <meta property="og:description" content="由于windows坑实在太多，这里只介绍osx和linux环境下的利用github pages 和hexo博客搭建，有兴趣可以去windows下试试。这里对于Hexo只做最基本的介绍具体使用和配置请查看官网。 前提安装 Hexo 相当简单。然而在安装前，您必须检查电脑中是否已安装下列应用程序：  Node.js Git  还需要给github添加ssh公钥(具体怎么生成操作就不扯了) 安装Hexo">
 <meta property="og:image" content="http://chuantu.biz/t5/126/1499235290x2890173801.png">
-<meta property="og:updated_time" content="2017-07-05T06:19:37.000Z">
+<meta property="og:updated_time" content="2017-07-05T06:24:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Github+Hexo 搭建静态博客">
 <meta name="twitter:description" content="由于windows坑实在太多，这里只介绍osx和linux环境下的利用github pages 和hexo博客搭建，有兴趣可以去windows下试试。这里对于Hexo只做最基本的介绍具体使用和配置请查看官网。 前提安装 Hexo 相当简单。然而在安装前，您必须检查电脑中是否已安装下列应用程序：  Node.js Git  还需要给github添加ssh公钥(具体怎么生成操作就不扯了) 安装Hexo">
@@ -406,9 +406,9 @@
 <p>搞定，于是访问yourname.github.io就能看到你的博客了。</p>
 <h4 id="自定义域名"><a href="#自定义域名" class="headerlink" title="自定义域名"></a>自定义域名</h4><p>要配置为 <code>blog.yourDomian.com</code> 这样的子域名时，需要增加一个CNAME解析。例如在万网后台，添加一条解析记录，记录类型为 cname。然而添加好了后发现居然访问不了：</p>
 <p><img src="http://chuantu.biz/t5/126/1499235290x2890173801.png" alt="404"></p>
-<p>在 <code>username.github.io</code> 项目的根目录下添加一个 <code>CNAME</code> 文件:</p>
+<p>在 <code>username.github.io</code> 项目的 <code>public</code> 下目录下添加一个 <code>CNAME</code> 文件:</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">echo</span> blog.yourDomain.com &gt;&gt; CNAME</div></pre></td></tr></table></figure>
-<p>然后 git 提交， 刷新下就能出现了。</p>
+<p>然后 <code>hexo d</code>提交。</p>
 
       
     </div>

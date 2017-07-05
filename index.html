@@ -1183,9 +1183,9 @@
 <p>搞定，于是访问yourname.github.io就能看到你的博客了。</p>
 <h4 id="自定义域名"><a href="#自定义域名" class="headerlink" title="自定义域名"></a>自定义域名</h4><p>要配置为 <code>blog.yourDomian.com</code> 这样的子域名时，需要增加一个CNAME解析。例如在万网后台，添加一条解析记录，记录类型为 cname。然而添加好了后发现居然访问不了：</p>
 <p><img src="http://chuantu.biz/t5/126/1499235290x2890173801.png" alt="404"></p>
-<p>在 <code>username.github.io</code> 项目的根目录下添加一个 <code>CNAME</code> 文件:</p>
+<p>在 <code>username.github.io</code> 项目的 <code>public</code> 下目录下添加一个 <code>CNAME</code> 文件:</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">echo</span> blog.yourDomain.com &gt;&gt; CNAME</div></pre></td></tr></table></figure>
-<p>然后 git 提交， 刷新下就能出现了。</p>
+<p>然后 <code>hexo d</code>提交。</p>
 
           
         
