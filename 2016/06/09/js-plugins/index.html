@@ -1,0 +1,789 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Monaco:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="视频背景插件 jquery.video.js bigvideo.js http://dfcb.github.io/BigVideo.js/  视频播放插件 video.js http://videojs.com/ jwplayer https://www.jwplayer.com/  轮播插件 flickity http://flickity.metafizzy.co/ swiper http:/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="实用的JS插件">
+<meta property="og:url" content="https://gikey.github.io/2016/06/09/js-plugins/index.html">
+<meta property="og:site_name" content="lingfeng&#39;blog">
+<meta property="og:description" content="视频背景插件 jquery.video.js bigvideo.js http://dfcb.github.io/BigVideo.js/  视频播放插件 video.js http://videojs.com/ jwplayer https://www.jwplayer.com/  轮播插件 flickity http://flickity.metafizzy.co/ swiper http:/">
+<meta property="og:updated_time" content="2017-07-17T02:53:05.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="实用的JS插件">
+<meta name="twitter:description" content="视频背景插件 jquery.video.js bigvideo.js http://dfcb.github.io/BigVideo.js/  视频播放插件 video.js http://videojs.com/ jwplayer https://www.jwplayer.com/  轮播插件 flickity http://flickity.metafizzy.co/ swiper http:/">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://gikey.github.io/2016/06/09/js-plugins/"/>
+
+
+
+
+
+  <title>实用的JS插件 | lingfeng'blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">lingfeng'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://gikey.github.io/2016/06/09/js-plugins/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="凌峰">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lingfeng'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">实用的JS插件</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-09T10:42:46+08:00">
+                2016-06-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="视频背景插件"><a href="#视频背景插件" class="headerlink" title="视频背景插件"></a>视频背景插件</h4><ul>
+<li>jquery.video.js</li>
+<li>bigvideo.js <a href="http://dfcb.github.io/BigVideo.js/" target="_blank" rel="external">http://dfcb.github.io/BigVideo.js/</a></li>
+</ul>
+<h4 id="视频播放插件"><a href="#视频播放插件" class="headerlink" title="视频播放插件"></a>视频播放插件</h4><ul>
+<li>video.js <a href="http://videojs.com/" target="_blank" rel="external">http://videojs.com/</a></li>
+<li>jwplayer <a href="https://www.jwplayer.com/" target="_blank" rel="external">https://www.jwplayer.com/</a></li>
+</ul>
+<h4 id="轮播插件"><a href="#轮播插件" class="headerlink" title="轮播插件"></a>轮播插件</h4><ul>
+<li>flickity <a href="http://flickity.metafizzy.co/" target="_blank" rel="external">http://flickity.metafizzy.co/</a></li>
+<li>swiper <a href="http://www.swiper.com.cn/" target="_blank" rel="external">http://www.swiper.com.cn/</a></li>
+</ul>
+<h4 id="滑动插件"><a href="#滑动插件" class="headerlink" title="滑动插件"></a>滑动插件</h4><ul>
+<li>TouchSlide <a href="http://www.superslide2.com/touchSlide/" target="_blank" rel="external">http://www.superslide2.com/touchSlide/</a></li>
+<li>iSlider <a href="http://be-fe.github.io/iSlider/" target="_blank" rel="external">http://be-fe.github.io/iSlider/</a></li>
+<li>Unslider <a href="http://unslider.com/" target="_blank" rel="external">http://unslider.com/</a></li>
+<li>OwlCarousel <a href="https://github.com/OwlFonk/OwlCarousel" target="_blank" rel="external">https://github.com/OwlFonk/OwlCarousel</a></li>
+<li>FullPage <a href="http://alvarotrigo.com/fullPage/" target="_blank" rel="external">http://alvarotrigo.com/fullPage/</a></li>
+<li>Onepage-Scroll <a href="https://github.com/peachananr/onepage-scroll" target="_blank" rel="external">https://github.com/peachananr/onepage-scroll</a></li>
+</ul>
+<h4 id="日期选择插件"><a href="#日期选择插件" class="headerlink" title="日期选择插件"></a>日期选择插件</h4><ul>
+<li>Bootstrap Datepicker <a href="https://eonasdan.github.io/bootstrap-datetimepicker/" target="_blank" rel="external">https://eonasdan.github.io/bootstrap-datetimepicker/</a></li>
+<li>Daterangepicker  <a href="http://www.daterangepicker.com/" target="_blank" rel="external">http://www.daterangepicker.com/</a></li>
+</ul>
+<h4 id="表格插件"><a href="#表格插件" class="headerlink" title="表格插件"></a>表格插件</h4><ul>
+<li>TableExport <a href="https://www.clarketravis.com/tableexport/" target="_blank" rel="external">https://www.clarketravis.com/tableexport/</a></li>
+<li>Datatables <a href="http://datatables.club/" target="_blank" rel="external">http://datatables.club/</a></li>
+<li>FooTable <a href="https://github.com/fooplugins/FooTable" target="_blank" rel="external">https://github.com/fooplugins/FooTable</a></li>
+</ul>
+<h4 id="下拉框插件"><a href="#下拉框插件" class="headerlink" title="下拉框插件"></a>下拉框插件</h4><ul>
+<li>multiple-select <a href="http://wenzhixin.net.cn/p/multiple-select/docs/" target="_blank" rel="external">http://wenzhixin.net.cn/p/multiple-select/docs/</a></li>
+<li>multiselect.js <a href="http://loudev.com/" target="_blank" rel="external">http://loudev.com/</a></li>
+<li>select2 <a href="https://select2.github.io/" target="_blank" rel="external">https://select2.github.io/</a></li>
+<li>angular-multi-select <a href="https://github.com/isteven/angular-multi-select" target="_blank" rel="external">https://github.com/isteven/angular-multi-select</a></li>
+</ul>
+<p>####视差滚动插件</p>
+<ul>
+<li>parallax.js <a href="https://github.com/pixelcog/parallax.js/" target="_blank" rel="external">https://github.com/pixelcog/parallax.js/</a></li>
+</ul>
+<h4 id="弹窗插件"><a href="#弹窗插件" class="headerlink" title="弹窗插件"></a>弹窗插件</h4><ul>
+<li>layer <a href="http://layer.layui.com/" target="_blank" rel="external">http://layer.layui.com/</a></li>
+<li>facnybox <a href="http://fancyapps.com/fancybox/" target="_blank" rel="external">http://fancyapps.com/fancybox/</a></li>
+<li>sweetalert <a href="http://t4t5.github.io/sweetalert/" target="_blank" rel="external">http://t4t5.github.io/sweetalert/</a></li>
+<li>x0popup <a href="https://gao-sun.github.io/x0popup/" target="_blank" rel="external">https://gao-sun.github.io/x0popup/</a></li>
+</ul>
+<h4 id="网页弹幕插件"><a href="#网页弹幕插件" class="headerlink" title="网页弹幕插件"></a>网页弹幕插件</h4><ul>
+<li>barrager <a href="https://github.com/yaseng/jquery.barrager.js" target="_blank" rel="external">https://github.com/yaseng/jquery.barrager.js</a></li>
+</ul>
+<h4 id="Toggle"><a href="#Toggle" class="headerlink" title="Toggle"></a>Toggle</h4><ul>
+<li>multiple <a href="https://multiple.js.org/" target="_blank" rel="external">https://multiple.js.org/</a></li>
+</ul>
+<h4 id="粒子插件"><a href="#粒子插件" class="headerlink" title="粒子插件"></a>粒子插件</h4><ul>
+<li>particle.js <a href="https://github.com/VincentGarreau/particles.js/" target="_blank" rel="external">https://github.com/VincentGarreau/particles.js/</a></li>
+</ul>
+<h4 id="VR视频插件"><a href="#VR视频插件" class="headerlink" title="VR视频插件"></a>VR视频插件</h4><ul>
+<li>UtoVRPlayerGuide.js <a href="http://www.utovr.com/sdk" target="_blank" rel="external">http://www.utovr.com/sdk</a></li>
+<li>Videojs-panorama <a href="http://yanwsh.github.io/videojs-panorama/" target="_blank" rel="external">http://yanwsh.github.io/videojs-panorama/</a></li>
+</ul>
+<h4 id="导航"><a href="#导航" class="headerlink" title="导航"></a>导航</h4><ul>
+<li>Navi.js <a href="http://navi.grantcr.com/#!/home" target="_blank" rel="external">http://navi.grantcr.com/#!/home</a></li>
+</ul>
+<h4 id="文字特效"><a href="#文字特效" class="headerlink" title="文字特效"></a>文字特效</h4><ul>
+<li>Textillate <a href="http://textillate.js.org/" target="_blank" rel="external">http://textillate.js.org/</a></li>
+</ul>
+<h4 id="动画特效"><a href="#动画特效" class="headerlink" title="动画特效"></a>动画特效</h4><ul>
+<li>Dynamics.js <a href="http://dynamicsjs.com/" target="_blank" rel="external">http://dynamicsjs.com/</a></li>
+<li><a href="https://github.com/gikey/WOW" target="_blank" rel="external">https://github.com/gikey/WOW</a></li>
+</ul>
+<h4 id="文档插件"><a href="#文档插件" class="headerlink" title="文档插件"></a>文档插件</h4><ul>
+<li>Docute <a href="https://docute.js.org/" target="_blank" rel="external">https://docute.js.org/</a></li>
+<li>Deck.js <a href="http://imakewebthings.github.com/deck.js/" target="_blank" rel="external">http://imakewebthings.github.com/deck.js/</a></li>
+<li>Jsdoc <a href="http://usejsdoc.org/" target="_blank" rel="external">http://usejsdoc.org/</a></li>
+</ul>
+<h4 id="分页插件"><a href="#分页插件" class="headerlink" title="分页插件"></a>分页插件</h4><ul>
+<li>Angular-Paging <a href="https://github.com/brantwills/Angular-Paging" target="_blank" rel="external">https://github.com/brantwills/Angular-Paging</a></li>
+</ul>
+<h4 id="图片裁剪"><a href="#图片裁剪" class="headerlink" title="图片裁剪"></a>图片裁剪</h4><ul>
+<li>vue-core-image-upload <a href="http://vanthink-ued.github.io/vue-core-image-upload/#/" target="_blank" rel="external">http://vanthink-ued.github.io/vue-core-image-upload/#/</a></li>
+</ul>
+<h4 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h4><ul>
+<li>JQuery-File-Upload <a href="https://github.com/blueimp/jQuery-File-Upload" target="_blank" rel="external">https://github.com/blueimp/jQuery-File-Upload</a></li>
+</ul>
+<h4 id="拾色器"><a href="#拾色器" class="headerlink" title="拾色器"></a>拾色器</h4><ul>
+<li>Jquery-minicolors <a href="https://github.com/claviska/jquery-minicolors" target="_blank" rel="external">https://github.com/claviska/jquery-minicolors</a></li>
+</ul>
+<h4 id="滑动条"><a href="#滑动条" class="headerlink" title="滑动条"></a>滑动条</h4><ul>
+<li><a href="https://github.com/seiyria/bootstrap-slider" target="_blank" rel="external">https://github.com/seiyria/bootstrap-slider</a></li>
+</ul>
+<h4 id="提示框"><a href="#提示框" class="headerlink" title="提示框"></a>提示框</h4><ul>
+<li>Sweetalert2 <a href="https://github.com/limonte/sweetalert2" target="_blank" rel="external">https://github.com/limonte/sweetalert2</a></li>
+</ul>
+<h4 id="拖放"><a href="#拖放" class="headerlink" title="拖放"></a>拖放</h4><ul>
+<li>Interact <a href="https://github.com/taye/interact.js" target="_blank" rel="external">https://github.com/taye/interact.js</a></li>
+</ul>
+<h4 id="图片二维码"><a href="#图片二维码" class="headerlink" title="图片二维码"></a>图片二维码</h4><ul>
+<li>Qart <a href="https://github.com/gikey/qart.js" target="_blank" rel="external">https://github.com/gikey/qart.js</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/06/apply-call-bind/" rel="next" title="Javascript 中 Apply 和 Call 的区别">
+                <i class="fa fa-chevron-left"></i> Javascript 中 Apply 和 Call 的区别
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/20/crontab/" rel="prev" title="Crontab 定时任务">
+                Crontab 定时任务 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="凌峰" />
+          <p class="site-author-name" itemprop="name">凌峰</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/gikey" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="1580039649" target="_blank" title="QQ">
+                  
+                    <i class="fa fa-fw fa-qq"></i>
+                  
+                  QQ
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="xlp4366@gmail.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#视频背景插件"><span class="nav-number">1.</span> <span class="nav-text">视频背景插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#视频播放插件"><span class="nav-number">2.</span> <span class="nav-text">视频播放插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#轮播插件"><span class="nav-number">3.</span> <span class="nav-text">轮播插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#滑动插件"><span class="nav-number">4.</span> <span class="nav-text">滑动插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#日期选择插件"><span class="nav-number">5.</span> <span class="nav-text">日期选择插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#表格插件"><span class="nav-number">6.</span> <span class="nav-text">表格插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#下拉框插件"><span class="nav-number">7.</span> <span class="nav-text">下拉框插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#弹窗插件"><span class="nav-number">8.</span> <span class="nav-text">弹窗插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#网页弹幕插件"><span class="nav-number">9.</span> <span class="nav-text">网页弹幕插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Toggle"><span class="nav-number">10.</span> <span class="nav-text">Toggle</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#粒子插件"><span class="nav-number">11.</span> <span class="nav-text">粒子插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#VR视频插件"><span class="nav-number">12.</span> <span class="nav-text">VR视频插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#导航"><span class="nav-number">13.</span> <span class="nav-text">导航</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文字特效"><span class="nav-number">14.</span> <span class="nav-text">文字特效</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动画特效"><span class="nav-number">15.</span> <span class="nav-text">动画特效</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文档插件"><span class="nav-number">16.</span> <span class="nav-text">文档插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分页插件"><span class="nav-number">17.</span> <span class="nav-text">分页插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#图片裁剪"><span class="nav-number">18.</span> <span class="nav-text">图片裁剪</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件上传"><span class="nav-number">19.</span> <span class="nav-text">文件上传</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拾色器"><span class="nav-number">20.</span> <span class="nav-text">拾色器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#滑动条"><span class="nav-number">21.</span> <span class="nav-text">滑动条</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#提示框"><span class="nav-number">22.</span> <span class="nav-text">提示框</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拖放"><span class="nav-number">23.</span> <span class="nav-text">拖放</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#图片二维码"><span class="nav-number">24.</span> <span class="nav-text">图片二维码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">凌峰</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
