@@ -80,7 +80,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="linux,svn," />
+  <meta name="keywords" content="frontend," />
 
 
 
@@ -96,17 +96,19 @@
 
 
 
-<meta name="description" content="Apache Subversion（简称SVN，svn），一个开放源代码的版本控制系统，相较于 RCS、CVS，它采用了分支管理系统，它的设计目标就是替换CVS。虽然功能没有后来的git和hg强大，但是用法非常简单，是非常适合新手入门的版本管理工具。 1.安装Ubuntu、Debian下： 1apt-get install subvertion Centos下： 1yum install subv">
-<meta name="keywords" content="linux,svn">
+<meta name="description" content="工欲善其事，必先利其器。这里大致介绍下前端开发环境搭建及工具使用，这次主要使用charles、gulp、介绍下浏览器调试本地手机页面。 安装配置 charlescharles是mac端的一款截取与分析网络请求的工具，在网络开发中使用其作分析，可以大大提高我们的开发效率。charles 是一款付费软件，一般可以试用30天。charles 官网 https://www.charlesproxy.com">
+<meta name="keywords" content="frontend">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux 下搭建 svn 服务器">
-<meta property="og:url" content="https://gikey.github.io/2016/05/30/svn-server/index.html">
+<meta property="og:title" content="前端开发环境搭建">
+<meta property="og:url" content="https://gikey.github.io/2017/07/29/frontend-scaffold/index.html">
 <meta property="og:site_name" content="lingfeng&#39;blog">
-<meta property="og:description" content="Apache Subversion（简称SVN，svn），一个开放源代码的版本控制系统，相较于 RCS、CVS，它采用了分支管理系统，它的设计目标就是替换CVS。虽然功能没有后来的git和hg强大，但是用法非常简单，是非常适合新手入门的版本管理工具。 1.安装Ubuntu、Debian下： 1apt-get install subvertion Centos下： 1yum install subv">
-<meta property="og:updated_time" content="2017-05-24T09:26:49.000Z">
+<meta property="og:description" content="工欲善其事，必先利其器。这里大致介绍下前端开发环境搭建及工具使用，这次主要使用charles、gulp、介绍下浏览器调试本地手机页面。 安装配置 charlescharles是mac端的一款截取与分析网络请求的工具，在网络开发中使用其作分析，可以大大提高我们的开发效率。charles 是一款付费软件，一般可以试用30天。charles 官网 https://www.charlesproxy.com">
+<meta property="og:image" content="http://cdn.xieluping.cn/images/ib57fuvo2tjjoymj0sakk2o6r.png">
+<meta property="og:updated_time" content="2017-07-29T10:04:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux 下搭建 svn 服务器">
-<meta name="twitter:description" content="Apache Subversion（简称SVN，svn），一个开放源代码的版本控制系统，相较于 RCS、CVS，它采用了分支管理系统，它的设计目标就是替换CVS。虽然功能没有后来的git和hg强大，但是用法非常简单，是非常适合新手入门的版本管理工具。 1.安装Ubuntu、Debian下： 1apt-get install subvertion Centos下： 1yum install subv">
+<meta name="twitter:title" content="前端开发环境搭建">
+<meta name="twitter:description" content="工欲善其事，必先利其器。这里大致介绍下前端开发环境搭建及工具使用，这次主要使用charles、gulp、介绍下浏览器调试本地手机页面。 安装配置 charlescharles是mac端的一款截取与分析网络请求的工具，在网络开发中使用其作分析，可以大大提高我们的开发效率。charles 是一款付费软件，一般可以试用30天。charles 官网 https://www.charlesproxy.com">
+<meta name="twitter:image" content="http://cdn.xieluping.cn/images/ib57fuvo2tjjoymj0sakk2o6r.png">
 
 
 
@@ -134,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="https://gikey.github.io/2016/05/30/svn-server/"/>
+  <link rel="canonical" href="https://gikey.github.io/2017/07/29/frontend-scaffold/"/>
 
 
 
 
 
-  <title>Linux 下搭建 svn 服务器 | lingfeng'blog</title>
+  <title>前端开发环境搭建 | lingfeng'blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -260,7 +262,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://gikey.github.io/2016/05/30/svn-server/">
+    <link itemprop="mainEntityOfPage" href="https://gikey.github.io/2017/07/29/frontend-scaffold/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="凌峰">
@@ -277,7 +279,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Linux 下搭建 svn 服务器</h2>
+          <h2 class="post-title" itemprop="name headline">前端开发环境搭建</h2>
         
 
         <div class="post-meta">
@@ -289,8 +291,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-30T21:34:18+08:00">
-                2016-05-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-29T16:47:20+08:00">
+                2017-07-29
               </time>
             
 
@@ -324,36 +326,11 @@
       
 
       
-        <p>Apache Subversion（简称SVN，svn），一个开放源代码的版本控制系统，相较于 RCS、CVS，它采用了分支管理系统，它的设计目标就是替换CVS。虽然功能没有后来的git和hg强大，但是用法非常简单，是非常适合新手入门的版本管理工具。</p>
-<h4 id="1-安装"><a href="#1-安装" class="headerlink" title="1.安装"></a>1.安装</h4><p>Ubuntu、Debian下：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install subvertion</div></pre></td></tr></table></figure>
-<p>Centos下：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install subversion</div></pre></td></tr></table></figure>
-<h4 id="2-新建仓库"><a href="#2-新建仓库" class="headerlink" title="2.新建仓库"></a>2.新建仓库</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">svnadmin create /srv/project</div></pre></td></tr></table></figure>
-<p>新建完成后里面有以下几个文件和文件夹：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">conf db format hooks locks README.txt</div></pre></td></tr></table></figure>
-<p>其中：</p>
-<ul>
-<li>hooks 目录：放置 hook 脚本文件的目录</li>
-<li>locks 目录：用来放置 subversion 的 db 锁文件和 db_logs 锁文件的目录，用来追踪存取文件库的客户端</li>
-<li>format 文件：是一个文本文件，里面只放了一个整数，表示当前文件库配置的版本号</li>
-<li>conf 目录：是这个仓库的配置文件（仓库的用户访问账号、权限等）</li>
-</ul>
-<h4 id="3-配置"><a href="#3-配置" class="headerlink" title="3.配置"></a>3.配置</h4><p>需要配置的是 conf 里面的三个文件：<code>authz</code>、<code>passwd</code>、<code>svnserve.conf</code>。</p>
-<p>编辑 svnserve.conf 文件：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /srv/project/conf/svnserve.conf</div></pre></td></tr></table></figure></p>
-<p>找到如下对应的信息取消注释并修改为：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">anon-access = none</div><div class="line">auth-access = write</div><div class="line">password-db = passwd</div></pre></td></tr></table></figure>
-<p>编辑passwd文件：</p>
-<pre><code>$ vim /srv/project/conf/passwd
-</code></pre><p>添加用户名和密码：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[users]</div><div class="line"><span class="built_in">test</span>1 = 123456 <span class="comment">#用户名和密码</span></div><div class="line"><span class="built_in">test</span>2 = 654321</div></pre></td></tr></table></figure></p>
-<p>编辑authz文件：</p>
-<pre><code>$ vim /srv/project/conf/authz
-</code></pre><p>添加用户和权限：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">[groups]</div><div class="line">admin = <span class="built_in">test</span>1 <span class="comment">#创建admin组用户有test1</span></div><div class="line">user = <span class="built_in">test</span>2  <span class="comment">#创建user组用户有test2</span></div><div class="line"></div><div class="line">[/]</div><div class="line">@admin = rw   <span class="comment">#admin组有读和写的权限</span></div><div class="line">@user = r     <span class="comment">#user组只有读的权限</span></div><div class="line"></div><div class="line">* =           <span class="comment">#表示除了上面设置的权限用户组以外，其他所有用户都设置空权限，空权限表示禁止访问本目录</span></div></pre></td></tr></table></figure></p>
-<p>修改完成后启动svn服务器：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ svnserve <span class="_">-d</span> -r /srv/project/</div></pre></td></tr></table></figure>
-<h4 id="4-客户端使用"><a href="#4-客户端使用" class="headerlink" title="4.客户端使用"></a>4.客户端使用</h4><p>客户端将项目先导入到版本库中：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">svn import /var/www/testproject svn://server/srv/project/testproject</div></pre></td></tr></table></figure></p>
-<p>将项目纳入到版本库中后就可以正常使用 svn 了。</p>
-
+        <p>工欲善其事，必先利其器。这里大致介绍下前端开发环境搭建及工具使用，这次主要使用charles、gulp、介绍下浏览器调试本地手机页面。</p>
+<h3 id="安装配置-charles"><a href="#安装配置-charles" class="headerlink" title="安装配置 charles"></a>安装配置 charles</h3><p>charles是mac端的一款截取与分析网络请求的工具，在网络开发中使用其作分析，可以大大提高我们的开发效率。charles 是一款付费软件，一般可以试用30天。charles 官网 <a href="https://www.charlesproxy.com/" target="_blank" rel="external">https://www.charlesproxy.com/</a></p>
+<h5 id="代理手机上的网络请求"><a href="#代理手机上的网络请求" class="headerlink" title="代理手机上的网络请求"></a>代理手机上的网络请求</h5><p>顶部菜单栏 -&gt; Proxy -&gt; Proxy Settings -&gt; Proxies -&gt; 勾上 Enable transparent HTTP proxying<br><img src="http://cdn.xieluping.cn/images/ib57fuvo2tjjoymj0sakk2o6r.png" alt=""></p>
+<p>为了把手机的请求转发到 PC 上，我们要保证手机和 PC 是在同一个局域网的。所以他们要连接同一个 Wi-Fi 。<br>然后，打开你手机的 Wi-Fi 设置：</p>
+<h3 id="配置-gulp-插件"><a href="#配置-gulp-插件" class="headerlink" title="配置 gulp 插件"></a>配置 gulp 插件</h3><h3 id="浏览器调试"><a href="#浏览器调试" class="headerlink" title="浏览器调试"></a>浏览器调试</h3>
       
     </div>
 
@@ -382,9 +359,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/linux/" rel="tag"># linux</a>
-          
-            <a href="/tags/svn/" rel="tag"># svn</a>
+            <a href="/tags/frontend/" rel="tag"># frontend</a>
           
         </div>
       
@@ -397,8 +372,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/05/26/frontend-rule/" rel="next" title="前端编码规范">
-                <i class="fa fa-chevron-left"></i> 前端编码规范
+              <a href="/2017/06/28/wechat-share/" rel="next" title="微信 jssdk 分享">
+                <i class="fa fa-chevron-left"></i> 微信 jssdk 分享
               </a>
             
           </div>
@@ -406,10 +381,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/06/04/js-this/" rel="prev" title="JavaScript 中的 this">
-                JavaScript 中的 this <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -558,7 +529,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-安装"><span class="nav-number">1.</span> <span class="nav-text">1.安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-新建仓库"><span class="nav-number">2.</span> <span class="nav-text">2.新建仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-配置"><span class="nav-number">3.</span> <span class="nav-text">3.配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-客户端使用"><span class="nav-number">4.</span> <span class="nav-text">4.客户端使用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装配置-charles"><span class="nav-number">1.</span> <span class="nav-text">安装配置 charles</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#代理手机上的网络请求"><span class="nav-number">1.0.1.</span> <span class="nav-text">代理手机上的网络请求</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置-gulp-插件"><span class="nav-number">2.</span> <span class="nav-text">配置 gulp 插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览器调试"><span class="nav-number">3.</span> <span class="nav-text">浏览器调试</span></a></li></ol></div>
             
 
           </div>

@@ -103,12 +103,12 @@
 <meta property="og:url" content="https://gikey.github.io/2017/03/08/ng-scope/index.html">
 <meta property="og:site_name" content="lingfeng&#39;blog">
 <meta property="og:description" content="什么是隔离 ScopeAngularJS 的 directive 默认能共享父 scope 中定义的属性，例如在模版中直接使用父 scope 中的对象和属性。通常使用这种直接共享的方式可以实现一些简单的 directive 功能。当你需要创建一个可重复使用的 directive，只是偶尔需要访问或者修改父 scope 的数据，就需要使用隔离 scope。当使用隔离 scope 的时候，direct">
-<meta property="og:image" content="http://7u2kz7.com1.z0.glb.clouddn.com/6502f268-800e-4874-8443-d7bebf1b12f0.png">
-<meta property="og:updated_time" content="2017-05-24T09:26:51.000Z">
+<meta property="og:image" content="http://cdn.xieluping.cn/images/6502f268-800e-4874-8443-d7bebf1b12f0.png">
+<meta property="og:updated_time" content="2017-07-31T02:04:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AngularJS Directive 隔离 Scope 数据交互">
 <meta name="twitter:description" content="什么是隔离 ScopeAngularJS 的 directive 默认能共享父 scope 中定义的属性，例如在模版中直接使用父 scope 中的对象和属性。通常使用这种直接共享的方式可以实现一些简单的 directive 功能。当你需要创建一个可重复使用的 directive，只是偶尔需要访问或者修改父 scope 的数据，就需要使用隔离 scope。当使用隔离 scope 的时候，direct">
-<meta name="twitter:image" content="http://7u2kz7.com1.z0.glb.clouddn.com/6502f268-800e-4874-8443-d7bebf1b12f0.png">
+<meta name="twitter:image" content="http://cdn.xieluping.cn/images/6502f268-800e-4874-8443-d7bebf1b12f0.png">
 
 
 
@@ -328,7 +328,7 @@
       
         <h3 id="什么是隔离-Scope"><a href="#什么是隔离-Scope" class="headerlink" title="什么是隔离 Scope"></a>什么是隔离 Scope</h3><p>AngularJS 的 directive 默认能共享父 scope 中定义的属性，例如在模版中直接使用父 scope 中的对象和属性。通常使用这种直接共享的方式可以实现一些简单的 directive 功能。当你需要创建一个可重复使用的 directive，只是偶尔需要访问或者修改父 scope 的数据，就需要使用隔离 scope。当使用隔离 scope 的时候，directive 会创建一个没有依赖父 scope 的 scope，并提供一些访问父 scope 的方式。</p>
 <h3 id="为什么使用隔离-Scope"><a href="#为什么使用隔离-Scope" class="headerlink" title="为什么使用隔离 Scope"></a>为什么使用隔离 Scope</h3><p>当你想要写一个可重复使用的 directive，不能再依赖父 scope，这时候就需要使用隔离 scope 代替。共享 scope 可以直接共享父 scope，而隔离 scope 无法共享父scope。下图解释共享 scope 和隔离 scope 的区别：</p>
-<p><img src="http://7u2kz7.com1.z0.glb.clouddn.com/6502f268-800e-4874-8443-d7bebf1b12f0.png" alt=""></p>
+<p><img src="http://cdn.xieluping.cn/images/6502f268-800e-4874-8443-d7bebf1b12f0.png" alt=""></p>
 <h4 id="共享-scope"><a href="#共享-scope" class="headerlink" title="共享 scope"></a>共享 scope</h4><p>使用共享 scope 的时候，可以直接从父 scope 中共享属性。因此下面示例可以将那么属性的值输出出来。使用的是父 scope 中定义的值。</p>
 <p>js代码：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">app.controller(<span class="string">"myController"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$scope</span>) </span>&#123;</div><div class="line">    $scope.name = <span class="string">"hello world"</span>;</div><div class="line">&#125;).directive(<span class="string">"shareDirective"</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        <span class="attr">template</span>: <span class="string">'Say:&#123;&#123;name&#125;&#125;'</span></div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
@@ -533,7 +533,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

@@ -257,6 +257,121 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://gikey.github.io/2017/07/29/frontend-scaffold/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="凌峰">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lingfeng'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/29/frontend-scaffold/" itemprop="url">前端开发环境搭建</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-29T16:47:20+08:00">
+                2017-07-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>工欲善其事，必先利其器。这里大致介绍下前端开发环境搭建及工具使用，这次主要使用charles、gulp、介绍下浏览器调试本地手机页面。</p>
+<h3 id="安装配置-charles"><a href="#安装配置-charles" class="headerlink" title="安装配置 charles"></a>安装配置 charles</h3><p>charles是mac端的一款截取与分析网络请求的工具，在网络开发中使用其作分析，可以大大提高我们的开发效率。charles 是一款付费软件，一般可以试用30天。charles 官网 <a href="https://www.charlesproxy.com/" target="_blank" rel="external">https://www.charlesproxy.com/</a></p>
+<h5 id="代理手机上的网络请求"><a href="#代理手机上的网络请求" class="headerlink" title="代理手机上的网络请求"></a>代理手机上的网络请求</h5><p>顶部菜单栏 -&gt; Proxy -&gt; Proxy Settings -&gt; Proxies -&gt; 勾上 Enable transparent HTTP proxying<br><img src="http://cdn.xieluping.cn/images/ib57fuvo2tjjoymj0sakk2o6r.png" alt=""></p>
+<p>为了把手机的请求转发到 PC 上，我们要保证手机和 PC 是在同一个局域网的。所以他们要连接同一个 Wi-Fi 。<br>然后，打开你手机的 Wi-Fi 设置：</p>
+<h3 id="配置-gulp-插件"><a href="#配置-gulp-插件" class="headerlink" title="配置 gulp 插件"></a>配置 gulp 插件</h3><h3 id="浏览器调试"><a href="#浏览器调试" class="headerlink" title="浏览器调试"></a>浏览器调试</h3>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://gikey.github.io/2017/06/28/wechat-share/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -917,7 +1032,7 @@
           
             <h3 id="什么是隔离-Scope"><a href="#什么是隔离-Scope" class="headerlink" title="什么是隔离 Scope"></a>什么是隔离 Scope</h3><p>AngularJS 的 directive 默认能共享父 scope 中定义的属性，例如在模版中直接使用父 scope 中的对象和属性。通常使用这种直接共享的方式可以实现一些简单的 directive 功能。当你需要创建一个可重复使用的 directive，只是偶尔需要访问或者修改父 scope 的数据，就需要使用隔离 scope。当使用隔离 scope 的时候，directive 会创建一个没有依赖父 scope 的 scope，并提供一些访问父 scope 的方式。</p>
 <h3 id="为什么使用隔离-Scope"><a href="#为什么使用隔离-Scope" class="headerlink" title="为什么使用隔离 Scope"></a>为什么使用隔离 Scope</h3><p>当你想要写一个可重复使用的 directive，不能再依赖父 scope，这时候就需要使用隔离 scope 代替。共享 scope 可以直接共享父 scope，而隔离 scope 无法共享父scope。下图解释共享 scope 和隔离 scope 的区别：</p>
-<p><img src="http://7u2kz7.com1.z0.glb.clouddn.com/6502f268-800e-4874-8443-d7bebf1b12f0.png" alt=""></p>
+<p><img src="http://cdn.xieluping.cn/images/6502f268-800e-4874-8443-d7bebf1b12f0.png" alt=""></p>
 <h4 id="共享-scope"><a href="#共享-scope" class="headerlink" title="共享 scope"></a>共享 scope</h4><p>使用共享 scope 的时候，可以直接从父 scope 中共享属性。因此下面示例可以将那么属性的值输出出来。使用的是父 scope 中定义的值。</p>
 <p>js代码：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">app.controller(<span class="string">"myController"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$scope</span>) </span>&#123;</div><div class="line">    $scope.name = <span class="string">"hello world"</span>;</div><div class="line">&#125;).directive(<span class="string">"shareDirective"</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        <span class="attr">template</span>: <span class="string">'Say:&#123;&#123;name&#125;&#125;'</span></div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
@@ -1728,129 +1843,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://gikey.github.io/2016/06/06/apply-call-bind/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="凌峰">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="lingfeng'blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/06/06/apply-call-bind/" itemprop="url">Javascript 中 Apply 和 Call 的区别</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-06T12:05:56+08:00">
-                2016-06-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>ECAMScript 3给Function的原型定义了Function.prototype.call和Function.prototype.apply两个方法，其实它们的作用一模一样，区别仅仅在于传入参数的形式。</p>
-<h4 id="apply"><a href="#apply" class="headerlink" title="apply"></a>apply</h4><p>apply接受两个参数，第一个参数制定了函数体内this对象的指向，第二个参数为一个带下标的集合，这个集合可以为数组，也可以为类数组，applay方法把这个集合中的元素作为参数传递给被调用的函数：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span>(<span class="params">a,b,c</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log([a,b,c]); <span class="comment">//输出：[1,2,3]</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line">func.apply(<span class="literal">null</span>,[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]);</div></pre></td></tr></table></figure>
-<p>在这段代码中，参数1、2、3被放在数组中一起传入func函数，分别对应的参数列表中的a、b、c。</p>
-<h4 id="call"><a href="#call" class="headerlink" title="call"></a>call</h4><p>call出入的参数数量不固定，第一个参数也是代表函数体内this的指向，从第二个参数开始往后，每个参数被依次传入函数：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span>(<span class="params">a,b,c</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log([a,b,c]); <span class="comment">//输出：[1,2,3]</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line">func.call(<span class="literal">null</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);</div></pre></td></tr></table></figure>
-<p>当调用一个函数时，JavaScript的解释器并不会计较形参和实参在数量、类型以及顺序上的区别，JavaScript的参数在内部就是用一个数组来表示的。从这个意义上说，apply比call的使用率更高。call是包装在apply上的一颗语法糖，如果我们明确知道函数接受参数的个数，而且想一目了然地表达形参和实参的对应关系，那么也可以使用call来传送参数。</p>
-<p>当使用apply和call的时候，如果传入的第一个参数为null,函数体内的this会指向默认的宿主对象，在浏览器中即为window:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span>(<span class="params">a,b,c</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span> === <span class="built_in">window</span>); <span class="comment">//输出：true</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line">func.apply(<span class="literal">null</span>,[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]);</div></pre></td></tr></table></figure>
-<p>然而在strict模式下，函数体内的this还依然是null:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span>(<span class="params">a,b,c</span>)</span>&#123;</div><div class="line"><span class="meta">    'use strict'</span></div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span> === <span class="literal">null</span>); <span class="comment">//输出：true</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line">func.apply(<span class="literal">null</span>,[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]);</div></pre></td></tr></table></figure>
-<p>有时候我们使用call或者apply的目的不在于指定this指向，而是另有用途，比如借用其他对象的方法。那么我们可以传入null来代替某个具体的对象：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Math</span>.max.apply( <span class="literal">null</span>, [ <span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">4</span> ] )    <span class="comment">// 输出：5</span></div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1900,7 +1892,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
