@@ -352,7 +352,7 @@
 <p>这样我们就轻松地发布了一个简单地 node 模块。这时候可以登录到 <a href="https://npmjs.com" target="_blank" rel="external">npmjs.com</a> 去搜索下刚刚发布地模块。<br><img src="http://cdn.xieluping.cn/images/y5iyl80aaznc7acmqhi05p14.png" alt=""></p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>最后我们可以像平时安装其他插件一样使用我们自己地插件了：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>),</div><div class="line">    calc = <span class="built_in">require</span>(<span class="string">'gulp-calc'</span>);</div><div class="line"></div><div class="line">gulp.task(<span class="string">'calc'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    gulp.src(<span class="string">'src/*.css'</span>)</div><div class="line">        .pipe(calc(&#123;</div><div class="line">            <span class="attr">divisor</span>: <span class="number">2</span></div><div class="line">        &#125;))</div><div class="line">        .pipe(gulp.dest(<span class="string">'dist/css'</span>))</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<p>项目比较简单，主要是介绍下如何自己开发、发布node 模块，通过这个简单地例子就能实现一些更加实用地功能。px =&gt; rem 原理也是如此， 有兴趣可以自己试试。</p>
+<p>项目比较简单，主要是介绍下如何自己开发、发布node 模块，通过这个简单地例子就能实现一些更加实用的功能。px =&gt; rem 原理也是如此， 有兴趣可以自己试试。</p>
 
           
         
