@@ -545,7 +545,7 @@
 </blockquote>
 <p>这样 Boolean、Number 是一样的逻辑。还剩下两种基本类型：null 和 undefined。</p>
 <p>undefined 当我们对变量只声明没有初始化时，输出为 undefined，<code>typeof undefined</code> 返回的是 undefined 也不是 object 类型，所以 undefined 并不是任何对象的实例。</p>
-<p>null 表示的是空对象，虽然 <code>typeof null</code> 是 object，但是 null 和 undefined 一样并没有任何属性和方法，所以 null 也不是任何对象的实例。<br><img src="http://cdn.xieluping.cn/images/y560nlqtuhtfe48rpphkt9.png" alt=""></p>
+<p>null 表示的是空对象，虽然 <code>typeof null</code> 是 object，但是 null 和 undefined 一样并没有任何属性和方法，在 instanceof 定义中也有判断，如果类型不是 object（这个类型判断并不是跟 typeof 返回值一样），就返回 false。<br><img src="http://cdn.xieluping.cn/images/y560nlqtuhtfe48rpphkt9.png" alt=""></p>
 
           
         
