@@ -275,6 +275,177 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://gikey.github.io/2017/08/18/instanceof/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="凌峰">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lingfeng'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/18/instanceof/" itemprop="url">JavaScript instanceof 操作符</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-18T12:51:54+08:00">
+                2017-08-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="instanceof-简介"><a href="#instanceof-简介" class="headerlink" title="instanceof 简介"></a>instanceof 简介</h3><p>在 JavaScript 中，判断一个变量的类型通常会用 typeof 运算符，在使用 typeof 运算符时采用引用类型存储值会出现一个问题，无论引用的是什么类型的对象，它都返回 “object”。例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> arr = <span class="keyword">new</span> <span class="built_in">Array</span>();</div><div class="line"><span class="built_in">console</span>.log( <span class="keyword">typeof</span> arr ); <span class="comment">// object</span></div></pre></td></tr></table></figure>
+<p>如果想要确定原型和实例之间的关系就需要用到 instanceof 操作符， 例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> arr = <span class="keyword">new</span> <span class="built_in">Array</span>();</div><div class="line"><span class="keyword">var</span> Fn = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> Fn();</div><div class="line"><span class="built_in">console</span>.log( arr <span class="keyword">instanceof</span> <span class="built_in">Array</span> ); <span class="comment">// true</span></div><div class="line"><span class="built_in">console</span>.log( arr <span class="keyword">instanceof</span> <span class="built_in">Object</span> ); <span class="comment">// true</span></div><div class="line"><span class="built_in">console</span>.log( foo <span class="keyword">instanceof</span> Fn); <span class="comment">// true</span></div><div class="line"><span class="built_in">console</span>.log( foo <span class="keyword">instanceof</span> <span class="built_in">Function</span> ); <span class="comment">// false</span></div><div class="line"><span class="built_in">console</span>.log( foo <span class="keyword">instanceof</span> <span class="built_in">Object</span> ); <span class="comment">// true</span></div></pre></td></tr></table></figure>
+<h3 id="Function-instanceof-Function"><a href="#Function-instanceof-Function" class="headerlink" title="Function instanceof Function ?"></a>Function instanceof Function ?</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log( <span class="built_in">String</span> <span class="keyword">instanceof</span> <span class="built_in">String</span> );</div><div class="line"><span class="built_in">console</span>.log( <span class="built_in">Function</span> <span class="keyword">instanceof</span> <span class="built_in">Function</span> );</div><div class="line"><span class="built_in">console</span>.log( <span class="built_in">Function</span> <span class="keyword">instanceof</span> <span class="built_in">Object</span> );</div><div class="line"><span class="built_in">console</span>.log( <span class="built_in">Object</span> <span class="keyword">instanceof</span> <span class="built_in">Function</span> );</div><div class="line"><span class="built_in">console</span>.log( <span class="built_in">Object</span> <span class="keyword">instanceof</span> <span class="built_in">Object</span> );</div></pre></td></tr></table></figure>
+<p>要解释这个问题就需要了解 1.JavaScript 语言规范中是如何定义 instanceof 运算符的，2.JavaScript 原型继承机制。</p>
+<h3 id="instanceof-运算符的定义"><a href="#instanceof-运算符的定义" class="headerlink" title="instanceof 运算符的定义"></a><a href="http://www.ecma-international.org/ecma-262/6.0/#sec-instanceofoperator" target="_blank" rel="external">instanceof 运算符的定义</a></h3><p>在 ECMAScript-262 中 instanceof 运算符的定义是这样的:</p>
+<blockquote>
+<p>12.9.4 Runtime Semantics: InstanceofOperator(O, C)<br>The abstract operation InstanceofOperator(O, C) implements the generic algorithm for determining if an object O inherits from the inheritance path defined by constructor C. This abstract operation performs the following steps:</p>
+<ol>
+<li>If Type(C) is not Object, throw a TypeError exception.</li>
+<li>Let instOfHandler be GetMethod(C,@@hasInstance).</li>
+<li>ReturnIfAbrupt(instOfHandler).</li>
+<li>If instOfHandler is not undefined, then<br>a. Return ToBoolean(Call(instOfHandler, C, «O»)).</li>
+<li>If IsCallable(C) is false, throw a TypeError exception.</li>
+<li>Return OrdinaryHasInstance(C, O).<br>NOTE Steps 5 and 6 provide compatibility with previous editions of ECMAScript that did not use a @@hasInstance method to define the instanceof operator semantics. If a function object does not define or inherit @@hasInstance it uses the default instanceof semantics.</li>
+</ol>
+<p>7.3.19 OrdinaryHasInstance (C, O)<br>The abstract operation OrdinaryHasInstance implements the default algorithm for determining if an object O inherits from the instance object inheritance path provided by constructor C. This abstract operation performs the following steps:</p>
+<ol>
+<li>If IsCallable(C) is false, return false.</li>
+<li>If C has a [[BoundTargetFunction]] internal slot, then<br>a. Let BC be the value of C’s [[BoundTargetFunction]] internal slot.<br>b. Return InstanceofOperator(O,BC) (see 12.9.4).</li>
+<li>If Type(O) is not Object, return false.</li>
+<li>Let P be Get(C, “prototype”).</li>
+<li>ReturnIfAbrupt(P).</li>
+<li>If Type(P) is not Object, throw a TypeError exception.</li>
+<li>Repeat<br>a. Let O be <code>O.[[GetPrototypeOf]]()</code>.<br>b. ReturnIfAbrupt(O).<br>c. If O is null, return false.<br>d. If SameValue(P, O) is true, return true.</li>
+</ol>
+</blockquote>
+<p>官网的定义非常晦涩，上面的翻译成代码大概就是：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">instanceOf</span>(<span class="params"> L, R </span>) </span>&#123; <span class="comment">//L 表示左表达式，R 表示右表达式</span></div><div class="line">    <span class="keyword">var</span> P = R.prototype; <span class="comment">// 取 R 的显示原型</span></div><div class="line">    L = L.__proto__; <span class="comment">// 取 L 的隐式原型</span></div><div class="line">    <span class="keyword">while</span> ( <span class="literal">true</span> ) &#123; </div><div class="line">        <span class="keyword">if</span> ( L === <span class="literal">null</span> ) <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        <span class="keyword">if</span> ( P === L ) <span class="keyword">return</span> <span class="literal">true</span>; </div><div class="line">        L = L.__proto__; </div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>再直接点的表达就是 instanceof 会一直在 obj 的原型链上查找，直到找到右边那个构造函数的 prototype 属性，或者为 null 的时候才停止。</p>
+<p>类似：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">obj.__proto__.__proto__ ... = Obj.prototype</div></pre></td></tr></table></figure></p>
+<p>obj 会一直沿着隐式原型链 <code>__proto__</code> 向上查找直到 <code>obj.__proto__.__proto__ ...... === Obj.prototype</code> 为止，如果找到则返回 true，也就是 obj 为 Obj 的一个实例。否则返回 false，obj 不是 Obj 的实例。</p>
+<h3 id="JavaScript-原型继承机制"><a href="#JavaScript-原型继承机制" class="headerlink" title="JavaScript 原型继承机制"></a>JavaScript 原型继承机制</h3><h4 id="原型与原型链"><a href="#原型与原型链" class="headerlink" title="原型与原型链"></a>原型与原型链</h4><p>在 JavaScript 每个函数都有一个 prototype 属性，该属性存储的就是原型对象。JavaScript 构造函数的继承都是通过 prototype 属性， 真正的原型链的实现是通过 <code>__proto__</code> 实现的，<code>__proto__</code>其实是指向‘父类’的 prototype 属性。例如：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> Foo = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</div><div class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> Foo;</div><div class="line"><span class="built_in">console</span>.log(foo.__proto__ === Foo.prototype) <span class="comment">// true</span></div><div class="line"><span class="built_in">console</span>.log(Foo.__proto__ === <span class="built_in">Function</span>.prototype) <span class="comment">// true</span></div></pre></td></tr></table></figure></p>
+<h4 id="原型继承"><a href="#原型继承" class="headerlink" title="原型继承"></a>原型继承</h4><p>JavaScript 是单继承的，Object.prototype 是原型链的顶端，所有对象从它继承了包括 valueOf、toString 等等方法和属性。</p>
+<p>Object 本身是构造函数，继承了 Function.prototype。 Function 也是对象，继承了 Object.prototype。</p>
+<p><img src="http://cdn.xieluping.cn/images/n448lo5bi6c3w5no6iggb9.jpg" alt=""></p>
+<h4 id="Object-instanceof-Object"><a href="#Object-instanceof-Object" class="headerlink" title="Object instanceof Object"></a>Object instanceof Object</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">ObjectL = <span class="built_in">Object</span>, ObjectR = <span class="built_in">Object</span>; </div><div class="line"></div><div class="line">R = ObjectR.prototype = <span class="built_in">Object</span>.prototype </div><div class="line">L = ObjectL.__proto__ = <span class="built_in">Function</span>.prototype </div><div class="line"></div><div class="line">R != L </div><div class="line"><span class="comment">// 循环查找 L 是否还有 __proto__ </span></div><div class="line">L = <span class="built_in">Function</span>.prototype.__proto__ = <span class="built_in">Object</span>.prototype </div><div class="line"></div><div class="line">R == L </div><div class="line"><span class="comment">// 返回 true</span></div></pre></td></tr></table></figure>
+<h4 id="String-instanceof-String"><a href="#String-instanceof-String" class="headerlink" title="String instanceof String"></a>String instanceof String</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">StringL = <span class="built_in">String</span>, StringR = <span class="built_in">String</span>;</div><div class="line"></div><div class="line">R = StringR.prototype = <span class="built_in">String</span>.prototype</div><div class="line">L = StringL.__proto__ = <span class="built_in">Object</span>.prototype</div><div class="line"></div><div class="line">R != L</div><div class="line"><span class="comment">// 循环查找 L 是否还有 __proto__ </span></div><div class="line">L = <span class="built_in">Object</span>.prototype.__proto__ = <span class="literal">null</span></div><div class="line"><span class="comment">// 返回 false</span></div></pre></td></tr></table></figure>
+<h3 id="一切皆对象？"><a href="#一切皆对象？" class="headerlink" title="一切皆对象？"></a>一切皆对象？</h3><p>常常说 JavaScript 中一切皆对象，那么就有这样一个问题了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="string">'string'</span>.__proto__ === <span class="built_in">String</span>.prototype <span class="comment">// true</span></div><div class="line"><span class="string">'string'</span> <span class="keyword">instanceof</span> <span class="built_in">String</span> <span class="comment">// false</span></div></pre></td></tr></table></figure>
+<p>按照上面的推导，<code>&#39;string&#39; instanceof String</code> 应该为 <code>true</code>，但是我们得到的却是 <code>false</code>。<br>其实问题的关键在于：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="string">'string'</span>); <span class="comment">// string</span></div></pre></td></tr></table></figure></p>
+<p>‘string’ 并不是一个 object 对象，MDN 上对 instanceof 的定义是：</p>
+<blockquote>
+<p>The instanceof operator tests whether an object in its prototype chain has the prototype property of a constructor.</p>
+</blockquote>
+<p>这样又有一个问题了，既然字符串不是对象那为什么有对象才有的属性和方法呢？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> s1 = <span class="string">"string"</span>;</div><div class="line"><span class="keyword">var</span> s2 = s1.substring(<span class="number">2</span>);</div></pre></td></tr></table></figure>
+<p>为了便于操作基本类型值，ECMAScript 还提供了 3 个特殊的引用类型: Boolean、Number 和 String。这些类型与本章介绍的其他引用类型相似，但同时也具有与各自的基本类型相应的特殊行为。 实际上，每当读取一个基本类型值的时候，后台就会创建一个对应的基本包装类型的对象，从而让我们 能够调用一些方法来操作这些数据。</p>
+<p>《JavaScript高级程序设计》中是这么解释的：</p>
+<blockquote>
+<p>上面的例子其实当第二行代码访问 s1 时，访问过程处于一种读取模式，也就是要 从内存中读取这个字符串的值。而在读取模式中访问字符串时，后台都会自动完成：<br>(1) 创建 String 类型的一个实例;<br>(2) 在实例上调用指定的方法;<br>(3) 销毁这个实例。</p>
+</blockquote>
+<p>可以将以上三个步骤想象成是执行了下列 ECMAScript 代码。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> s1 = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">"some text"</span>);</div><div class="line"><span class="keyword">var</span> s2 = s1.substring(<span class="number">2</span>);</div><div class="line">s1 = <span class="literal">null</span>;</div></pre></td></tr></table></figure></p>
+<p>《Javascript权威指南》里说：</p>
+<blockquote>
+<p>其实（包装对象）在实现上并不一定创建或销毁这个临时对象，然而整个过程看起来是这样的。</p>
+</blockquote>
+<p>这样 Boolean、Number 是一样的逻辑。还剩下两种基本类型：null 和 undefined。</p>
+<p>undefined 当我们对变量只声明没有初始化时，输出为 undefined，<code>typeof undefined</code> 返回的是 undefined 也不是 object 类型，所以 undefined 并不是任何对象的实例。</p>
+<p>null 表示的是空对象，虽然 <code>typeof null</code> 是 object，但是 null 和 undefined 一样并没有任何属性和方法，所以 null 也不是任何对象的实例。<br><img src="http://cdn.xieluping.cn/images/y560nlqtuhtfe48rpphkt9.png" alt=""></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://gikey.github.io/2017/08/14/npm-plugin/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -620,7 +791,8 @@
 <h3 id="安装配置-charles"><a href="#安装配置-charles" class="headerlink" title="安装配置 charles"></a>安装配置 charles</h3><p>charles是mac端的一款截取与分析网络请求的工具，在网络开发中使用其作分析，可以大大提高我们的开发效率。charles 是一款付费软件，一般可以试用30天。charles 官网 <a href="https://www.charlesproxy.com/" target="_blank" rel="external">https://www.charlesproxy.com/</a></p>
 <h5 id="代理手机上的网络请求"><a href="#代理手机上的网络请求" class="headerlink" title="代理手机上的网络请求"></a>代理手机上的网络请求</h5><p>顶部菜单栏 -&gt; Proxy -&gt; Proxy Settings -&gt; Proxies -&gt; 勾上 Enable transparent HTTP proxying<br><img src="http://cdn.xieluping.cn/images/ib57fuvo2tjjoymj0sakk2o6r.png" alt=""></p>
 <p>为了把手机的请求转发到 PC 上，我们要保证手机和 PC 是在同一个局域网的。所以他们要连接同一个 Wi-Fi 。<br>然后，打开你手机的 Wi-Fi 设置：<br><img src="http://cdn.xieluping.cn/images/1126A11AD24938382E52766012A60421.jpeg" alt=""></p>
-<h3 id="配置-gulp-插件"><a href="#配置-gulp-插件" class="headerlink" title="配置 gulp 插件"></a>配置 gulp 插件</h3><h3 id="浏览器调试"><a href="#浏览器调试" class="headerlink" title="浏览器调试"></a>浏览器调试</h3>
+<h3 id="配置-gulp-插件"><a href="#配置-gulp-插件" class="headerlink" title="配置 gulp 插件"></a>配置 gulp 插件</h3><h3 id="浏览器调试"><a href="#浏览器调试" class="headerlink" title="浏览器调试"></a>浏览器调试</h3><p>未完待续。。。</p>
+
           
         
       
@@ -1626,165 +1798,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://gikey.github.io/2016/10/06/uwsgi-django/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="凌峰">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="lingfeng'blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/10/06/uwsgi-django/" itemprop="url">Uwsgi+Nginx 部署 Django 项目</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-06T21:41:31+08:00">
-                2016-10-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="1-安装uwsgi"><a href="#1-安装uwsgi" class="headerlink" title="1.安装uwsgi"></a>1.安装uwsgi</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install uwsgi</div></pre></td></tr></table></figure>
-<h4 id="2-配置uwsgi"><a href="#2-配置uwsgi" class="headerlink" title="2.配置uwsgi"></a>2.配置uwsgi</h4><p>新建一个uwsgi.ini文件并将其放在项目根目录下：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[uwsgi]</div><div class="line">socket = 127.0.0.1:8000</div><div class="line"><span class="built_in">chdir</span> = /var/www/blog/</div><div class="line">wsgi-file = blog/wsgi.py</div><div class="line">processes = 4</div><div class="line">threads = 2</div><div class="line">stats = 127.0.0.1:9191</div><div class="line">daemonize = /var/<span class="built_in">log</span>/uwsgi.log</div></pre></td></tr></table></figure>
-<blockquote>
-<p>常用的配置参数</p>
-</blockquote>
-<ul>
-<li>chdir=/xxx/xxx # 指定项目目录</li>
-<li>home=/xxx/xxx # 指定虚拟环境变量</li>
-<li>wsgi-file=xxx # 指定加载WSGI文件</li>
-<li>socket=xxx # 指定uwsgi的客户端将要连接的socket的路径（使用UNIX socket的情况）或者地址（使用网络地址的情况）。</li>
-<li>callable=xxx # uWSGI加载的模块中哪个变量将被调用</li>
-<li>master=true # 指定启动主进程</li>
-<li>processes=4 # 设置工作进程的数量</li>
-<li>threads=2 # 设置每个工作进程的线程数</li>
-<li>vacuum=true # 当服务器退出时自动删除unix socket文件和pid文件</li>
-<li>logfile-chmod=644 # 指定日志文件的权限</li>
-<li>daemonize=%(chdir)/xxx.log # 进程在后台运行，并将日志打印到指定文件</li>
-<li>pidfile=%(chdir)/xxx.pid # 在失去权限前，将主进程pid写到指定的文件</li>
-<li>uid=xxx # uWSGI服务器运行时的用户id</li>
-<li>gid=xxx # uWSGI服务器运行时的用户组id</li>
-<li>procname-prefix-spaced=xxx # 指定工作进程名称的前缀</li>
-</ul>
-<p>详细配置项查看：<a href="http://www.cnblogs.com/zhouej/archive/2012/03/25/2379646.html" target="_blank" rel="external">http://www.cnblogs.com/zhouej/archive/2012/03/25/2379646.html</a></p>
-<h4 id="3-配置nginx"><a href="#3-配置nginx" class="headerlink" title="3.配置nginx"></a>3.配置nginx</h4><p>在nginx中配置一个新的server：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">server&#123;</div><div class="line">    listen 80;</div><div class="line">    server_name  www.example.com;</div><div class="line">    charset utf-8;</div><div class="line"></div><div class="line">    location /&#123;</div><div class="line">        include /etc/nginx/uwsgi_params;</div><div class="line">        uwsgi_pass 127.0.0.1:8000;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>重启nginx。</p>
-<h4 id="4-启动uwsgi"><a href="#4-启动uwsgi" class="headerlink" title="4.启动uwsgi"></a>4.启动uwsgi</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">uwsgi uwsgi.ini</div></pre></td></tr></table></figure>
-<blockquote>
-<p>启动 uwsgi之前一定要先关掉 selinux！！！</p>
-</blockquote>
-<h5 id="查看SELinux状态："><a href="#查看SELinux状态：" class="headerlink" title="查看SELinux状态："></a>查看SELinux状态：</h5><p>1、/usr/sbin/sestatus -v   //如果SELinux status参数为enabled即为开启状态</p>
-<p>SELinux status: enabled</p>
-<p>2、getenforce   //也可以用这个命令检查</p>
-<h5 id="关闭SELinux："><a href="#关闭SELinux：" class="headerlink" title="关闭SELinux："></a>关闭SELinux：</h5><p>1、临时关闭（不用重启机器）：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">setenforce 0  //设置SELinux 成为permissive模式</div><div class="line">// setenforce 1 设置SELinux 成为enforcing模式</div></pre></td></tr></table></figure>
-<p>2、修改配置文件需要重启机器(修改完后重启机器)：</p>
-<p>修改 <code>/etc/selinux/config</code> 文件</p>
-<p>将</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SELINUX=enforcing</div></pre></td></tr></table></figure>
-<p>改为</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SELINUX=disabled</div></pre></td></tr></table></figure>
-<p>从此django项目启动了可以通过域名访问啦啦啦。。。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1829,7 +1847,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
