@@ -80,7 +80,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="js,frontend," />
+  <meta name="keywords" content="frontend,js," />
 
 
 
@@ -97,7 +97,7 @@
 
 
 <meta name="description" content="instanceof 简介在 JavaScript 中，判断一个变量的类型通常会用 typeof 运算符，在使用 typeof 运算符时采用引用类型存储值会出现一个问题，无论引用的是什么类型的对象，它都返回 “object”。例如： 12var arr = new Array();console.log( typeof arr ); // object 如果想要确定原型和实例之间的关系就需要用到">
-<meta name="keywords" content="js,frontend">
+<meta name="keywords" content="frontend,js">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaScript instanceof 操作符">
 <meta property="og:url" content="https://gikey.github.io/2017/08/18/instanceof/index.html">
@@ -105,7 +105,7 @@
 <meta property="og:description" content="instanceof 简介在 JavaScript 中，判断一个变量的类型通常会用 typeof 运算符，在使用 typeof 运算符时采用引用类型存储值会出现一个问题，无论引用的是什么类型的对象，它都返回 “object”。例如： 12var arr = new Array();console.log( typeof arr ); // object 如果想要确定原型和实例之间的关系就需要用到">
 <meta property="og:image" content="http://cdn.xieluping.cn/images/n448lo5bi6c3w5no6iggb9.jpg">
 <meta property="og:image" content="http://cdn.xieluping.cn/images/y560nlqtuhtfe48rpphkt9.png">
-<meta property="og:updated_time" content="2017-08-18T05:00:01.000Z">
+<meta property="og:updated_time" content="2017-08-18T13:57:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript instanceof 操作符">
 <meta name="twitter:description" content="instanceof 简介在 JavaScript 中，判断一个变量的类型通常会用 typeof 运算符，在使用 typeof 运算符时采用引用类型存储值会出现一个问题，无论引用的是什么类型的对象，它都返回 “object”。例如： 12var arr = new Array();console.log( typeof arr ); // object 如果想要确定原型和实例之间的关系就需要用到">
@@ -374,15 +374,20 @@
 </ol>
 </blockquote>
 <p>官网的定义非常晦涩，上面的翻译成代码大概就是：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">instanceOf</span>(<span class="params"> L, R </span>) </span>&#123; <span class="comment">//L 表示左表达式，R 表示右表达式</span></div><div class="line">    <span class="keyword">var</span> P = R.prototype; <span class="comment">// 取 R 的显示原型</span></div><div class="line">    L = L.__proto__; <span class="comment">// 取 L 的隐式原型</span></div><div class="line">    <span class="keyword">while</span> ( <span class="literal">true</span> ) &#123; </div><div class="line">        <span class="keyword">if</span> ( L === <span class="literal">null</span> ) <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        <span class="keyword">if</span> ( P === L ) <span class="keyword">return</span> <span class="literal">true</span>; </div><div class="line">        L = L.__proto__; </div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>再直接点的表达就是 instanceof 会一直在 obj 的原型链上查找，直到找到右边那个构造函数的 prototype 属性，或者为 null 的时候才停止。</p>
-<p>类似：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">obj.__proto__.__proto__ ... = Obj.prototype</div></pre></td></tr></table></figure></p>
+<p>再直接点的表达就是 instanceof 会一直在 obj 的原型链上查找，直到找到右边那个构造函数的 prototype 属性，或者为 null 的时候才停止。<br>类似：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">obj.__proto__.__proto__ ... = Obj.prototype</div></pre></td></tr></table></figure></p>
 <p>obj 会一直沿着隐式原型链 <code>__proto__</code> 向上查找直到 <code>obj.__proto__.__proto__ ...... === Obj.prototype</code> 为止，如果找到则返回 true，也就是 obj 为 Obj 的一个实例。否则返回 false，obj 不是 Obj 的实例。</p>
 <h3 id="JavaScript-原型继承机制"><a href="#JavaScript-原型继承机制" class="headerlink" title="JavaScript 原型继承机制"></a>JavaScript 原型继承机制</h3><h4 id="原型与原型链"><a href="#原型与原型链" class="headerlink" title="原型与原型链"></a>原型与原型链</h4><p>在 JavaScript 每个函数都有一个 prototype 属性，该属性存储的就是原型对象。JavaScript 构造函数的继承都是通过 prototype 属性， 真正的原型链的实现是通过 <code>__proto__</code> 实现的，<code>__proto__</code>其实是指向‘父类’的 prototype 属性。例如：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> Foo = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</div><div class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> Foo;</div><div class="line"><span class="built_in">console</span>.log(foo.__proto__ === Foo.prototype) <span class="comment">// true</span></div><div class="line"><span class="built_in">console</span>.log(Foo.__proto__ === <span class="built_in">Function</span>.prototype) <span class="comment">// true</span></div></pre></td></tr></table></figure></p>
-<h4 id="原型继承"><a href="#原型继承" class="headerlink" title="原型继承"></a>原型继承</h4><p>JavaScript 是单继承的，Object.prototype 是原型链的顶端，所有对象从它继承了包括 valueOf、toString 等等方法和属性。</p>
-<p>Object 本身是构造函数，继承了 Function.prototype。 Function 也是对象，继承了 Object.prototype。</p>
+<h4 id="原型继承"><a href="#原型继承" class="headerlink" title="原型继承"></a>原型继承</h4><p>JavaScript 是单继承的，Object.prototype 是原型链的顶端，所有对象从它继承了包括 valueOf、toString 等等方法和属性。Object 本身是构造函数，继承了 Function.prototype。 Function 也是对象，继承了 Object.prototype。</p>
 <p><img src="http://cdn.xieluping.cn/images/n448lo5bi6c3w5no6iggb9.jpg" alt=""></p>
-<h4 id="Object-instanceof-Object"><a href="#Object-instanceof-Object" class="headerlink" title="Object instanceof Object"></a>Object instanceof Object</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">ObjectL = <span class="built_in">Object</span>, ObjectR = <span class="built_in">Object</span>; </div><div class="line"></div><div class="line">R = ObjectR.prototype = <span class="built_in">Object</span>.prototype </div><div class="line">L = ObjectL.__proto__ = <span class="built_in">Function</span>.prototype </div><div class="line"></div><div class="line">R != L </div><div class="line"><span class="comment">// 循环查找 L 是否还有 __proto__ </span></div><div class="line">L = <span class="built_in">Function</span>.prototype.__proto__ = <span class="built_in">Object</span>.prototype </div><div class="line"></div><div class="line">R == L </div><div class="line"><span class="comment">// 返回 true</span></div></pre></td></tr></table></figure>
-<h4 id="String-instanceof-String"><a href="#String-instanceof-String" class="headerlink" title="String instanceof String"></a>String instanceof String</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">StringL = <span class="built_in">String</span>, StringR = <span class="built_in">String</span>;</div><div class="line"></div><div class="line">R = StringR.prototype = <span class="built_in">String</span>.prototype</div><div class="line">L = StringL.__proto__ = <span class="built_in">Object</span>.prototype</div><div class="line"></div><div class="line">R != L</div><div class="line"><span class="comment">// 循环查找 L 是否还有 __proto__ </span></div><div class="line">L = <span class="built_in">Object</span>.prototype.__proto__ = <span class="literal">null</span></div><div class="line"><span class="comment">// 返回 false</span></div></pre></td></tr></table></figure>
+<p>下面我们推导下之前的两个例子，其他的可以自行推倒。</p>
+<ul>
+<li><p>Object instanceof Object</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">ObjectL = <span class="built_in">Object</span>, ObjectR = <span class="built_in">Object</span>; </div><div class="line"></div><div class="line">R = ObjectR.prototype = <span class="built_in">Object</span>.prototype </div><div class="line">L = ObjectL.__proto__ = <span class="built_in">Function</span>.prototype </div><div class="line"></div><div class="line">R != L </div><div class="line"><span class="comment">// 循环查找 L 是否还有 __proto__ </span></div><div class="line">L = <span class="built_in">Function</span>.prototype.__proto__ = <span class="built_in">Object</span>.prototype </div><div class="line"></div><div class="line">R == L </div><div class="line"><span class="comment">// 返回 true</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>String instanceof String</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">StringL = <span class="built_in">String</span>, StringR = <span class="built_in">String</span>;</div><div class="line"></div><div class="line">R = StringR.prototype = <span class="built_in">String</span>.prototype</div><div class="line">L = StringL.__proto__ = <span class="built_in">Function</span>.prototype</div><div class="line"></div><div class="line">R != L</div><div class="line"><span class="comment">// 循环查找 L 是否还有 __proto__ </span></div><div class="line">L = <span class="built_in">Object</span>.prototype.__proto__ = <span class="literal">null</span></div><div class="line"><span class="comment">// 返回 false</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
 <h3 id="一切皆对象？"><a href="#一切皆对象？" class="headerlink" title="一切皆对象？"></a>一切皆对象？</h3><p>常常说 JavaScript 中一切皆对象，那么就有这样一个问题了：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="string">'string'</span>.__proto__ === <span class="built_in">String</span>.prototype <span class="comment">// true</span></div><div class="line"><span class="string">'string'</span> <span class="keyword">instanceof</span> <span class="built_in">String</span> <span class="comment">// false</span></div></pre></td></tr></table></figure>
 <p>按照上面的推导，<code>&#39;string&#39; instanceof String</code> 应该为 <code>true</code>，但是我们得到的却是 <code>false</code>。<br>其实问题的关键在于：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="string">'string'</span>); <span class="comment">// string</span></div></pre></td></tr></table></figure></p>
@@ -455,9 +460,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/js/" rel="tag"># js</a>
-          
             <a href="/tags/frontend/" rel="tag"># frontend</a>
+          
+            <a href="/tags/js/" rel="tag"># js</a>
           
         </div>
       
@@ -479,6 +484,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/18/ecmascript/" rel="prev" title="ES5, ES6, ES2016, ES.Next, JavaScript 的版本是怎么回事？">
+                ES5, ES6, ES2016, ES.Next, JavaScript 的版本是怎么回事？ <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -552,7 +561,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -629,7 +638,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#instanceof-简介"><span class="nav-number">1.</span> <span class="nav-text">instanceof 简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Function-instanceof-Function"><span class="nav-number">2.</span> <span class="nav-text">Function instanceof Function ?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#instanceof-运算符的定义"><span class="nav-number">3.</span> <span class="nav-text">instanceof 运算符的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript-原型继承机制"><span class="nav-number">4.</span> <span class="nav-text">JavaScript 原型继承机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原型与原型链"><span class="nav-number">4.1.</span> <span class="nav-text">原型与原型链</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原型继承"><span class="nav-number">4.2.</span> <span class="nav-text">原型继承</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Object-instanceof-Object"><span class="nav-number">4.3.</span> <span class="nav-text">Object instanceof Object</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#String-instanceof-String"><span class="nav-number">4.4.</span> <span class="nav-text">String instanceof String</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一切皆对象？"><span class="nav-number">5.</span> <span class="nav-text">一切皆对象？</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#instanceof-简介"><span class="nav-number">1.</span> <span class="nav-text">instanceof 简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Function-instanceof-Function"><span class="nav-number">2.</span> <span class="nav-text">Function instanceof Function ?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#instanceof-运算符的定义"><span class="nav-number">3.</span> <span class="nav-text">instanceof 运算符的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript-原型继承机制"><span class="nav-number">4.</span> <span class="nav-text">JavaScript 原型继承机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原型与原型链"><span class="nav-number">4.1.</span> <span class="nav-text">原型与原型链</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原型继承"><span class="nav-number">4.2.</span> <span class="nav-text">原型继承</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一切皆对象？"><span class="nav-number">5.</span> <span class="nav-text">一切皆对象？</span></a></li></ol></div>
             
 
           </div>
