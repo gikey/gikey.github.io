@@ -96,17 +96,17 @@
 
 
 
-<meta name="description" content="背景在一些实验室环境，服务器没有直接连接外网的权限，需要通过网络代理。我们通常会将网络代理直接配置在/etc/environment、/etc/profile之类的配置文件中，这对于大部分操作都是可行的。 然而，docker命令却使用不了这些代理。比如docker pull时需要从外网下载镜像，就会出现如下错误： 123docker pull hello-worldNetwork timed ou">
+<meta name="description" content="背景在一些实验室环境，服务器没有直接连接外网的权限，需要通过网络代理。我们通常会将网络代理直接配置在/etc/environment、/etc/profile之类的配置文件中，这对于大部分操作都是可行的。 然而，docker命令却使用不了这些代理。比如docker pull时需要从外网下载镜像，就会出现如下错误： 1234567docker pull hello-worldUnable to fi">
 <meta name="keywords" content="docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker网络代理设置">
 <meta property="og:url" content="https://gikey.github.io/2017/10/10/docker-proxy-pull-timeout/index.html">
 <meta property="og:site_name" content="lingfeng&#39;blog">
-<meta property="og:description" content="背景在一些实验室环境，服务器没有直接连接外网的权限，需要通过网络代理。我们通常会将网络代理直接配置在/etc/environment、/etc/profile之类的配置文件中，这对于大部分操作都是可行的。 然而，docker命令却使用不了这些代理。比如docker pull时需要从外网下载镜像，就会出现如下错误： 123docker pull hello-worldNetwork timed ou">
-<meta property="og:updated_time" content="2017-10-10T09:54:23.000Z">
+<meta property="og:description" content="背景在一些实验室环境，服务器没有直接连接外网的权限，需要通过网络代理。我们通常会将网络代理直接配置在/etc/environment、/etc/profile之类的配置文件中，这对于大部分操作都是可行的。 然而，docker命令却使用不了这些代理。比如docker pull时需要从外网下载镜像，就会出现如下错误： 1234567docker pull hello-worldUnable to fi">
+<meta property="og:updated_time" content="2017-10-10T09:58:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker网络代理设置">
-<meta name="twitter:description" content="背景在一些实验室环境，服务器没有直接连接外网的权限，需要通过网络代理。我们通常会将网络代理直接配置在/etc/environment、/etc/profile之类的配置文件中，这对于大部分操作都是可行的。 然而，docker命令却使用不了这些代理。比如docker pull时需要从外网下载镜像，就会出现如下错误： 123docker pull hello-worldNetwork timed ou">
+<meta name="twitter:description" content="背景在一些实验室环境，服务器没有直接连接外网的权限，需要通过网络代理。我们通常会将网络代理直接配置在/etc/environment、/etc/profile之类的配置文件中，这对于大部分操作都是可行的。 然而，docker命令却使用不了这些代理。比如docker pull时需要从外网下载镜像，就会出现如下错误： 1234567docker pull hello-worldUnable to fi">
 
 
 
@@ -344,7 +344,7 @@
       
         <h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>在一些实验室环境，服务器没有直接连接外网的权限，需要通过网络代理。我们通常会将网络代理直接配置在/etc/environment、/etc/profile之类的配置文件中，这对于大部分操作都是可行的。</p>
 <p>然而，docker命令却使用不了这些代理。比如docker pull时需要从外网下载镜像，就会出现如下错误：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">docker pull hello-world</div><div class="line"></div><div class="line">Network timed out <span class="keyword">while</span> trying to connect to https://index.docker.io/v1/repositories/library/mongo/images. You may want to check your internet connection or <span class="keyword">if</span> you are behind a proxy.</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">docker pull hello-world</div><div class="line"></div><div class="line">Unable to find image,hello-world:latest locally</div><div class="line"></div><div class="line">Pulling repository docker.io/library/hello-world</div><div class="line"></div><div class="line">docker: Network timed out <span class="keyword">while</span> trying to connect to https://index.docker.io/v1/repositories/library/hello-world/images. You may want to check your internet connection or <span class="keyword">if</span> you are behind a proxy..</div></pre></td></tr></table></figure>
 <h4 id="解决方案一："><a href="#解决方案一：" class="headerlink" title="解决方案一："></a>解决方案一：</h4><p>停止docker服务，手动以使用2375端口监听所有网络接口的方式启动docker daemon。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">systemctl stop docker.service</div><div class="line">nohup docker daemon -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock &amp;</div></pre></td></tr></table></figure>
 <p><a href="https://docs.docker.com/v1.11/engine/reference/commandline/daemon/" target="_blank" rel="external">详情参见</a></p>
