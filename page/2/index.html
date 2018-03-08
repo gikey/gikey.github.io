@@ -421,7 +421,7 @@
 <p>配置好后我们再博客的目录下执行：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">npm install hexo-deployer-git --save</div><div class="line">hexo g</div><div class="line">hexo d</div></pre></td></tr></table></figure>
 <p>搞定，于是访问 yourname.github.io 就能看到你的博客了。</p>
-<h4 id="自定义域名"><a href="#自定义域名" class="headerlink" title="自定义域名"></a>自定义域名</h4><p>要配置为 <code>blog.yourDomian.com</code> 这样的子域名时，需要增加一个CNAME解析。例如在万网后台，添加一条解析记录，记录类型为 cname。然而添加好了后发现居然访问不了：</p>
+<h4 id="自定义域名"><a href="#自定义域名" class="headerlink" title="自定义域名"></a>自定义域名</h4><p>要配置为 <code>blog.yourDomian.com</code> 这样的子域名时，需要增加一个 CNAME 解析。例如在万网后台，添加一条解析记录，记录类型为 cname。然而添加好了后发现居然访问不了：</p>
 <p><img src="http://chuantu.biz/t5/126/1499235290x2890173801.png" alt="404"></p>
 <p>在 <code>yourname.github.io</code> 项目的 <code>source</code> 下目录下添加一个 <code>CNAME</code> 文件:</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">echo</span> blog.yourDomain.com &gt;&gt; CNAME</div></pre></td></tr></table></figure>
