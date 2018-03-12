@@ -107,7 +107,7 @@
 <meta property="og:image" content="http://cdn.xieluping.cn/images/98jgwu48as4.png">
 <meta property="og:image" content="http://cdn.xieluping.cn/images/s8c5yx7ia5r.png">
 <meta property="og:image" content="http://cdn.xieluping.cn/images/ugloyynx3m.png">
-<meta property="og:updated_time" content="2018-03-08T09:35:24.997Z">
+<meta property="og:updated_time" content="2018-03-12T02:10:43.797Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript 任务和事件循环">
 <meta name="twitter:description" content="js是单线程的，处理任务是一件接着一件处理，所以如果一个任务需要处理很久的话，后面的任务就会被阻塞，所以 JS 通过 Event Loop 事件循环的方式解决了这个问题。 First首先来看下面一段代码： 1234567891011console.log(&apos;script start&apos;);setTimeout(function() &amp;#123;  console.log(&apos;setTimeout&apos;);">
@@ -392,7 +392,66 @@
 <h3 id="One-more-question"><a href="#One-more-question" class="headerlink" title="One more question"></a>One more question</h3><p>如果有下面一段代码：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"outer"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"inner"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> outer = <span class="built_in">document</span>.querySelector(<span class="string">'.outer'</span>);</div><div class="line"><span class="keyword">var</span> inner = <span class="built_in">document</span>.querySelector(<span class="string">'.inner'</span>);</div><div class="line"></div><div class="line"><span class="keyword">new</span> MutationObserver(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'mutate'</span>);</div><div class="line">&#125;).observe(outer, &#123;</div><div class="line">  <span class="attr">attributes</span>: <span class="literal">true</span></div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">onClick</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'click'</span>);</div><div class="line"></div><div class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'timeout'</span>);</div><div class="line">  &#125;, <span class="number">0</span>);</div><div class="line"></div><div class="line">  <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'promise'</span>);</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  outer.setAttribute(<span class="string">'data-random'</span>, <span class="built_in">Math</span>.random());</div><div class="line">&#125;</div><div class="line"></div><div class="line">inner.addEventListener(<span class="string">'click'</span>, onClick);</div><div class="line">outer.addEventListener(<span class="string">'click'</span>, onClick);</div><div class="line"></div><div class="line"><span class="comment">// inner.click();</span></div></pre></td></tr></table></figure>
-<p>在这里不同的浏览器可能会有不同的结果。<br>| Chrome  | FireFox  |   Safari   | Edge |<br>| :—— | :—— | :——  | :——  |<br>| click   | click |  click  |  click  |<br>| promise | mutate | mutate    | click  |<br>| mutate  | click |    click | mutate |<br>| click   | mutate | mutate    | timeout |<br>| promise | timeout | promise | promise |<br>| mutate  | promise    | promise |    timeout |<br>| timeout | promise | timeout | promise |<br>| timeout | timeout |  timeout  | |</p>
+<p>在这里不同的浏览器可能会有不同的结果。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Chrome</th>
+<th style="text-align:left">FireFox</th>
+<th style="text-align:left">Safari</th>
+<th style="text-align:left">Edge</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">click</td>
+<td style="text-align:left">click</td>
+<td style="text-align:left">click</td>
+<td style="text-align:left">click</td>
+</tr>
+<tr>
+<td style="text-align:left">promise</td>
+<td style="text-align:left">mutate</td>
+<td style="text-align:left">mutate</td>
+<td style="text-align:left">click</td>
+</tr>
+<tr>
+<td style="text-align:left">mutate</td>
+<td style="text-align:left">click</td>
+<td style="text-align:left">click</td>
+<td style="text-align:left">mutate</td>
+</tr>
+<tr>
+<td style="text-align:left">click</td>
+<td style="text-align:left">mutate</td>
+<td style="text-align:left">mutate</td>
+<td style="text-align:left">timeout</td>
+</tr>
+<tr>
+<td style="text-align:left">promise</td>
+<td style="text-align:left">timeout</td>
+<td style="text-align:left">promise</td>
+<td style="text-align:left">promise</td>
+</tr>
+<tr>
+<td style="text-align:left">mutate</td>
+<td style="text-align:left">promise</td>
+<td style="text-align:left">promise</td>
+<td style="text-align:left">timeout</td>
+</tr>
+<tr>
+<td style="text-align:left">timeout</td>
+<td style="text-align:left">promise</td>
+<td style="text-align:left">timeout</td>
+<td style="text-align:left">promise</td>
+</tr>
+<tr>
+<td style="text-align:left">timeout</td>
+<td style="text-align:left">timeout</td>
+<td style="text-align:left">timeout</td>
+</tr>
+</tbody>
+</table>
 <p>按照上面的推导 Chrome 的输出是正确的。</p>
 <blockquote>
 <p>通过上面的例子可以测试出，FireFox 和 Safari 能够正确的执行 microtask 队列，这一点可以通过 MutationObserver 的表现中看出，不过 Promise 被添加至事件队列中的方式好像有些不同。 这一点也是能够理解的，由于 jobs 和 microtasks 的关系以及概念目前还比较模糊，不过人们都普遍的期望他们都能够在两个事件监听器之间执行。这里有 FireFox 和 Safari 的 BUG 记录。（目前 Safari 已经修复了这一 BUG）<br>在 Edge 中我们可以明显的看出其压入 Promise 的方式是错误的，同时其执行 microtask 队列的方式也不正确，它没有在两个事件监听器之间执行，反而是在所有的事件监听器之后执行，所以才会只输出了一次 mutate 。Edge bug ticket （目前已修复）</p>
