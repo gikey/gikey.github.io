@@ -103,7 +103,7 @@
 <meta property="og:url" content="https://gikey.github.io/2018/03/14/nginx-https/index.html">
 <meta property="og:site_name" content="lingfeng&#39;blog">
 <meta property="og:description" content="1 获取证书去阿里云或者腾讯云申请免费证书，下载得到的 www.domain.com.zip 文件，解压获得3个文件夹，分别是 Apache、IIS、Nginx 服务器的证书文件。这里我们只介绍 Nginx 的配置。 Nginx文件夹内获得SSL证书文件 1_www.domain.com_bundle.crt 和私钥文件 2_www.domain.com.key,1_www.domain.com_">
-<meta property="og:updated_time" content="2018-03-13T16:35:30.256Z">
+<meta property="og:updated_time" content="2018-03-13T16:39:14.621Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nginx 配置 SSL 证书">
 <meta name="twitter:description" content="1 获取证书去阿里云或者腾讯云申请免费证书，下载得到的 www.domain.com.zip 文件，解压获得3个文件夹，分别是 Apache、IIS、Nginx 服务器的证书文件。这里我们只介绍 Nginx 的配置。 Nginx文件夹内获得SSL证书文件 1_www.domain.com_bundle.crt 和私钥文件 2_www.domain.com.key,1_www.domain.com_">
@@ -343,10 +343,10 @@
 
       
         <h3 id="1-获取证书"><a href="#1-获取证书" class="headerlink" title="1 获取证书"></a>1 获取证书</h3><p>去阿里云或者腾讯云申请免费证书，下载得到的 www.domain.com.zip 文件，解压获得3个文件夹，分别是 Apache、IIS、Nginx 服务器的证书文件。这里我们只介绍 Nginx 的配置。</p>
-<p>Nginx文件夹内获得SSL证书文件 1_www.domain.com_bundle.crt 和私钥文件 2_www.domain.com.key,<br>1_www.domain.com_bundle.crt 文件包括两段证书代码 “—–BEGIN CERTIFICATE—–”和“—–END CERTIFICATE—–”,<br>2_www.domain.com.key 文件包括一段私钥代码“—–BEGIN RSA PRIVATE KEY—–”和“—–END RSA PRIVATE KEY—–”。</p>
-<h3 id="2-证书安装"><a href="#2-证书安装" class="headerlink" title="2 证书安装"></a>2 证书安装</h3><p>将域名 www.domain.com 的证书文件1_www.domain.com_bundle.crt 、私钥文件2_www.domain.com.key保存到同一个目录，例如/usr/local/nginx/conf目录下。<br>更新Nginx根目录下 conf/nginx.conf 文件如下：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">       listen 443;</div><div class="line">       server_name www.domain.com; <span class="comment">#填写绑定证书的域名</span></div><div class="line">       ssl on;</div><div class="line">       ssl_certificate 1_www.domain.com_bundle.crt;</div><div class="line">       ssl_certificate_key 2_www.domain.com.key;</div><div class="line">       ssl_session_timeout 5m;</div><div class="line">       ssl_protocols TLSv1 TLSv1.1 TLSv1.2; <span class="comment">#按照这个协议配置</span></div><div class="line">       ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;<span class="comment">#按照这个套件配置</span></div><div class="line">       ssl_prefer_server_ciphers on;</div><div class="line">       location / &#123;</div><div class="line">           root   html; <span class="comment">#站点目录</span></div><div class="line">           index  index.html index.htm;</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p>配置完成后，先用bin/nginx –t来测试下配置是否有误，正确无误的话，重启nginx。就可以使 <a href="https://www.domain.com" target="_blank" rel="external">https://www.domain.com</a> 来访问了。</p>
+<p>Nginx文件夹内获得SSL证书文件 <code>1_www.domain.com_bundle.crt</code> 和私钥文件 <code>2_www.domain.com.key</code>,<br><code>1_www.domain.com_bundle.crt</code> 文件包括两段证书代码 <code>“-----BEGIN CERTIFICATE-----”和“-----END CERTIFICATE-----”</code>,<br><code>2_www.domain.com.key</code> 文件包括一段私钥代码<code>“-----BEGIN RSA PRIVATE KEY-----”</code>和<code>“-----END RSA PRIVATE KEY-----”</code>。</p>
+<h3 id="2-证书安装"><a href="#2-证书安装" class="headerlink" title="2 证书安装"></a>2 证书安装</h3><p>将域名 www.domain.com 的证书文件 1_www.domain.com_bundle.crt 、私钥文件 2_www.domain.com.key 保存到同一个目录，例如 /usr/local/nginx/conf 目录下。<br>更新 Nginx 根目录下 conf/nginx.conf 文件如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">       listen 443 ssl;</div><div class="line">       server_name www.domain.com; <span class="comment">#填写绑定证书的域名</span></div><div class="line">       ssl on;</div><div class="line">       ssl_certificate 1_www.domain.com_bundle.crt;</div><div class="line">       ssl_certificate_key 2_www.domain.com.key;</div><div class="line">       ssl_session_timeout 5m;</div><div class="line">       ssl_protocols TLSv1 TLSv1.1 TLSv1.2; <span class="comment">#按照这个协议配置</span></div><div class="line">       ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;<span class="comment">#按照这个套件配置</span></div><div class="line">       ssl_prefer_server_ciphers on;</div><div class="line">       location / &#123;</div><div class="line">           root   html; <span class="comment">#站点目录</span></div><div class="line">           index  index.html index.htm;</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>配置完成后，先用 bin/nginx –t 来测试下配置是否有误，正确无误的话，重启 nginx。就可以使 <a href="https://www.domain.com" target="_blank" rel="external">https://www.domain.com</a> 来访问了。</p>
 <p>注：</p>
 <table>
 <thead>
@@ -378,11 +378,11 @@
 </tr>
 <tr>
 <td style="text-align:left">ssl_ciphers</td>
-<td style="text-align:left">配置加密套件，写法遵循openssl标准</td>
+<td style="text-align:left">配置加密套件，写法遵循 openssl 标准</td>
 </tr>
 </tbody>
 </table>
-<h3 id="3-使用全站加密，http自动跳转https（可选）"><a href="#3-使用全站加密，http自动跳转https（可选）" class="headerlink" title="3 使用全站加密，http自动跳转https（可选）"></a>3 使用全站加密，http自动跳转https（可选）</h3><p>对于用户不知道网站可以进行https访问的情况下，让服务器自动把http的请求重定向到https。<br>在服务器这边的话配置的话，可以在页面里加js脚本，也可以在后端程序里写重定向，当然也可以在web服务器来实现跳转。Nginx是支持rewrite的（只要在编译的时候没有去掉pcre）<br>在http的server里增加rewrite ^(.*) <a href="https://$host$1" target="_blank" rel="external">https://$host$1</a> permanent;<br>这样就可以实现80进来的请求，重定向为https了。</p>
+<h3 id="3-使用全站加密，http-自动跳转-https（可选）"><a href="#3-使用全站加密，http-自动跳转-https（可选）" class="headerlink" title="3 使用全站加密，http 自动跳转 https（可选）"></a>3 使用全站加密，http 自动跳转 https（可选）</h3><p>对于用户不知道网站可以进行 https 访问的情况下，让服务器自动把 http 的请求重定向到 https。<br>在服务器这边的话配置的话，可以在页面里加 js 脚本，也可以在后端程序里写重定向，当然也可以在web服务器来实现跳转。Nginx 是支持 rewrite 的（只要在编译的时候没有去掉 pcre）<br>在 http 的 server 里增加 <code>rewrite ^(.*) https://$host$1 permanent</code>;<br>这样就可以实现80进来的请求，重定向为 https 了。</p>
 
       
     </div>
@@ -605,7 +605,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-获取证书"><span class="nav-number">1.</span> <span class="nav-text">1 获取证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-证书安装"><span class="nav-number">2.</span> <span class="nav-text">2 证书安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-使用全站加密，http自动跳转https（可选）"><span class="nav-number">3.</span> <span class="nav-text">3 使用全站加密，http自动跳转https（可选）</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-获取证书"><span class="nav-number">1.</span> <span class="nav-text">1 获取证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-证书安装"><span class="nav-number">2.</span> <span class="nav-text">2 证书安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-使用全站加密，http-自动跳转-https（可选）"><span class="nav-number">3.</span> <span class="nav-text">3 使用全站加密，http 自动跳转 https（可选）</span></a></li></ol></div>
             
 
           </div>
