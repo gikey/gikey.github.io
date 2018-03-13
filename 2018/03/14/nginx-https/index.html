@@ -80,7 +80,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="linux,git," />
+  <meta name="keywords" content="nginx," />
 
 
 
@@ -96,17 +96,17 @@
 
 
 
-<meta name="description" content="Git是用于Linux内核开发的版本控制工具。与CVS、Subversion一类的集中式版本控制工具不同，它采用了分布式版本库的作法，不需要服务器端软件，就可以运作版本控制，使得源代码的发布和交流极其方便。 1.安装gitUbuntu和Debain下：1apt-get install git Centos下： 1yum install git 2.创建账户1adduser git 3.创建证书在g">
-<meta name="keywords" content="linux,git">
+<meta name="description" content="1 获取证书去阿里云或者腾讯云申请免费证书，下载得到的 www.domain.com.zip 文件，解压获得3个文件夹，分别是 Apache、IIS、Nginx 服务器的证书文件。这里我们只介绍 Nginx 的配置。 Nginx文件夹内获得SSL证书文件 1_www.domain.com_bundle.crt 和私钥文件 2_www.domain.com.key,1_www.domain.com_">
+<meta name="keywords" content="nginx">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux 下 git 服务器的搭建">
-<meta property="og:url" content="https://gikey.github.io/2016/05/20/git-server/index.html">
+<meta property="og:title" content="Nginx 配置 SSL 证书">
+<meta property="og:url" content="https://gikey.github.io/2018/03/14/nginx-https/index.html">
 <meta property="og:site_name" content="lingfeng&#39;blog">
-<meta property="og:description" content="Git是用于Linux内核开发的版本控制工具。与CVS、Subversion一类的集中式版本控制工具不同，它采用了分布式版本库的作法，不需要服务器端软件，就可以运作版本控制，使得源代码的发布和交流极其方便。 1.安装gitUbuntu和Debain下：1apt-get install git Centos下： 1yum install git 2.创建账户1adduser git 3.创建证书在g">
-<meta property="og:updated_time" content="2017-05-24T09:26:58.000Z">
+<meta property="og:description" content="1 获取证书去阿里云或者腾讯云申请免费证书，下载得到的 www.domain.com.zip 文件，解压获得3个文件夹，分别是 Apache、IIS、Nginx 服务器的证书文件。这里我们只介绍 Nginx 的配置。 Nginx文件夹内获得SSL证书文件 1_www.domain.com_bundle.crt 和私钥文件 2_www.domain.com.key,1_www.domain.com_">
+<meta property="og:updated_time" content="2018-03-13T16:35:30.256Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux 下 git 服务器的搭建">
-<meta name="twitter:description" content="Git是用于Linux内核开发的版本控制工具。与CVS、Subversion一类的集中式版本控制工具不同，它采用了分布式版本库的作法，不需要服务器端软件，就可以运作版本控制，使得源代码的发布和交流极其方便。 1.安装gitUbuntu和Debain下：1apt-get install git Centos下： 1yum install git 2.创建账户1adduser git 3.创建证书在g">
+<meta name="twitter:title" content="Nginx 配置 SSL 证书">
+<meta name="twitter:description" content="1 获取证书去阿里云或者腾讯云申请免费证书，下载得到的 www.domain.com.zip 文件，解压获得3个文件夹，分别是 Apache、IIS、Nginx 服务器的证书文件。这里我们只介绍 Nginx 的配置。 Nginx文件夹内获得SSL证书文件 1_www.domain.com_bundle.crt 和私钥文件 2_www.domain.com.key,1_www.domain.com_">
 
 
 
@@ -134,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="https://gikey.github.io/2016/05/20/git-server/"/>
+  <link rel="canonical" href="https://gikey.github.io/2018/03/14/nginx-https/"/>
 
 
 
 
 
-  <title>Linux 下 git 服务器的搭建 | lingfeng'blog</title>
+  <title>Nginx 配置 SSL 证书 | lingfeng'blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -278,7 +278,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://gikey.github.io/2016/05/20/git-server/">
+    <link itemprop="mainEntityOfPage" href="https://gikey.github.io/2018/03/14/nginx-https/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="凌峰">
@@ -295,7 +295,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Linux 下 git 服务器的搭建</h2>
+          <h2 class="post-title" itemprop="name headline">Nginx 配置 SSL 证书</h2>
         
 
         <div class="post-meta">
@@ -307,8 +307,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-20T12:27:15+08:00">
-                2016-05-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-14T00:24:34+08:00">
+                2018-03-14
               </time>
             
 
@@ -342,21 +342,47 @@
       
 
       
-        <p>Git是用于Linux内核开发的版本控制工具。与CVS、Subversion一类的集中式版本控制工具不同，它采用了分布式版本库的作法，不需要服务器端软件，就可以运作版本控制，使得源代码的发布和交流极其方便。</p>
-<h4 id="1-安装git"><a href="#1-安装git" class="headerlink" title="1.安装git"></a>1.安装git</h4><p>Ubuntu和Debain下：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install git</div></pre></td></tr></table></figure></p>
-<p>Centos下：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install git</div></pre></td></tr></table></figure>
-<h4 id="2-创建账户"><a href="#2-创建账户" class="headerlink" title="2.创建账户"></a>2.创建账户</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">adduser git</div></pre></td></tr></table></figure>
-<h4 id="3-创建证书"><a href="#3-创建证书" class="headerlink" title="3.创建证书"></a>3.创建证书</h4><p>在git push操作的时候每次都需要输入密码，非常繁琐。创建证书并将公钥导入到git用户下就能实现免密码操作了。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa</div></pre></td></tr></table></figure></p>
-<p>然后一路回车就能在当前用户的主目录下生成一个.ssh的文件夹，里面有两个文件<code>id_rsa.pub</code>和<code>id_rsa</code>, 我们将 <code>id_rsa.pub</code> 文件 scp 到 git 的相同目录下（如果 git 用户主目录下没有 .ssh 文件夹，也要先生成。）<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scp .ssh/id_rsa.pub git@server:/home/git/.ssh/authorized_keys</div></pre></td></tr></table></figure></p>
-<p>这样以后git的任何操作都不再需要输入密码了，非常方便。</p>
-<h4 id="4-初始化-git-仓库"><a href="#4-初始化-git-仓库" class="headerlink" title="4.初始化 git 仓库"></a>4.初始化 git 仓库</h4><p>进入到/srv目录下，初始化git仓库。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git init --bare sample.git</div></pre></td></tr></table></figure></p>
-<h4 id="5-更改git仓库所有者为git用户"><a href="#5-更改git仓库所有者为git用户" class="headerlink" title="5.更改git仓库所有者为git用户"></a>5.更改git仓库所有者为git用户</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chown -R git:git sample.git</div></pre></td></tr></table></figure>
-<h4 id="6-禁用-shell-登录"><a href="#6-禁用-shell-登录" class="headerlink" title="6.禁用 shell 登录"></a>6.禁用 shell 登录</h4><p>出于安全考虑，git 用户不允许登录 shell，编辑<code>/etc/passwd</code>文件完成。找到类似下面的一行：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git:x:1001:1001:,,,:/home/git:/bin/bash</div></pre></td></tr></table></figure></p>
-<p>改为：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git:x:1001:1001:,,,:/home/git:/usr/bin/git-shell</div></pre></td></tr></table></figure></p>
-<p>这样git用户就无法 shell 登录了。</p>
-<h4 id="7-克隆远程仓库"><a href="#7-克隆远程仓库" class="headerlink" title="7.克隆远程仓库"></a>7.克隆远程仓库</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> git@server:/srv/sample.git</div></pre></td></tr></table></figure>
-<p>至此git的搭建就完成了。</p>
+        <h3 id="1-获取证书"><a href="#1-获取证书" class="headerlink" title="1 获取证书"></a>1 获取证书</h3><p>去阿里云或者腾讯云申请免费证书，下载得到的 www.domain.com.zip 文件，解压获得3个文件夹，分别是 Apache、IIS、Nginx 服务器的证书文件。这里我们只介绍 Nginx 的配置。</p>
+<p>Nginx文件夹内获得SSL证书文件 1_www.domain.com_bundle.crt 和私钥文件 2_www.domain.com.key,<br>1_www.domain.com_bundle.crt 文件包括两段证书代码 “—–BEGIN CERTIFICATE—–”和“—–END CERTIFICATE—–”,<br>2_www.domain.com.key 文件包括一段私钥代码“—–BEGIN RSA PRIVATE KEY—–”和“—–END RSA PRIVATE KEY—–”。</p>
+<h3 id="2-证书安装"><a href="#2-证书安装" class="headerlink" title="2 证书安装"></a>2 证书安装</h3><p>将域名 www.domain.com 的证书文件1_www.domain.com_bundle.crt 、私钥文件2_www.domain.com.key保存到同一个目录，例如/usr/local/nginx/conf目录下。<br>更新Nginx根目录下 conf/nginx.conf 文件如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">       listen 443;</div><div class="line">       server_name www.domain.com; <span class="comment">#填写绑定证书的域名</span></div><div class="line">       ssl on;</div><div class="line">       ssl_certificate 1_www.domain.com_bundle.crt;</div><div class="line">       ssl_certificate_key 2_www.domain.com.key;</div><div class="line">       ssl_session_timeout 5m;</div><div class="line">       ssl_protocols TLSv1 TLSv1.1 TLSv1.2; <span class="comment">#按照这个协议配置</span></div><div class="line">       ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;<span class="comment">#按照这个套件配置</span></div><div class="line">       ssl_prefer_server_ciphers on;</div><div class="line">       location / &#123;</div><div class="line">           root   html; <span class="comment">#站点目录</span></div><div class="line">           index  index.html index.htm;</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>配置完成后，先用bin/nginx –t来测试下配置是否有误，正确无误的话，重启nginx。就可以使 <a href="https://www.domain.com" target="_blank" rel="external">https://www.domain.com</a> 来访问了。</p>
+<p>注：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">配置文件参数</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">listen 443</td>
+<td style="text-align:left">SSL访问端口号为443</td>
+</tr>
+<tr>
+<td style="text-align:left">ssl on</td>
+<td style="text-align:left">启用SSL功能</td>
+</tr>
+<tr>
+<td style="text-align:left">ssl_certificate</td>
+<td style="text-align:left">证书文件</td>
+</tr>
+<tr>
+<td style="text-align:left">ssl_certificate_key</td>
+<td style="text-align:left">私钥文件</td>
+</tr>
+<tr>
+<td style="text-align:left">ssl_protocols</td>
+<td style="text-align:left">使用的协议</td>
+</tr>
+<tr>
+<td style="text-align:left">ssl_ciphers</td>
+<td style="text-align:left">配置加密套件，写法遵循openssl标准</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-使用全站加密，http自动跳转https（可选）"><a href="#3-使用全站加密，http自动跳转https（可选）" class="headerlink" title="3 使用全站加密，http自动跳转https（可选）"></a>3 使用全站加密，http自动跳转https（可选）</h3><p>对于用户不知道网站可以进行https访问的情况下，让服务器自动把http的请求重定向到https。<br>在服务器这边的话配置的话，可以在页面里加js脚本，也可以在后端程序里写重定向，当然也可以在web服务器来实现跳转。Nginx是支持rewrite的（只要在编译的时候没有去掉pcre）<br>在http的server里增加rewrite ^(.*) <a href="https://$host$1" target="_blank" rel="external">https://$host$1</a> permanent;<br>这样就可以实现80进来的请求，重定向为https了。</p>
 
       
     </div>
@@ -407,9 +433,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/linux/" rel="tag"># linux</a>
-          
-            <a href="/tags/git/" rel="tag"># git</a>
+            <a href="/tags/nginx/" rel="tag"># nginx</a>
           
         </div>
       
@@ -422,8 +446,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/05/09/gulp/" rel="next" title="Gulp 的基本使用">
-                <i class="fa fa-chevron-left"></i> Gulp 的基本使用
+              <a href="/2018/03/08/event-loop/" rel="next" title="JavaScript 任务和事件循环">
+                <i class="fa fa-chevron-left"></i> JavaScript 任务和事件循环
               </a>
             
           </div>
@@ -431,10 +455,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/05/24/less/" rel="prev" title="Less 基本语法">
-                Less 基本语法 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -585,7 +605,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-安装git"><span class="nav-number">1.</span> <span class="nav-text">1.安装git</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-创建账户"><span class="nav-number">2.</span> <span class="nav-text">2.创建账户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-创建证书"><span class="nav-number">3.</span> <span class="nav-text">3.创建证书</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-初始化-git-仓库"><span class="nav-number">4.</span> <span class="nav-text">4.初始化 git 仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-更改git仓库所有者为git用户"><span class="nav-number">5.</span> <span class="nav-text">5.更改git仓库所有者为git用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-禁用-shell-登录"><span class="nav-number">6.</span> <span class="nav-text">6.禁用 shell 登录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-克隆远程仓库"><span class="nav-number">7.</span> <span class="nav-text">7.克隆远程仓库</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-获取证书"><span class="nav-number">1.</span> <span class="nav-text">1 获取证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-证书安装"><span class="nav-number">2.</span> <span class="nav-text">2 证书安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-使用全站加密，http自动跳转https（可选）"><span class="nav-number">3.</span> <span class="nav-text">3 使用全站加密，http自动跳转https（可选）</span></a></li></ol></div>
             
 
           </div>
