@@ -275,6 +275,143 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://gikey.github.io/2018/06/20/vue-component/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="凌峰">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lingfeng'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/20/vue-component/" itemprop="url">发布自定义 Vue 组件到 npm</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-20T15:42:08+08:00">
+                2018-06-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>总结一下最近工作中的如何使用npm发布属于自己的vue组件库，项目比较简单，只做最基本的介绍。如果还不了解如何发布插件到 npm，可以先看看 <a href="https://blog.xieluping.cn/2017/08/14/npm-plugin/" target="_blank" rel="external">创建你的第一个 gulp 插件</a>。</p>
+<h3 id="项目目录"><a href="#项目目录" class="headerlink" title="项目目录"></a>项目目录</h3><p>由于只做基本介绍，所以项目目录比较简单：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">.</div><div class="line">├── build</div><div class="line">│   ├── webpack.base.conf.js</div><div class="line">│   ├── webpack.dev.conf.js</div><div class="line">│   └── webpack.prod.conf.js</div><div class="line">├── dist</div><div class="line">│   └── vselect.js <span class="comment"># 打包后的文件</span></div><div class="line">├── index.html</div><div class="line">├── package-lock.json</div><div class="line">├── package.json</div><div class="line">└── src</div><div class="line">    ├── App.vue</div><div class="line">    ├── main.js</div><div class="line">    └── vselect <span class="comment"># 组件源文件</span></div><div class="line">        ├── common.js</div><div class="line">        ├── index.js</div><div class="line">        └── vselect.vue</div></pre></td></tr></table></figure></p>
+<h3 id="基本实现"><a href="#基本实现" class="headerlink" title="基本实现"></a>基本实现</h3><p>项目中的组件源文件就是 src 下的 vselect 目录下的文件，src 中的其他文件只是开发中的 demo，具体可以查看本项目源码 <a href="https://github.com/gikey/vue-awesome-select" target="_blank" rel="external">https://github.com/gikey/vue-awesome-select</a></p>
+<p>vselect.vue 就是基本的vue文件，需要在 index.js 中注册下这个组件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> vSelect <span class="keyword">from</span> <span class="string">'./vselect'</span></div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">    <span class="attr">install</span>: <span class="function"><span class="params">Vue</span> =&gt;</span> &#123;</div><div class="line">        Vue.component(vSelect.name, vSelect)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里比较关键的其实就是 build 中的 webpack 配置文件：</p>
+<ul>
+<li>webpack.base.conf.js</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</div><div class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>)</div><div class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>)</div><div class="line"><span class="keyword">const</span> VueLoaderPlugin = <span class="built_in">require</span>(<span class="string">'vue-loader/lib/plugin'</span>)</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    <span class="attr">output</span>: &#123;</div><div class="line">        <span class="attr">path</span>: path.resolve(__dirname, <span class="string">'../dist'</span>),</div><div class="line">        <span class="attr">filename</span>: <span class="string">'[name].js'</span>,</div><div class="line">        <span class="attr">publicPath</span>: <span class="string">'/'</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">resolve</span>: &#123;</div><div class="line">        <span class="attr">extensions</span>: [<span class="string">'.js'</span>, <span class="string">'.vue'</span>],</div><div class="line">        <span class="attr">alias</span>: &#123;</div><div class="line">            <span class="string">'vue$'</span>: <span class="string">'vue/dist/vue.esm.js'</span>,</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">module</span>: &#123;</div><div class="line">        <span class="attr">rules</span>: [&#123;</div><div class="line">            <span class="attr">test</span>: <span class="regexp">/\.vue$/</span>,</div><div class="line">            <span class="attr">loader</span>: <span class="string">'vue-loader'</span></div><div class="line">        &#125;, &#123;</div><div class="line">            <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,</div><div class="line">            <span class="attr">loader</span>: <span class="string">'babel-loader'</span></div><div class="line">        &#125;, &#123;</div><div class="line">            <span class="attr">test</span>: <span class="regexp">/\.scss$/</span>,</div><div class="line">            <span class="attr">use</span>: [&#123;</div><div class="line">                <span class="attr">loader</span>: <span class="string">"style-loader"</span></div><div class="line">            &#125;, &#123;</div><div class="line">                <span class="attr">loader</span>: <span class="string">"css-loader"</span>, <span class="attr">options</span>: &#123;</div><div class="line">                    <span class="attr">sourceMap</span>: <span class="literal">true</span></div><div class="line">                &#125;</div><div class="line">            &#125;, &#123;</div><div class="line">                <span class="attr">loader</span>: <span class="string">"sass-loader"</span>, <span class="attr">options</span>: &#123;</div><div class="line">                    <span class="attr">sourceMap</span>: <span class="literal">true</span></div><div class="line">                &#125;</div><div class="line">            &#125;]</div><div class="line">        &#125;]</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">plugins</span>: [</div><div class="line">        <span class="keyword">new</span> VueLoaderPlugin()</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>webpack.dev.conf.js</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>)</div><div class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>)</div><div class="line"><span class="keyword">const</span> merge = <span class="built_in">require</span>(<span class="string">'webpack-merge'</span>)</div><div class="line"><span class="keyword">const</span> webpackBaseConfig = <span class="built_in">require</span>(<span class="string">'./webpack.base.conf'</span>)</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = merge(webpackBaseConfig, &#123;</div><div class="line">    <span class="attr">entry</span>: <span class="string">'./src/main.js'</span>,</div><div class="line">    <span class="attr">mode</span>: <span class="string">'development'</span>,</div><div class="line">    <span class="attr">plugins</span>: [</div><div class="line">        <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</div><div class="line">            <span class="attr">filename</span>: <span class="string">'index.html'</span>,</div><div class="line">            <span class="attr">template</span>: <span class="string">'index.html'</span>,</div><div class="line">            <span class="attr">inject</span>: <span class="literal">true</span></div><div class="line">        &#125;),</div><div class="line">        <span class="keyword">new</span> webpack.HotModuleReplacementPlugin()</div><div class="line">    ],</div><div class="line">    <span class="attr">devServer</span>: &#123;</div><div class="line">        <span class="attr">hot</span>: <span class="literal">true</span>,</div><div class="line">        <span class="attr">host</span>: <span class="string">'localhost'</span>,</div><div class="line">        <span class="attr">port</span>: <span class="number">9090</span>,</div><div class="line">        <span class="attr">open</span>: <span class="literal">true</span></div><div class="line">    &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<ul>
+<li>webpack.dev.conf.js</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* 打包 src/vselect */</span></div><div class="line"><span class="keyword">const</span> merge = <span class="built_in">require</span>(<span class="string">'webpack-merge'</span>)</div><div class="line"><span class="keyword">const</span> webpackBaseConfig = <span class="built_in">require</span>(<span class="string">'./webpack.base.conf'</span>)</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = merge(webpackBaseConfig, &#123;</div><div class="line">    <span class="attr">entry</span>: <span class="string">'./src/vselect/index.js'</span>,</div><div class="line">    <span class="attr">mode</span>: <span class="string">'production'</span>,</div><div class="line">    <span class="attr">output</span>: &#123;</div><div class="line">        <span class="attr">filename</span>: <span class="string">'vselect.js'</span>,</div><div class="line">        <span class="attr">libraryTarget</span>: <span class="string">"commonjs2"</span></div><div class="line">    &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>最后需要在 package.json 中配置下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line"><span class="string">"main"</span>: <span class="string">"dist/vselect.js"</span>, <span class="comment">// 打包后的入口文件</span></div><div class="line"><span class="string">"scripts"</span>: &#123;</div><div class="line">    <span class="string">"dev"</span>: <span class="string">"webpack-dev-server --inline --progress --config build/webpack.dev.conf.js"</span>,</div><div class="line">    <span class="string">"build"</span>: <span class="string">"webpack --config build/webpack.prod.conf.js"</span></div><div class="line">&#125;</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>组件开发好后 <code>npm run build</code>， 然后在项目根目录发布到 npm 就行了。</p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>在新项目中使用 <code>npm i -S vue-awesome-select</code>, 然后在项目中的 main.js 文件中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">import <span class="string">'vSelect'</span> <span class="keyword">from</span> <span class="string">'vue-awesome-select'</span></div><div class="line">Vue.use(vSelect)</div></pre></td></tr></table></figure>
+<p>在vue文件中就能使用了</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">v-select</span> <span class="attr">v-model</span>=<span class="string">"selected"</span> <span class="attr">:options</span>=<span class="string">"options"</span>&gt;</span><span class="tag">&lt;/<span class="name">v-select</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>本文<a href="https://blog.xieluping.cn/2018/06/20/vue-component/" target="_blank" rel="external">原始链接</a>,转载请注明出处。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://gikey.github.io/2018/06/12/blockchain/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1753,133 +1890,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://gikey.github.io/2017/06/28/wechat-share/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="凌峰">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="lingfeng'blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/28/wechat-share/" itemprop="url">微信 jssdk 分享</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T16:02:37+08:00">
-                2017-06-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><h4 id="1-获取-access-token"><a href="#1-获取-access-token" class="headerlink" title="1. 获取 access_token"></a>1. 获取 access_token</h4><p>access_token 是公众号的全局唯一接口调用凭据，公众号调用各接口时都需使用 access_token。通过get请求 <a href="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&amp;appid=APPID&amp;secret=APPSECRET" target="_blank" rel="external">https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&amp;appid=APPID&amp;secret=APPSECRET</a> ，正常返回：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"access_token"</span>: <span class="string">"ACCESS_TOKEN"</span>,</div><div class="line">    <span class="string">"expires_in"</span>: <span class="number">7200</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h4 id="2-获取-jsapi-ticket"><a href="#2-获取-jsapi-ticket" class="headerlink" title="2. 获取 jsapi_ticket"></a>2. 获取 jsapi_ticket</h4><p>api_ticket 是用于调用微信卡券 JS API 的临时票据，需要通过 access_token 来获取，api_ticket 和 accss_token 一样有效期都为7200s。由于获取api_ticket 的api 调用次数非常有限，频繁刷新 api_ticket 会导致 api 调用受限，影响自身业务，开发者需在自己的服务存储与更新 api_ticket。<br>通过 get 请求 <a href="https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&amp;type=wx_card" target="_blank" rel="external">https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&amp;type=wx_card</a> ，正常返回：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"errcode"</span>: <span class="number">0</span>,</div><div class="line">    <span class="string">"errmsg"</span>: <span class="string">"ok"</span>,</div><div class="line">    <span class="string">"ticket"</span>: <span class="string">"bxLdikRXVbTPdHSM05e5u5sUoXNKdvsdshFKA"</span>,</div><div class="line">    <span class="string">"expires_in"</span>: <span class="number">7200</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h4 id="3-生成-signature"><a href="#3-生成-signature" class="headerlink" title="3. 生成 signature"></a>3. 生成 signature</h4><p>需要将 <code>noncestr</code>（随机字符串）, 有效的<code>jsapi_ticket</code>, <code>timestamp</code>（时间戳）, <code>url</code>（当前网页的URL，不包含#及其后面部分）进行sha1签名得到signature。对所有待签名参数按照字段名的 ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1&amp;key2=value2…）拼接成字符串string1。这里需要注意的是所有参数名均为小写字符。对 string1 作 sha1 加密，字段名和字段值都采用原始值，不进行 URL 转义。</p>
-<p>字符串 string1：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jsapi_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_90u5h9nbSlYy3-Sl-HhTdfl2fzFy1AOcHKP7qg&amp;noncestr=Wm3WZYTPz0wzccnW&amp;timestamp=<span class="number">1414587457</span>&amp;url=http:<span class="comment">//mp.weixin.qq.com?params=value</span></div></pre></td></tr></table></figure></p>
-<p>然后对 string1 进行签名后即可得到 signature, 类似：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">0</span>f9de62fce790f9a083d5c99e95740ceb90c27ed</div></pre></td></tr></table></figure></p>
-<p>最后将分享需要的权限验证配置项：<code>appId</code>， <code>timestamp</code>，<code>nonceStr</code>， <code>signature</code> 返回即可。</p>
-<blockquote>
-<p>推荐能用到的库 sha1、redis、request，具体使用参考 <a href="http://npmjs.com" target="_blank" rel="external">http://npmjs.com</a></p>
-</blockquote>
-<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><h4 id="1-修改-JS-接口安全域名"><a href="#1-修改-JS-接口安全域名" class="headerlink" title="1. 修改 JS 接口安全域名"></a>1. 修改 JS 接口安全域名</h4><p>即使客户端其他设置都完成后，域名也是备案好的，但是还是经常会发生分享不成功的情况，打开 debug 模式后，显示的信息是 <code>{ &quot;errMsg&quot;: &quot;config:invalid url domain&quot; }</code>，很大程度上是因为公众号后台配置错误，注意上面说的是<code>域名</code>不是 url， 所以不需要加上协议头！！！</p>
-<h4 id="2-引入-jssdk"><a href="#2-引入-jssdk" class="headerlink" title="2. 引入 jssdk"></a>2. 引入 jssdk</h4><p>在需要调用JS接口的页面引入如下JS文件，（支持https）：<a href="http://res.wx.qq.com/open/js/jweixin-1.2.0.js" target="_blank" rel="external">http://res.wx.qq.com/open/js/jweixin-1.2.0.js</a><br>如果需要动态引入的话可以参照：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">id, d, s, cb</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> d = d || <span class="built_in">window</span>.document,</div><div class="line">        s = s || <span class="string">'script'</span>,</div><div class="line">        fjs = d.getElementsByTagName(s)[<span class="number">0</span>],</div><div class="line">        js;</div><div class="line">    <span class="keyword">if</span> (d.getElementById(id)) <span class="keyword">return</span>;</div><div class="line">    js = d.createElement(s); js.id = id;</div><div class="line">    js.src = <span class="string">'//res.wx.qq.com/open/js/jweixin-1.2.0.js'</span>;</div><div class="line">    fjs.parentNode.insertBefore(js, fjs);</div><div class="line">    cb &amp;&amp; cb();</div><div class="line">&#125;(<span class="string">'wx-jssdk'</span>));</div></pre></td></tr></table></figure></p>
-<h4 id="3-配置分享"><a href="#3-配置分享" class="headerlink" title="3. 配置分享"></a>3. 配置分享</h4><p>首先需要调用后端接口获取配置项，一定要带上当前 url (不带不包含#及其后面部分)！！！否则不能成功分享。<br>例如：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$.ajax(&#123;</div><div class="line">    <span class="attr">url</span>: <span class="string">'/server/getConfig/?url='</span>+ location.href.split(<span class="string">'#'</span>)[<span class="number">0</span>],</div><div class="line">    <span class="attr">type</span>: <span class="string">'GET'</span>,</div><div class="line">    ...</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
-<p>配置完 wx.config 后需要在 wx.ready 回调中设置分享接口，可以设置多个分享具体参考官方文档 <a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421141115" target="_blank" rel="external">https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421141115</a></p>
-<blockquote>
-<p>最后说下分享的图片必须是 <code>https</code> 协议的，否则不会展示</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1929,7 +1939,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1942,7 +1952,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

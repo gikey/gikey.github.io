@@ -275,6 +275,133 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://gikey.github.io/2017/06/28/wechat-share/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="凌峰">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lingfeng'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/28/wechat-share/" itemprop="url">微信 jssdk 分享</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T16:02:37+08:00">
+                2017-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><h4 id="1-获取-access-token"><a href="#1-获取-access-token" class="headerlink" title="1. 获取 access_token"></a>1. 获取 access_token</h4><p>access_token 是公众号的全局唯一接口调用凭据，公众号调用各接口时都需使用 access_token。通过get请求 <a href="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&amp;appid=APPID&amp;secret=APPSECRET" target="_blank" rel="external">https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&amp;appid=APPID&amp;secret=APPSECRET</a> ，正常返回：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"access_token"</span>: <span class="string">"ACCESS_TOKEN"</span>,</div><div class="line">    <span class="string">"expires_in"</span>: <span class="number">7200</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="2-获取-jsapi-ticket"><a href="#2-获取-jsapi-ticket" class="headerlink" title="2. 获取 jsapi_ticket"></a>2. 获取 jsapi_ticket</h4><p>api_ticket 是用于调用微信卡券 JS API 的临时票据，需要通过 access_token 来获取，api_ticket 和 accss_token 一样有效期都为7200s。由于获取api_ticket 的api 调用次数非常有限，频繁刷新 api_ticket 会导致 api 调用受限，影响自身业务，开发者需在自己的服务存储与更新 api_ticket。<br>通过 get 请求 <a href="https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&amp;type=wx_card" target="_blank" rel="external">https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&amp;type=wx_card</a> ，正常返回：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"errcode"</span>: <span class="number">0</span>,</div><div class="line">    <span class="string">"errmsg"</span>: <span class="string">"ok"</span>,</div><div class="line">    <span class="string">"ticket"</span>: <span class="string">"bxLdikRXVbTPdHSM05e5u5sUoXNKdvsdshFKA"</span>,</div><div class="line">    <span class="string">"expires_in"</span>: <span class="number">7200</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="3-生成-signature"><a href="#3-生成-signature" class="headerlink" title="3. 生成 signature"></a>3. 生成 signature</h4><p>需要将 <code>noncestr</code>（随机字符串）, 有效的<code>jsapi_ticket</code>, <code>timestamp</code>（时间戳）, <code>url</code>（当前网页的URL，不包含#及其后面部分）进行sha1签名得到signature。对所有待签名参数按照字段名的 ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1&amp;key2=value2…）拼接成字符串string1。这里需要注意的是所有参数名均为小写字符。对 string1 作 sha1 加密，字段名和字段值都采用原始值，不进行 URL 转义。</p>
+<p>字符串 string1：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jsapi_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_90u5h9nbSlYy3-Sl-HhTdfl2fzFy1AOcHKP7qg&amp;noncestr=Wm3WZYTPz0wzccnW&amp;timestamp=<span class="number">1414587457</span>&amp;url=http:<span class="comment">//mp.weixin.qq.com?params=value</span></div></pre></td></tr></table></figure></p>
+<p>然后对 string1 进行签名后即可得到 signature, 类似：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">0</span>f9de62fce790f9a083d5c99e95740ceb90c27ed</div></pre></td></tr></table></figure></p>
+<p>最后将分享需要的权限验证配置项：<code>appId</code>， <code>timestamp</code>，<code>nonceStr</code>， <code>signature</code> 返回即可。</p>
+<blockquote>
+<p>推荐能用到的库 sha1、redis、request，具体使用参考 <a href="http://npmjs.com" target="_blank" rel="external">http://npmjs.com</a></p>
+</blockquote>
+<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><h4 id="1-修改-JS-接口安全域名"><a href="#1-修改-JS-接口安全域名" class="headerlink" title="1. 修改 JS 接口安全域名"></a>1. 修改 JS 接口安全域名</h4><p>即使客户端其他设置都完成后，域名也是备案好的，但是还是经常会发生分享不成功的情况，打开 debug 模式后，显示的信息是 <code>{ &quot;errMsg&quot;: &quot;config:invalid url domain&quot; }</code>，很大程度上是因为公众号后台配置错误，注意上面说的是<code>域名</code>不是 url， 所以不需要加上协议头！！！</p>
+<h4 id="2-引入-jssdk"><a href="#2-引入-jssdk" class="headerlink" title="2. 引入 jssdk"></a>2. 引入 jssdk</h4><p>在需要调用JS接口的页面引入如下JS文件，（支持https）：<a href="http://res.wx.qq.com/open/js/jweixin-1.2.0.js" target="_blank" rel="external">http://res.wx.qq.com/open/js/jweixin-1.2.0.js</a><br>如果需要动态引入的话可以参照：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">id, d, s, cb</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> d = d || <span class="built_in">window</span>.document,</div><div class="line">        s = s || <span class="string">'script'</span>,</div><div class="line">        fjs = d.getElementsByTagName(s)[<span class="number">0</span>],</div><div class="line">        js;</div><div class="line">    <span class="keyword">if</span> (d.getElementById(id)) <span class="keyword">return</span>;</div><div class="line">    js = d.createElement(s); js.id = id;</div><div class="line">    js.src = <span class="string">'//res.wx.qq.com/open/js/jweixin-1.2.0.js'</span>;</div><div class="line">    fjs.parentNode.insertBefore(js, fjs);</div><div class="line">    cb &amp;&amp; cb();</div><div class="line">&#125;(<span class="string">'wx-jssdk'</span>));</div></pre></td></tr></table></figure></p>
+<h4 id="3-配置分享"><a href="#3-配置分享" class="headerlink" title="3. 配置分享"></a>3. 配置分享</h4><p>首先需要调用后端接口获取配置项，一定要带上当前 url (不带不包含#及其后面部分)！！！否则不能成功分享。<br>例如：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$.ajax(&#123;</div><div class="line">    <span class="attr">url</span>: <span class="string">'/server/getConfig/?url='</span>+ location.href.split(<span class="string">'#'</span>)[<span class="number">0</span>],</div><div class="line">    <span class="attr">type</span>: <span class="string">'GET'</span>,</div><div class="line">    ...</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>配置完 wx.config 后需要在 wx.ready 回调中设置分享接口，可以设置多个分享具体参考官方文档 <a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421141115" target="_blank" rel="external">https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421141115</a></p>
+<blockquote>
+<p>最后说下分享的图片必须是 <code>https</code> 协议的，否则不会展示</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://gikey.github.io/2017/03/23/xss/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1764,146 +1891,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://gikey.github.io/2016/05/30/svn-server/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="凌峰">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="lingfeng'blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/30/svn-server/" itemprop="url">Linux 下搭建 svn 服务器</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-30T21:34:18+08:00">
-                2016-05-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Apache Subversion（简称SVN，svn），一个开放源代码的版本控制系统，相较于 RCS、CVS，它采用了分支管理系统，它的设计目标就是替换CVS。虽然功能没有后来的git和hg强大，但是用法非常简单，是非常适合新手入门的版本管理工具。</p>
-<h4 id="1-安装"><a href="#1-安装" class="headerlink" title="1.安装"></a>1.安装</h4><p>Ubuntu、Debian下：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install subvertion</div></pre></td></tr></table></figure>
-<p>Centos下：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install subversion</div></pre></td></tr></table></figure>
-<h4 id="2-新建仓库"><a href="#2-新建仓库" class="headerlink" title="2.新建仓库"></a>2.新建仓库</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">svnadmin create /srv/project</div></pre></td></tr></table></figure>
-<p>新建完成后里面有以下几个文件和文件夹：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">conf db format hooks locks README.txt</div></pre></td></tr></table></figure>
-<p>其中：</p>
-<ul>
-<li>hooks 目录：放置 hook 脚本文件的目录</li>
-<li>locks 目录：用来放置 subversion 的 db 锁文件和 db_logs 锁文件的目录，用来追踪存取文件库的客户端</li>
-<li>format 文件：是一个文本文件，里面只放了一个整数，表示当前文件库配置的版本号</li>
-<li>conf 目录：是这个仓库的配置文件（仓库的用户访问账号、权限等）</li>
-</ul>
-<h4 id="3-配置"><a href="#3-配置" class="headerlink" title="3.配置"></a>3.配置</h4><p>需要配置的是 conf 里面的三个文件：<code>authz</code>、<code>passwd</code>、<code>svnserve.conf</code>。</p>
-<p>编辑 svnserve.conf 文件：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /srv/project/conf/svnserve.conf</div></pre></td></tr></table></figure></p>
-<p>找到如下对应的信息取消注释并修改为：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">anon-access = none</div><div class="line">auth-access = write</div><div class="line">password-db = passwd</div></pre></td></tr></table></figure>
-<p>编辑passwd文件：</p>
-<pre><code>$ vim /srv/project/conf/passwd
-</code></pre><p>添加用户名和密码：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[users]</div><div class="line"><span class="built_in">test</span>1 = 123456 <span class="comment">#用户名和密码</span></div><div class="line"><span class="built_in">test</span>2 = 654321</div></pre></td></tr></table></figure></p>
-<p>编辑authz文件：</p>
-<pre><code>$ vim /srv/project/conf/authz
-</code></pre><p>添加用户和权限：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">[groups]</div><div class="line">admin = <span class="built_in">test</span>1 <span class="comment">#创建admin组用户有test1</span></div><div class="line">user = <span class="built_in">test</span>2  <span class="comment">#创建user组用户有test2</span></div><div class="line"></div><div class="line">[/]</div><div class="line">@admin = rw   <span class="comment">#admin组有读和写的权限</span></div><div class="line">@user = r     <span class="comment">#user组只有读的权限</span></div><div class="line"></div><div class="line">* =           <span class="comment">#表示除了上面设置的权限用户组以外，其他所有用户都设置空权限，空权限表示禁止访问本目录</span></div></pre></td></tr></table></figure></p>
-<p>修改完成后启动svn服务器：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ svnserve <span class="_">-d</span> -r /srv/project/</div></pre></td></tr></table></figure>
-<h4 id="4-客户端使用"><a href="#4-客户端使用" class="headerlink" title="4.客户端使用"></a>4.客户端使用</h4><p>客户端将项目先导入到版本库中：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">svn import /var/www/testproject svn://server/srv/project/testproject</div></pre></td></tr></table></figure></p>
-<p>将项目纳入到版本库中后就可以正常使用 svn 了。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1953,7 +1940,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1966,7 +1953,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
