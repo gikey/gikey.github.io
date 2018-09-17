@@ -351,7 +351,7 @@
 <h2 id="How-to-use"><a href="#How-to-use" class="headerlink" title="How to use"></a>How to use</h2><p>导入 <code>InsProgressBar</code> 和 <code>insProgress</code></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123; InsProgressBar, insProgress &#125; <span class="keyword">from</span> <span class="string">'react-ins-progress-bar'</span></div></pre></td></tr></table></figure>
 <p>在 render 方法中使用 <code>InsProgressBar</code> 组件</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">render() &#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;InsProgressBar /&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">    )</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">render() &#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">        <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></div><div class="line">            <span class="tag">&lt;<span class="name">InsProgressBar</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    )</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>最后只需要调用 <code>insProgress.start()</code> 和 <code>insProgress.finish()</code> 两个方法：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">insProgress.start() <span class="comment">// 显示</span></div><div class="line">insProgress.finish() <span class="comment">// 隐藏</span></div></pre></td></tr></table></figure>
 <h2 id="Options"><a href="#Options" class="headerlink" title="Options"></a>Options</h2><p><code>&lt;InsProgressBar /&gt;</code> 中可以全局配置</p>
@@ -437,6 +437,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/09/17/browser-cache/" rel="prev" title="浏览器缓存">
+                浏览器缓存 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -509,7 +513,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
