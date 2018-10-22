@@ -80,7 +80,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="nginx," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -96,17 +96,16 @@
 
 
 
-<meta name="description" content="1 获取证书去阿里云或者腾讯云申请免费证书，下载得到的 www.domain.com.zip 文件，解压获得3个文件夹，分别是 Apache、IIS、Nginx 服务器的证书文件。这里我们只介绍 Nginx 的配置。 Nginx文件夹内获得SSL证书文件 1_www.domain.com_bundle.crt 和私钥文件 2_www.domain.com.key,1_www.domain.com_">
-<meta name="keywords" content="nginx">
+<meta name="description" content="web领域可以实现的技术方案主要是类似于以下两种原理：  获取句柄，定向通讯 共享内存，结合轮询或者事件通知来完成业务逻辑  postMessage123456// parent.htmlvar childPage = window.open(&apos;child.html&apos;, &apos;child&apos;)childPage.onload = function() &amp;#123;	childPage.postMessa">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Nginx 配置 SSL 证书">
-<meta property="og:url" content="https://gikey.github.io/2018/03/14/nginx-https/index.html">
+<meta property="og:title" content="前端跨页面通信方式">
+<meta property="og:url" content="https://gikey.github.io/2018/10/22/across-page-messaging/index.html">
 <meta property="og:site_name" content="lingfeng&#39;blog">
-<meta property="og:description" content="1 获取证书去阿里云或者腾讯云申请免费证书，下载得到的 www.domain.com.zip 文件，解压获得3个文件夹，分别是 Apache、IIS、Nginx 服务器的证书文件。这里我们只介绍 Nginx 的配置。 Nginx文件夹内获得SSL证书文件 1_www.domain.com_bundle.crt 和私钥文件 2_www.domain.com.key,1_www.domain.com_">
-<meta property="og:updated_time" content="2018-03-13T16:39:14.621Z">
+<meta property="og:description" content="web领域可以实现的技术方案主要是类似于以下两种原理：  获取句柄，定向通讯 共享内存，结合轮询或者事件通知来完成业务逻辑  postMessage123456// parent.htmlvar childPage = window.open(&apos;child.html&apos;, &apos;child&apos;)childPage.onload = function() &amp;#123;	childPage.postMessa">
+<meta property="og:updated_time" content="2018-10-22T03:43:45.786Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Nginx 配置 SSL 证书">
-<meta name="twitter:description" content="1 获取证书去阿里云或者腾讯云申请免费证书，下载得到的 www.domain.com.zip 文件，解压获得3个文件夹，分别是 Apache、IIS、Nginx 服务器的证书文件。这里我们只介绍 Nginx 的配置。 Nginx文件夹内获得SSL证书文件 1_www.domain.com_bundle.crt 和私钥文件 2_www.domain.com.key,1_www.domain.com_">
+<meta name="twitter:title" content="前端跨页面通信方式">
+<meta name="twitter:description" content="web领域可以实现的技术方案主要是类似于以下两种原理：  获取句柄，定向通讯 共享内存，结合轮询或者事件通知来完成业务逻辑  postMessage123456// parent.htmlvar childPage = window.open(&apos;child.html&apos;, &apos;child&apos;)childPage.onload = function() &amp;#123;	childPage.postMessa">
 
 
 
@@ -134,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="https://gikey.github.io/2018/03/14/nginx-https/"/>
+  <link rel="canonical" href="https://gikey.github.io/2018/10/22/across-page-messaging/"/>
 
 
 
 
 
-  <title>Nginx 配置 SSL 证书 | lingfeng'blog</title>
+  <title>前端跨页面通信方式 | lingfeng'blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -278,7 +277,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://gikey.github.io/2018/03/14/nginx-https/">
+    <link itemprop="mainEntityOfPage" href="https://gikey.github.io/2018/10/22/across-page-messaging/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="凌峰">
@@ -295,7 +294,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Nginx 配置 SSL 证书</h2>
+          <h2 class="post-title" itemprop="name headline">前端跨页面通信方式</h2>
         
 
         <div class="post-meta">
@@ -307,8 +306,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-14T00:24:34+08:00">
-                2018-03-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-22T11:04:05+08:00">
+                2018-10-22
               </time>
             
 
@@ -342,47 +341,25 @@
       
 
       
-        <h3 id="1-获取证书"><a href="#1-获取证书" class="headerlink" title="1 获取证书"></a>1 获取证书</h3><p>去阿里云或者腾讯云申请免费证书，下载得到的 www.domain.com.zip 文件，解压获得3个文件夹，分别是 Apache、IIS、Nginx 服务器的证书文件。这里我们只介绍 Nginx 的配置。</p>
-<p>Nginx文件夹内获得SSL证书文件 <code>1_www.domain.com_bundle.crt</code> 和私钥文件 <code>2_www.domain.com.key</code>,<br><code>1_www.domain.com_bundle.crt</code> 文件包括两段证书代码 <code>“-----BEGIN CERTIFICATE-----”和“-----END CERTIFICATE-----”</code>,<br><code>2_www.domain.com.key</code> 文件包括一段私钥代码<code>“-----BEGIN RSA PRIVATE KEY-----”</code>和<code>“-----END RSA PRIVATE KEY-----”</code>。</p>
-<h3 id="2-证书安装"><a href="#2-证书安装" class="headerlink" title="2 证书安装"></a>2 证书安装</h3><p>将域名 www.domain.com 的证书文件 1_www.domain.com_bundle.crt 、私钥文件 2_www.domain.com.key 保存到同一个目录，例如 /usr/local/nginx/conf 目录下。<br>更新 Nginx 根目录下 conf/nginx.conf 文件如下：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">       listen 443 ssl;</div><div class="line">       server_name www.domain.com; <span class="comment">#填写绑定证书的域名</span></div><div class="line">       ssl on;</div><div class="line">       ssl_certificate 1_www.domain.com_bundle.crt;</div><div class="line">       ssl_certificate_key 2_www.domain.com.key;</div><div class="line">       ssl_session_timeout 5m;</div><div class="line">       ssl_protocols TLSv1 TLSv1.1 TLSv1.2; <span class="comment">#按照这个协议配置</span></div><div class="line">       ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;<span class="comment">#按照这个套件配置</span></div><div class="line">       ssl_prefer_server_ciphers on;</div><div class="line">       location / &#123;</div><div class="line">           root   html; <span class="comment">#站点目录</span></div><div class="line">           index  index.html index.htm;</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p>配置完成后，先用 bin/nginx –t 来测试下配置是否有误，正确无误的话，重启 nginx。就可以使 <a href="https://www.domain.com" target="_blank" rel="external">https://www.domain.com</a> 来访问了。</p>
-<p>注：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">配置文件参数</th>
-<th style="text-align:left">说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">listen 443</td>
-<td style="text-align:left">SSL访问端口号为443</td>
-</tr>
-<tr>
-<td style="text-align:left">ssl on</td>
-<td style="text-align:left">启用SSL功能</td>
-</tr>
-<tr>
-<td style="text-align:left">ssl_certificate</td>
-<td style="text-align:left">证书文件</td>
-</tr>
-<tr>
-<td style="text-align:left">ssl_certificate_key</td>
-<td style="text-align:left">私钥文件</td>
-</tr>
-<tr>
-<td style="text-align:left">ssl_protocols</td>
-<td style="text-align:left">使用的协议</td>
-</tr>
-<tr>
-<td style="text-align:left">ssl_ciphers</td>
-<td style="text-align:left">配置加密套件，写法遵循 openssl 标准</td>
-</tr>
-</tbody>
-</table>
-<h3 id="3-使用全站加密，http-自动跳转-https（可选）"><a href="#3-使用全站加密，http-自动跳转-https（可选）" class="headerlink" title="3 使用全站加密，http 自动跳转 https（可选）"></a>3 使用全站加密，http 自动跳转 https（可选）</h3><p>对于用户不知道网站可以进行 https 访问的情况下，让服务器自动把 http 的请求重定向到 https。<br>在服务器这边的话配置的话，可以在页面里加 js 脚本，也可以在后端程序里写重定向，当然也可以在web服务器来实现跳转。Nginx 是支持 rewrite 的（只要在编译的时候没有去掉 pcre）<br>在 http 的 server 里增加 <code>rewrite ^(.*) https://$host$1 permanent</code>;<br>这样就可以实现80进来的请求，重定向为 https 了。</p>
+        <p>web领域可以实现的技术方案主要是类似于以下两种原理：</p>
+<ul>
+<li>获取句柄，定向通讯</li>
+<li>共享内存，结合轮询或者事件通知来完成业务逻辑</li>
+</ul>
+<h3 id="postMessage"><a href="#postMessage" class="headerlink" title="postMessage"></a>postMessage</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// parent.html</span></div><div class="line"><span class="keyword">var</span> childPage = <span class="built_in">window</span>.open(<span class="string">'child.html'</span>, <span class="string">'child'</span>)</div><div class="line"></div><div class="line">childPage.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	childPage.postMessage(<span class="string">'hello'</span>, location.origin)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>postMessage 包含5个属性：</p>
+<ul>
+<li><code>data</code>    包含任意字符串数据，由原始脚本发送</li>
+<li><code>origin</code>    一个字符串，包含原始文档的方案、域名以及端口(如：<a href="http://domain.example:80" target="_blank" rel="external">http://domain.example:80</a>)</li>
+<li><code>lastEventId</code>    一个字符串，包含了当前的消息事件的唯一标识符。</li>
+<li><code>source</code>    原始文件的窗口的引用。更确切地说，它是一个WindowProxy对象。</li>
+<li><code>ports</code>    一个数组，包含任何MessagePort对象发送消息。</li>
+</ul>
+<h3 id="BroadcastChannel"><a href="#BroadcastChannel" class="headerlink" title="BroadcastChannel"></a>BroadcastChannel</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// a.html</span></div><div class="line"><span class="keyword">var</span> channel = <span class="keyword">new</span> BroadcastChannel(<span class="string">'channel'</span>)</div><div class="line">channel.postMessage(<span class="string">'hello'</span>)</div><div class="line"></div><div class="line"><span class="comment">// b.html</span></div><div class="line"><span class="keyword">var</span> channel = <span class="keyword">new</span> BroadcastChannel(<span class="string">'channel'</span>)</div><div class="line">channel.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">	<span class="comment">// event.data</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="localStorage"><a href="#localStorage" class="headerlink" title="localStorage"></a>localStorage</h3><p>设置共享区域的storage，storage会触发storage事件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// a.html</span></div><div class="line">localStorage.setItem(<span class="string">'message'</span>, <span class="string">'hello'</span>)</div><div class="line"></div><div class="line"><span class="comment">// b.html</span></div><div class="line"><span class="built_in">window</span>.onstorage = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="comment">// event.key, event.oldValue, event.newValue</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其实 cookie 通过轮询也能实现类似的效果</p>
+<h3 id="websocket"><a href="#websocket" class="headerlink" title="websocket"></a>websocket</h3><p>这个需要借助服务器来实现。例如：socket.io</p>
 
       
     </div>
@@ -431,12 +408,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/nginx/" rel="tag"># nginx</a>
-          
-        </div>
-      
 
       
         
@@ -446,8 +417,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/08/event-loop/" rel="next" title="JavaScript 任务和事件循环">
-                <i class="fa fa-chevron-left"></i> JavaScript 任务和事件循环
+              <a href="/2018/09/17/browser-cache/" rel="next" title="浏览器缓存机制">
+                <i class="fa fa-chevron-left"></i> 浏览器缓存机制
               </a>
             
           </div>
@@ -455,10 +426,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/01/webpack-server/" rel="prev" title="webpack 配置局域网访问">
-                webpack 配置局域网访问 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -609,7 +576,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-获取证书"><span class="nav-number">1.</span> <span class="nav-text">1 获取证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-证书安装"><span class="nav-number">2.</span> <span class="nav-text">2 证书安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-使用全站加密，http-自动跳转-https（可选）"><span class="nav-number">3.</span> <span class="nav-text">3 使用全站加密，http 自动跳转 https（可选）</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#postMessage"><span class="nav-number">1.</span> <span class="nav-text">postMessage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BroadcastChannel"><span class="nav-number">2.</span> <span class="nav-text">BroadcastChannel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#localStorage"><span class="nav-number">3.</span> <span class="nav-text">localStorage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#websocket"><span class="nav-number">4.</span> <span class="nav-text">websocket</span></a></li></ol></div>
             
 
           </div>
