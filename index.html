@@ -568,11 +568,11 @@
 <h2 id="缓存判断流程"><a href="#缓存判断流程" class="headerlink" title="缓存判断流程"></a>缓存判断流程</h2><p>如果资源已经被浏览器缓存下来，在缓存失效之前，再次请求时，默认会先检查是否命中强缓存，如果强缓存命中则直接读取缓存，如果强缓存没有命中则发请求到服务器检查是否命中协商缓存，如果协商缓存命中，则告诉浏览器还是可以从缓存读取，否则才从服务器返回最新的资源。其浏览器判断缓存的详细流程图，如下：<br><img src="https://user-gold-cdn.xitu.io/2018/9/8/165b74d0e55dda0b?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>最后整理下 http 缓存及其优先级。</p>
 <ol>
-<li><p>强缓存和对比缓存同时存在，如果强缓存还在生效期则强制缓存覆盖对比缓存，对比缓存不生效；如果强缓存不在有效期，对比缓存生效。即：强缓存优先级 &gt; 对比缓存优先级</p>
+<li><p>强缓存和协商缓存同时存在，如果强缓存还在生效期则强制缓存覆盖协商缓存，协商缓存不生效；如果强缓存不在有效期，协商缓存生效。即：强缓存优先级 &gt; 协商缓存优先级</p>
 </li>
 <li><p>强缓存 Expires 和 Cache-Control 同时存在时，则 Cache-Control 会覆盖 Expires，Expires 无论有没有过期，都无效。 即：Cache-Control 优先级 &gt; Expires 优先级。</p>
 </li>
-<li><p>对比缓存 Etag 和 Last-Modified 同时存在时，则 Etag 会覆盖 Last-Modified，Last-Modified 不会生效。即：ETag 优先级 &gt; Last-Modified 优先级。</p>
+<li><p>协商缓存 Etag 和 Last-Modified 同时存在时，则 Etag 会覆盖 Last-Modified，Last-Modified 不会生效。即：ETag 优先级 &gt; Last-Modified 优先级。</p>
 </li>
 </ol>
 <p>当然还有一种缓存pragma，和 Cache-Control 类似，前者是http1.0内容后者是http1.1内容，并且pragma优先级 &gt;  Cache-Control 优先级，不过前者目前基本不使用。</p>
