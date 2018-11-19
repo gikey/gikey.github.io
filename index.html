@@ -275,6 +275,121 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://gikey.github.io/2018/11/19/scrapy-twisted/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="凌峰">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lingfeng'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/19/scrapy-twisted/" itemprop="url">Scrapy 安装出错 requirement Twisted>=13.1.0</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-19T19:36:38+08:00">
+                2018-11-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>centos 系统安装 scrapy 时，提示缺少 twisted。直接用 pip install twisted 会提示找不到合适版本。</p>
+<p>在 <a href="https://pypi.org/project/Twisted/#files" target="_blank" rel="external">pypi</a> 找到最新的版本 Twisted-18.9.0.tar.bz2</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wget https://files.pythonhosted.org/packages/5d/0e/a72d85a55761c2c3ff1cb968143a2fd5f360220779ed90e0fadf4106d4f2/Twisted-18.9.0.tar.bz2</div><div class="line">tar -xvf Twisted-18.9.0.tar.bz2</div><div class="line"><span class="built_in">cd</span> Twisted-18.9.0</div><div class="line">python setup.py install</div></pre></td></tr></table></figure>
+<p>安装好 twisted 后重新安装 Scrapy 就可以了</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://gikey.github.io/2018/10/22/across-document-messaging/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1797,146 +1912,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://gikey.github.io/2017/10/10/docker-proxy-pull-timeout/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="凌峰">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="lingfeng'blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/10/docker-proxy-pull-timeout/" itemprop="url">Docker网络代理设置</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-10T17:42:04+08:00">
-                2017-10-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>在一些实验室环境，服务器没有直接连接外网的权限，需要通过网络代理。我们通常会将网络代理直接配置在/etc/environment、/etc/profile之类的配置文件中，这对于大部分操作都是可行的。</p>
-<p>然而，docker命令却使用不了这些代理。比如docker pull时需要从外网下载镜像，就会出现如下错误：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">docker pull hello-world</div><div class="line"></div><div class="line">Unable to find image,hello-world:latest locally</div><div class="line"></div><div class="line">Pulling repository docker.io/library/hello-world</div><div class="line"></div><div class="line">docker: Network timed out <span class="keyword">while</span> trying to connect to https://index.docker.io/v1/repositories/library/hello-world/images. You may want to check your internet connection or <span class="keyword">if</span> you are behind a proxy..</div></pre></td></tr></table></figure>
-<h4 id="解决方案一："><a href="#解决方案一：" class="headerlink" title="解决方案一："></a>解决方案一：</h4><p>停止docker服务，手动以使用2375端口监听所有网络接口的方式启动docker daemon。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">systemctl stop docker.service</div><div class="line">nohup docker daemon -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock &amp;</div></pre></td></tr></table></figure>
-<p><a href="https://docs.docker.com/v1.11/engine/reference/commandline/daemon/" target="_blank" rel="external">详情参见</a></p>
-<h4 id="解决方案二："><a href="#解决方案二：" class="headerlink" title="解决方案二："></a>解决方案二：</h4><p>编辑配置文件，Ubuntu 下是 <code>/etc/default/docker</code>，CentOS 下是 <code>/etc/sysconfig/docker</code>。不过通过修改这两个文件来配置 daemon 已经是 discouraged 的了。不鼓励使用这种方法。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">HTTP_PROXY=<span class="string">"http://[proxy-addr]:[proxy-port]/"</span></div><div class="line">HTTPS_PROXY=<span class="string">"https://[proxy-addr]:[proxy-port]/"</span></div><div class="line"><span class="built_in">export</span> HTTP_PROXY HTTPS_PROXY</div></pre></td></tr></table></figure>
-<h4 id="解决方案三："><a href="#解决方案三：" class="headerlink" title="解决方案三："></a>解决方案三：</h4><p>该方法是持久化的，修改后会一直生效。该方法覆盖了默认的docker.service文件。</p>
-<ol>
-<li>为docker服务创建一个内嵌的systemd目录</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mkdir -p /etc/systemd/system/docker.service.d</div></pre></td></tr></table></figure>
-<ol>
-<li>创建/etc/systemd/system/docker.service.d/http-proxy.conf文件，并添加HTTP_PROXY环境变量。其中[proxy-addr]和[proxy-port]分别改成实际情况的代理地址和端口：</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#http-proxy.conf</span></div><div class="line"></div><div class="line">[Service]</div><div class="line">Environment=<span class="string">"HTTP_PROXY=http://[proxy-addr]:[proxy-port]/"</span></div></pre></td></tr></table></figure>
-<ol>
-<li>如果还有内部的不需要使用代理来访问的Docker registries，那么还需要制定NO_PROXY环境变量：</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#http-proxy.conf</span></div><div class="line"></div><div class="line">[Service]</div><div class="line">Environment=<span class="string">"HTTP_PROXY=http://[proxy-addr]:[proxy-port]/"</span> <span class="string">"HTTPS_PROXY=https://[proxy-addr]:[proxy-port]/"</span> <span class="string">"NO_PROXY=localhost,127.0.0.1,docker-registry.somecorporation.com"</span></div></pre></td></tr></table></figure>
-<ol>
-<li>更新配置：</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">systemctl daemon-reload</div></pre></td></tr></table></figure>
-<ol>
-<li>重启Docker服务：</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">systemctl restart docker</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1986,7 +1961,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-count">30</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1999,7 +1974,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

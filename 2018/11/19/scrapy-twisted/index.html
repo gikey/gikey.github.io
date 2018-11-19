@@ -80,7 +80,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="python," />
 
 
 
@@ -96,12 +96,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="lingfeng&#39;blog">
-<meta property="og:url" content="https://gikey.github.io/archives/2018/04/index.html">
+<meta name="description" content="centos 系统安装 scrapy 时，提示缺少 twisted。直接用 pip install twisted 会提示找不到合适版本。 在 pypi 找到最新的版本 Twisted-18.9.0.tar.bz2 1234wget https://files.pythonhosted.org/packages/5d/0e/a72d85a55761c2c3ff1cb968143a2fd5f3602">
+<meta name="keywords" content="python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scrapy 安装出错 requirement Twisted&gt;=13.1.0">
+<meta property="og:url" content="https://gikey.github.io/2018/11/19/scrapy-twisted/index.html">
 <meta property="og:site_name" content="lingfeng&#39;blog">
+<meta property="og:description" content="centos 系统安装 scrapy 时，提示缺少 twisted。直接用 pip install twisted 会提示找不到合适版本。 在 pypi 找到最新的版本 Twisted-18.9.0.tar.bz2 1234wget https://files.pythonhosted.org/packages/5d/0e/a72d85a55761c2c3ff1cb968143a2fd5f3602">
+<meta property="og:updated_time" content="2018-11-19T11:43:09.035Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="lingfeng&#39;blog">
+<meta name="twitter:title" content="Scrapy 安装出错 requirement Twisted&gt;=13.1.0">
+<meta name="twitter:description" content="centos 系统安装 scrapy 时，提示缺少 twisted。直接用 pip install twisted 会提示找不到合适版本。 在 pypi 找到最新的版本 Twisted-18.9.0.tar.bz2 1234wget https://files.pythonhosted.org/packages/5d/0e/a72d85a55761c2c3ff1cb968143a2fd5f3602">
 
 
 
@@ -129,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="https://gikey.github.io/archives/2018/04/"/>
+  <link rel="canonical" href="https://gikey.github.io/2018/11/19/scrapy-twisted/"/>
 
 
 
 
 
-  <title>归档 | lingfeng'blog</title>
+  <title>Scrapy 安装出错 requirement Twisted>=13.1.0 | lingfeng'blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -179,7 +184,7 @@
     
   
 
-  <div class="container sidebar-position-left  page-archive  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -263,58 +268,172 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
     
 
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://gikey.github.io/2018/11/19/scrapy-twisted/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="凌峰">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lingfeng'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Scrapy 安装出错 requirement Twisted>=13.1.0</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-19T19:36:38+08:00">
+                2018-11-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
     
 
-      
+    <div class="post-body" itemprop="articleBody">
+
       
       
 
+      
+        <p>centos 系统安装 scrapy 时，提示缺少 twisted。直接用 pip install twisted 会提示找不到合适版本。</p>
+<p>在 <a href="https://pypi.org/project/Twisted/#files" target="_blank" rel="external">pypi</a> 找到最新的版本 Twisted-18.9.0.tar.bz2</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wget https://files.pythonhosted.org/packages/5d/0e/a72d85a55761c2c3ff1cb968143a2fd5f360220779ed90e0fadf4106d4f2/Twisted-18.9.0.tar.bz2</div><div class="line">tar -xvf Twisted-18.9.0.tar.bz2</div><div class="line"><span class="built_in">cd</span> Twisted-18.9.0</div><div class="line">python setup.py install</div></pre></td></tr></table></figure>
+<p>安装好 twisted 后重新安装 Scrapy 就可以了</p>
+
+      
+    </div>
+
+    <div>
       
         
-        <div class="collection-title">
-          <h2 class="archive-year motion-element" id="archive-year-2018">2018</h2>
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechatpay.png" alt="凌峰 WeChat Pay"/>
+          <p>微信打赏</p>
         </div>
       
       
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="凌峰 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
 
       
+    </div>
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
+    <div>
+      
         
-            <a class="post-title-link" href="/2018/04/23/preflighted-requests/" itemprop="url">
-              
-                <span itemprop="name">CORS 预检请求</span>
-              
-            </a>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
         
-      </h3>
+      
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-23T22:05:49+08:00"
-              content="2018-04-23" >
-          04-23
-        </time>
-      </div>
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/22/across-document-messaging/" rel="next" title="前端跨页面通信方式">
+                <i class="fa fa-chevron-left"></i> 前端跨页面通信方式
+              </a>
+            
+          </div>
 
-    </header>
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
 
-    
-
-  </section>
-
-  
-
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -322,6 +441,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
 
         </div>
         
@@ -525,11 +650,9 @@
   
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
 
 
   
@@ -562,6 +685,10 @@
   
     
 
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2141757"></script>
+      <!-- UY END -->
     
   
 
