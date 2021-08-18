@@ -1,0 +1,42 @@
+baseURL = 'https://gikey.github.io'
+languageCode = 'zh-Hans'
+title = 'Null'
+subtitle = 'hello'
+theme = 'PaperMod'
+buildFuture = true
+buildExpired = true
+enableEmoji = true
+enableInlineShortcodes = true
+paginate = 5
+
+[params]
+    custom_css = ["css/style.css"]
+    
+[outputs]
+    home = ["HTML", "RSS", "JSON"]
+
+[taxonomies]
+    tag = "tags"
+    category = "categories"
+
+[menu]
+[[menu.main]]
+    identifier = 'home'
+    name = 'Home'
+    url = '/'
+    weight = 1
+[[menu.main]]
+    identifier = 'archives'
+    name = 'Archives'
+    url = '/archives/'
+    weight = 2
+[[menu.main]]
+    identifier = 'tags'
+    name = 'Tags'
+    url = '/tags/'
+    weight = 3
+[[menu.main]]
+    identifier = 'search'
+    name = 'Search'
+    url = '/search/'
+    weight = 4
