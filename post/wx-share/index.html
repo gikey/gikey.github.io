@@ -11,25 +11,25 @@
 字符串 string1：
 jsapi_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_90u5h9nbSlYy3-Sl-HhTdfl2fzFy1AOcHKP7qg&noncestr=Wm3WZYTPz0wzccnW&timestamp=1414587457&url=http://mp.weixin.qq.com?params=value 然后对 string1 进行签名后即可得到 signature, 类似：">
 <meta name=author content>
-<link rel=canonical href=https://gikey.github.io/post/wx-share/>
+<link rel=canonical href=https://www.xieluping.cn/post/wx-share/>
 <link crossorigin=anonymous href=/assets/css/stylesheet.min.6cba0d81b5f3f42bb578d49f402ba4175aa72b43def148780b8ad714c957c6f5.css integrity="sha256-bLoNgbXz9Cu1eNSfQCukF1qnK0Pe8Uh4C4rXFMlXxvU=" rel="preload stylesheet" as=style>
 <script defer crossorigin=anonymous src=/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5+kdJvBz5iKbt6B5PJI=" onload=hljs.initHighlightingOnLoad()></script>
-<link rel=icon href=https://gikey.github.io/favicon.ico>
-<link rel=icon type=image/png sizes=16x16 href=https://gikey.github.io/favicon-16x16.png>
-<link rel=icon type=image/png sizes=32x32 href=https://gikey.github.io/favicon-32x32.png>
-<link rel=apple-touch-icon href=https://gikey.github.io/apple-touch-icon.png>
-<link rel=mask-icon href=https://gikey.github.io/safari-pinned-tab.svg>
+<link rel=icon href=https://www.xieluping.cn/favicon.ico>
+<link rel=icon type=image/png sizes=16x16 href=https://www.xieluping.cn/favicon-16x16.png>
+<link rel=icon type=image/png sizes=32x32 href=https://www.xieluping.cn/favicon-32x32.png>
+<link rel=apple-touch-icon href=https://www.xieluping.cn/apple-touch-icon.png>
+<link rel=mask-icon href=https://www.xieluping.cn/safari-pinned-tab.svg>
 <meta name=theme-color content="#2e2e33">
 <meta name=msapplication-TileColor content="#2e2e33">
 <meta name=generator content="Hugo 0.87.0">
-<link rel=stylesheet href=https://gikey.github.io/css/style.css><meta property="og:title" content="微信 jssdk 分享">
+<link rel=stylesheet href=https://www.xieluping.cn/css/style.css><meta property="og:title" content="微信 jssdk 分享">
 <meta property="og:description" content="服务端 1. 获取 access_token access_token 是公众号的全局唯一接口调用凭据，公众号调用各接口时都需使用 access_token。通过get请求 https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET ，正常返回：
 { &#34;access_token&#34;: &#34;ACCESS_TOKEN&#34;, &#34;expires_in&#34;: 7200 } 2. 获取 jsapi_ticket api_ticket 是用于调用微信卡券 JS API 的临时票据，需要通过 access_token 来获取，api_ticket 和 accss_token 一样有效期都为7200s。由于获取api_ticket 的api 调用次数非常有限，频繁刷新 api_ticket 会导致 api 调用受限，影响自身业务，开发者需在自己的服务存储与更新 api_ticket。 通过 get 请求 https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=wx_card ，正常返回：
 { &#34;errcode&#34;: 0, &#34;errmsg&#34;: &#34;ok&#34;, &#34;ticket&#34;: &#34;bxLdikRXVbTPdHSM05e5u5sUoXNKdvsdshFKA&#34;, &#34;expires_in&#34;: 7200 } 3. 生成 signature 需要将 noncestr（随机字符串）, 有效的jsapi_ticket, timestamp（时间戳）, url（当前网页的URL，不包含#及其后面部分）进行sha1签名得到signature。对所有待签名参数按照字段名的 ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1&key2=value2…）拼接成字符串string1。这里需要注意的是所有参数名均为小写字符。对 string1 作 sha1 加密，字段名和字段值都采用原始值，不进行 URL 转义。
 字符串 string1：
 jsapi_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_90u5h9nbSlYy3-Sl-HhTdfl2fzFy1AOcHKP7qg&noncestr=Wm3WZYTPz0wzccnW&timestamp=1414587457&url=http://mp.weixin.qq.com?params=value 然后对 string1 进行签名后即可得到 signature, 类似：">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://gikey.github.io/post/wx-share/"><meta property="article:section" content="post">
+<meta property="og:url" content="https://www.xieluping.cn/post/wx-share/"><meta property="article:section" content="post">
 <meta property="article:published_time" content="2017-06-28T16:02:37+08:00">
 <meta property="article:modified_time" content="2017-06-28T16:02:37+08:00">
 <meta name=twitter:card content="summary">
@@ -39,8 +39,8 @@ jsapi_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_90u5h9nbSlYy3-Sl-Hh
 { &#34;errcode&#34;: 0, &#34;errmsg&#34;: &#34;ok&#34;, &#34;ticket&#34;: &#34;bxLdikRXVbTPdHSM05e5u5sUoXNKdvsdshFKA&#34;, &#34;expires_in&#34;: 7200 } 3. 生成 signature 需要将 noncestr（随机字符串）, 有效的jsapi_ticket, timestamp（时间戳）, url（当前网页的URL，不包含#及其后面部分）进行sha1签名得到signature。对所有待签名参数按照字段名的 ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1&key2=value2…）拼接成字符串string1。这里需要注意的是所有参数名均为小写字符。对 string1 作 sha1 加密，字段名和字段值都采用原始值，不进行 URL 转义。
 字符串 string1：
 jsapi_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_90u5h9nbSlYy3-Sl-HhTdfl2fzFy1AOcHKP7qg&noncestr=Wm3WZYTPz0wzccnW&timestamp=1414587457&url=http://mp.weixin.qq.com?params=value 然后对 string1 进行签名后即可得到 signature, 类似：">
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":2,"name":"Posts","item":"https://gikey.github.io/post/"},{"@type":"ListItem","position":3,"name":"微信 jssdk 分享","item":"https://gikey.github.io/post/wx-share/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"微信 jssdk 分享","name":"微信 jssdk 分享","description":"服务端 1. 获取 access_token access_token 是公众号的全局唯一接口调用凭据，公众号调用各接口时都需使用 access_token。通过get请求 https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential\u0026amp;appid=APPID\u0026amp;secret=APPSECRET ，正常返回：\n{ \u0026#34;access_token\u0026#34;: \u0026#34;ACCESS_TOKEN\u0026#34;, \u0026#34;expires_in\u0026#34;: 7200 } 2. 获取 jsapi_ticket api_ticket 是用于调用微信卡券 JS API 的临时票据，需要通过 access_token 来获取，api_ticket 和 accss_token 一样有效期都为7200s。由于获取api_ticket 的api 调用次数非常有限，频繁刷新 api_ticket 会导致 api 调用受限，影响自身业务，开发者需在自己的服务存储与更新 api_ticket。 通过 get 请求 https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN\u0026amp;type=wx_card ，正常返回：\n{ \u0026#34;errcode\u0026#34;: 0, \u0026#34;errmsg\u0026#34;: \u0026#34;ok\u0026#34;, \u0026#34;ticket\u0026#34;: \u0026#34;bxLdikRXVbTPdHSM05e5u5sUoXNKdvsdshFKA\u0026#34;, \u0026#34;expires_in\u0026#34;: 7200 } 3. 生成 signature 需要将 noncestr（随机字符串）, 有效的jsapi_ticket, timestamp（时间戳）, url（当前网页的URL，不包含#及其后面部分）进行sha1签名得到signature。对所有待签名参数按照字段名的 ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1\u0026amp;key2=value2…）拼接成字符串string1。这里需要注意的是所有参数名均为小写字符。对 string1 作 sha1 加密，字段名和字段值都采用原始值，不进行 URL 转义。\n字符串 string1：\njsapi_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_90u5h9nbSlYy3-Sl-HhTdfl2fzFy1AOcHKP7qg\u0026amp;noncestr=Wm3WZYTPz0wzccnW\u0026amp;timestamp=1414587457\u0026amp;url=http://mp.weixin.qq.com?params=value 然后对 string1 进行签名后即可得到 signature, 类似：","keywords":[],"articleBody":"服务端 1. 获取 access_token access_token 是公众号的全局唯一接口调用凭据，公众号调用各接口时都需使用 access_token。通过get请求 https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential\u0026appid=APPID\u0026secret=APPSECRET ，正常返回：\n{ \"access_token\": \"ACCESS_TOKEN\", \"expires_in\": 7200 } 2. 获取 jsapi_ticket api_ticket 是用于调用微信卡券 JS API 的临时票据，需要通过 access_token 来获取，api_ticket 和 accss_token 一样有效期都为7200s。由于获取api_ticket 的api 调用次数非常有限，频繁刷新 api_ticket 会导致 api 调用受限，影响自身业务，开发者需在自己的服务存储与更新 api_ticket。 通过 get 请求 https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN\u0026type=wx_card ，正常返回：\n{ \"errcode\": 0, \"errmsg\": \"ok\", \"ticket\": \"bxLdikRXVbTPdHSM05e5u5sUoXNKdvsdshFKA\", \"expires_in\": 7200 } 3. 生成 signature 需要将 noncestr（随机字符串）, 有效的jsapi_ticket, timestamp（时间戳）, url（当前网页的URL，不包含#及其后面部分）进行sha1签名得到signature。对所有待签名参数按照字段名的 ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1\u0026key2=value2…）拼接成字符串string1。这里需要注意的是所有参数名均为小写字符。对 string1 作 sha1 加密，字段名和字段值都采用原始值，不进行 URL 转义。\n字符串 string1：\njsapi_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_90u5h9nbSlYy3-Sl-HhTdfl2fzFy1AOcHKP7qg\u0026noncestr=Wm3WZYTPz0wzccnW\u0026timestamp=1414587457\u0026url=http://mp.weixin.qq.com?params=value 然后对 string1 进行签名后即可得到 signature, 类似：\n0f9de62fce790f9a083d5c99e95740ceb90c27ed 最后将分享需要的权限验证配置项：appId， timestamp，nonceStr， signature 返回即可。\n 推荐能用到的库 sha1、redis、request，具体使用参考 http://npmjs.com\n 客户端 1. 修改 JS 接口安全域名 即使客户端其他设置都完成后，域名也是备案好的，但是还是经常会发生分享不成功的情况，打开 debug 模式后，显示的信息是 { \"errMsg\": \"config:invalid url domain\" }，很大程度上是因为公众号后台配置错误，注意上面说的是域名不是 url， 所以不需要加上协议头！！！\n2. 引入 jssdk 在需要调用JS接口的页面引入如下JS文件，（支持https）：http://res.wx.qq.com/open/js/jweixin-1.2.0.js 如果需要动态引入的话可以参照：\n(function(id, d, s, cb) { var d = d || window.document, s = s || 'script', fjs = d.getElementsByTagName(s)[0], js; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = '//res.wx.qq.com/open/js/jweixin-1.2.0.js'; fjs.parentNode.insertBefore(js, fjs); cb \u0026\u0026 cb(); }('wx-jssdk')); 3. 配置分享 首先需要调用后端接口获取配置项，一定要带上当前 url (不带不包含#及其后面部分)！！！否则不能成功分享。 例如：\n$.ajax({ url: '/server/getConfig/?url='+ location.href.split('#')[0], type: 'GET', ... }) 配置完 wx.config 后需要在 wx.ready 回调中设置分享接口，可以设置多个分享具体参考官方文档 https://mp.weixin.qq.com/wiki?t=resource/res_main\u0026id=mp1421141115\n 最后说下分享的图片必须是 https 协议的，否则不会展示\n ","wordCount":"164","inLanguage":"en","datePublished":"2017-06-28T16:02:37+08:00","dateModified":"2017-06-28T16:02:37+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://gikey.github.io/post/wx-share/"},"publisher":{"@type":"Organization","name":"Null","logo":{"@type":"ImageObject","url":"https://gikey.github.io/favicon.ico"}}}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":2,"name":"Posts","item":"https://www.xieluping.cn/post/"},{"@type":"ListItem","position":3,"name":"微信 jssdk 分享","item":"https://www.xieluping.cn/post/wx-share/"}]}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"微信 jssdk 分享","name":"微信 jssdk 分享","description":"服务端 1. 获取 access_token access_token 是公众号的全局唯一接口调用凭据，公众号调用各接口时都需使用 access_token。通过get请求 https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential\u0026amp;appid=APPID\u0026amp;secret=APPSECRET ，正常返回：\n{ \u0026#34;access_token\u0026#34;: \u0026#34;ACCESS_TOKEN\u0026#34;, \u0026#34;expires_in\u0026#34;: 7200 } 2. 获取 jsapi_ticket api_ticket 是用于调用微信卡券 JS API 的临时票据，需要通过 access_token 来获取，api_ticket 和 accss_token 一样有效期都为7200s。由于获取api_ticket 的api 调用次数非常有限，频繁刷新 api_ticket 会导致 api 调用受限，影响自身业务，开发者需在自己的服务存储与更新 api_ticket。 通过 get 请求 https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN\u0026amp;type=wx_card ，正常返回：\n{ \u0026#34;errcode\u0026#34;: 0, \u0026#34;errmsg\u0026#34;: \u0026#34;ok\u0026#34;, \u0026#34;ticket\u0026#34;: \u0026#34;bxLdikRXVbTPdHSM05e5u5sUoXNKdvsdshFKA\u0026#34;, \u0026#34;expires_in\u0026#34;: 7200 } 3. 生成 signature 需要将 noncestr（随机字符串）, 有效的jsapi_ticket, timestamp（时间戳）, url（当前网页的URL，不包含#及其后面部分）进行sha1签名得到signature。对所有待签名参数按照字段名的 ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1\u0026amp;key2=value2…）拼接成字符串string1。这里需要注意的是所有参数名均为小写字符。对 string1 作 sha1 加密，字段名和字段值都采用原始值，不进行 URL 转义。\n字符串 string1：\njsapi_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_90u5h9nbSlYy3-Sl-HhTdfl2fzFy1AOcHKP7qg\u0026amp;noncestr=Wm3WZYTPz0wzccnW\u0026amp;timestamp=1414587457\u0026amp;url=http://mp.weixin.qq.com?params=value 然后对 string1 进行签名后即可得到 signature, 类似：","keywords":[],"articleBody":"服务端 1. 获取 access_token access_token 是公众号的全局唯一接口调用凭据，公众号调用各接口时都需使用 access_token。通过get请求 https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential\u0026appid=APPID\u0026secret=APPSECRET ，正常返回：\n{ \"access_token\": \"ACCESS_TOKEN\", \"expires_in\": 7200 } 2. 获取 jsapi_ticket api_ticket 是用于调用微信卡券 JS API 的临时票据，需要通过 access_token 来获取，api_ticket 和 accss_token 一样有效期都为7200s。由于获取api_ticket 的api 调用次数非常有限，频繁刷新 api_ticket 会导致 api 调用受限，影响自身业务，开发者需在自己的服务存储与更新 api_ticket。 通过 get 请求 https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN\u0026type=wx_card ，正常返回：\n{ \"errcode\": 0, \"errmsg\": \"ok\", \"ticket\": \"bxLdikRXVbTPdHSM05e5u5sUoXNKdvsdshFKA\", \"expires_in\": 7200 } 3. 生成 signature 需要将 noncestr（随机字符串）, 有效的jsapi_ticket, timestamp（时间戳）, url（当前网页的URL，不包含#及其后面部分）进行sha1签名得到signature。对所有待签名参数按照字段名的 ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1\u0026key2=value2…）拼接成字符串string1。这里需要注意的是所有参数名均为小写字符。对 string1 作 sha1 加密，字段名和字段值都采用原始值，不进行 URL 转义。\n字符串 string1：\njsapi_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_90u5h9nbSlYy3-Sl-HhTdfl2fzFy1AOcHKP7qg\u0026noncestr=Wm3WZYTPz0wzccnW\u0026timestamp=1414587457\u0026url=http://mp.weixin.qq.com?params=value 然后对 string1 进行签名后即可得到 signature, 类似：\n0f9de62fce790f9a083d5c99e95740ceb90c27ed 最后将分享需要的权限验证配置项：appId， timestamp，nonceStr， signature 返回即可。\n 推荐能用到的库 sha1、redis、request，具体使用参考 http://npmjs.com\n 客户端 1. 修改 JS 接口安全域名 即使客户端其他设置都完成后，域名也是备案好的，但是还是经常会发生分享不成功的情况，打开 debug 模式后，显示的信息是 { \"errMsg\": \"config:invalid url domain\" }，很大程度上是因为公众号后台配置错误，注意上面说的是域名不是 url， 所以不需要加上协议头！！！\n2. 引入 jssdk 在需要调用JS接口的页面引入如下JS文件，（支持https）：http://res.wx.qq.com/open/js/jweixin-1.2.0.js 如果需要动态引入的话可以参照：\n(function(id, d, s, cb) { var d = d || window.document, s = s || 'script', fjs = d.getElementsByTagName(s)[0], js; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = '//res.wx.qq.com/open/js/jweixin-1.2.0.js'; fjs.parentNode.insertBefore(js, fjs); cb \u0026\u0026 cb(); }('wx-jssdk')); 3. 配置分享 首先需要调用后端接口获取配置项，一定要带上当前 url (不带不包含#及其后面部分)！！！否则不能成功分享。 例如：\n$.ajax({ url: '/server/getConfig/?url='+ location.href.split('#')[0], type: 'GET', ... }) 配置完 wx.config 后需要在 wx.ready 回调中设置分享接口，可以设置多个分享具体参考官方文档 https://mp.weixin.qq.com/wiki?t=resource/res_main\u0026id=mp1421141115\n 最后说下分享的图片必须是 https 协议的，否则不会展示\n ","wordCount":"164","inLanguage":"en","datePublished":"2017-06-28T16:02:37+08:00","dateModified":"2017-06-28T16:02:37+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.xieluping.cn/post/wx-share/"},"publisher":{"@type":"Organization","name":"Null","logo":{"@type":"ImageObject","url":"https://www.xieluping.cn/favicon.ico"}}}</script>
 </head>
 <body id=top>
 <script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add('dark'):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove('dark'):window.matchMedia('(prefers-color-scheme: dark)').matches&&document.body.classList.add('dark')</script>
@@ -51,7 +51,7 @@ jsapi_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_90u5h9nbSlYy3-Sl-Hh
 <header class=header>
 <nav class=nav>
 <div class=logo>
-<a href=https://gikey.github.io accesskey=h title="Null (Alt + H)">Null</a>
+<a href=https://www.xieluping.cn accesskey=h title="Null (Alt + H)">Null</a>
 <span class=logo-switches>
 <button id=theme-toggle accesskey=t title="(Alt + T)"><svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
 </button>
@@ -59,22 +59,22 @@ jsapi_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_90u5h9nbSlYy3-Sl-Hh
 </div>
 <ul id=menu>
 <li>
-<a href=https://gikey.github.io/ title=Home>
+<a href=https://www.xieluping.cn/ title=Home>
 <span>Home</span>
 </a>
 </li>
 <li>
-<a href=https://gikey.github.io/archives/ title=Archives>
+<a href=https://www.xieluping.cn/archives/ title=Archives>
 <span>Archives</span>
 </a>
 </li>
 <li>
-<a href=https://gikey.github.io/tags/ title=Tags>
+<a href=https://www.xieluping.cn/tags/ title=Tags>
 <span>Tags</span>
 </a>
 </li>
 <li>
-<a href=https://gikey.github.io/search/ title="Search (Alt + /)" accesskey=/>
+<a href=https://www.xieluping.cn/search/ title="Search (Alt + /)" accesskey=/>
 <span>Search</span>
 </a>
 </li>
@@ -151,7 +151,7 @@ jsapi_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_90u5h9nbSlYy3-Sl-Hh
 </article>
 </main>
 <footer class=footer>
-<span>&copy; 2021 <a href=https://gikey.github.io>Null</a></span>
+<span>&copy; 2021 <a href=https://www.xieluping.cn>Null</a></span>
 </footer>
 <a href=#top aria-label="go to top" title="Go to Top (Alt + G)">
 <button class=top-link id=top-link type=button accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
