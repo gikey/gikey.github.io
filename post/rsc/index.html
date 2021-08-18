@@ -1,0 +1,375 @@
+<!doctype html><html lang=en dir=auto>
+<head><meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no">
+<meta name=robots content="index, follow">
+<title>React Server Components 介绍 | Null</title>
+<meta name=keywords content>
+<meta name=description content="2020年12月21日 React 官方公布了一个新的提案 React Server Component（后面简称：RSC），并做了视频介绍和 demo (如果跑不起来建议尝试docker)演示。React Server Component 还在研发中，目前还是个试验性的功能，主要目的是为了从社区收到一些反馈。离正式发布还需要较长时间，暂时不用立即跟进学习。接下来主要做个简单的介绍。
+Web 渲染的演化 一、Web1.0 服务端渲染 为了区分目前常说的“服务端渲染”，暂且把没有 Ajax 时代的服务端渲染称为“Web1.0 服务端渲染”。Web1.0 的时候前后端不分离，后端提供数据和模板渲染相应 HTML 页面，前端主要提供页面样式和js实现交互动效果。
+渲染流程：  客户端发起页面请求 服务端查询数据并使用相应的模板引擎渲染成 HTML 片段 客户端收到返回 HTML 解析成可见网页内容   优点：  友好的 SEO，每个页面都是服务端返回的完整的 HTML 首屏加载快，页面由后端渲染完成  缺点：  前后端耦合严重，前后端开发相互依赖 交互体验不佳，每个路由都需要页面刷新 服务端负载压力大，渲染任务都由服务端也丧失了客户端作为天然分布式系统的优势  二、客户端渲染（CSR） 随着前端页面复杂程度加剧和 Web2.0 Ajax 技术的发展，就有了前后端分离概念。以 Anglular 为代表的现代前端框架让这种后端提供接口，前端渲染页面的开发方式得到普及。也让服务端和客户端职责得到了明确的分工，让客户端和服务端各自实现更擅长的事情。 渲染流程：
+ 客户端发起请求并接收返回的 HTML 内容 客户端解析网页内容并执行 JS 脚本 JS 利用 Ajax请求后端数据（json/xml） JS 动态将数据渲染在页面中   优点：  前后端分离模式，前端专注于UI，后端专注于逻辑 良好的交互体验，局部进行刷新，可以实现单页应用，预加载等提升页面性能 降低服务器压力，部署比较简单节约服务器成本  缺点：  不利于 SEO，页面数据都是动态生成不利于 SEO 优化 首屏白屏，首次请求几乎空白的 HMTL 页面，TTI受限于数据获取和浏览器渲染的耗时  三、服务端渲染（SSR） 随着单页应用的发展，不友好的 SEO 和首屏渲染白屏等问题亟待解决，于是再次考虑引入服务端渲染。主要逻辑是将 Web1.">
+<meta name=author content>
+<link rel=canonical href=https://gikey.github.io/post/rsc/>
+<link crossorigin=anonymous href=/assets/css/stylesheet.min.6cba0d81b5f3f42bb578d49f402ba4175aa72b43def148780b8ad714c957c6f5.css integrity="sha256-bLoNgbXz9Cu1eNSfQCukF1qnK0Pe8Uh4C4rXFMlXxvU=" rel="preload stylesheet" as=style>
+<script defer crossorigin=anonymous src=/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5+kdJvBz5iKbt6B5PJI=" onload=hljs.initHighlightingOnLoad()></script>
+<link rel=icon href=https://gikey.github.io/favicon.ico>
+<link rel=icon type=image/png sizes=16x16 href=https://gikey.github.io/favicon-16x16.png>
+<link rel=icon type=image/png sizes=32x32 href=https://gikey.github.io/favicon-32x32.png>
+<link rel=apple-touch-icon href=https://gikey.github.io/apple-touch-icon.png>
+<link rel=mask-icon href=https://gikey.github.io/safari-pinned-tab.svg>
+<meta name=theme-color content="#2e2e33">
+<meta name=msapplication-TileColor content="#2e2e33">
+<meta name=generator content="Hugo 0.87.0">
+<link rel=stylesheet href=https://gikey.github.io/css/style.css><meta property="og:title" content="React Server Components 介绍">
+<meta property="og:description" content="2020年12月21日 React 官方公布了一个新的提案 React Server Component（后面简称：RSC），并做了视频介绍和 demo (如果跑不起来建议尝试docker)演示。React Server Component 还在研发中，目前还是个试验性的功能，主要目的是为了从社区收到一些反馈。离正式发布还需要较长时间，暂时不用立即跟进学习。接下来主要做个简单的介绍。
+Web 渲染的演化 一、Web1.0 服务端渲染 为了区分目前常说的“服务端渲染”，暂且把没有 Ajax 时代的服务端渲染称为“Web1.0 服务端渲染”。Web1.0 的时候前后端不分离，后端提供数据和模板渲染相应 HTML 页面，前端主要提供页面样式和js实现交互动效果。
+渲染流程：  客户端发起页面请求 服务端查询数据并使用相应的模板引擎渲染成 HTML 片段 客户端收到返回 HTML 解析成可见网页内容   优点：  友好的 SEO，每个页面都是服务端返回的完整的 HTML 首屏加载快，页面由后端渲染完成  缺点：  前后端耦合严重，前后端开发相互依赖 交互体验不佳，每个路由都需要页面刷新 服务端负载压力大，渲染任务都由服务端也丧失了客户端作为天然分布式系统的优势  二、客户端渲染（CSR） 随着前端页面复杂程度加剧和 Web2.0 Ajax 技术的发展，就有了前后端分离概念。以 Anglular 为代表的现代前端框架让这种后端提供接口，前端渲染页面的开发方式得到普及。也让服务端和客户端职责得到了明确的分工，让客户端和服务端各自实现更擅长的事情。 渲染流程：
+ 客户端发起请求并接收返回的 HTML 内容 客户端解析网页内容并执行 JS 脚本 JS 利用 Ajax请求后端数据（json/xml） JS 动态将数据渲染在页面中   优点：  前后端分离模式，前端专注于UI，后端专注于逻辑 良好的交互体验，局部进行刷新，可以实现单页应用，预加载等提升页面性能 降低服务器压力，部署比较简单节约服务器成本  缺点：  不利于 SEO，页面数据都是动态生成不利于 SEO 优化 首屏白屏，首次请求几乎空白的 HMTL 页面，TTI受限于数据获取和浏览器渲染的耗时  三、服务端渲染（SSR） 随着单页应用的发展，不友好的 SEO 和首屏渲染白屏等问题亟待解决，于是再次考虑引入服务端渲染。主要逻辑是将 Web1.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://gikey.github.io/post/rsc/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2021-08-16T10:08:13+08:00">
+<meta property="article:modified_time" content="2021-08-16T10:08:13+08:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="React Server Components 介绍">
+<meta name=twitter:description content="2020年12月21日 React 官方公布了一个新的提案 React Server Component（后面简称：RSC），并做了视频介绍和 demo (如果跑不起来建议尝试docker)演示。React Server Component 还在研发中，目前还是个试验性的功能，主要目的是为了从社区收到一些反馈。离正式发布还需要较长时间，暂时不用立即跟进学习。接下来主要做个简单的介绍。
+Web 渲染的演化 一、Web1.0 服务端渲染 为了区分目前常说的“服务端渲染”，暂且把没有 Ajax 时代的服务端渲染称为“Web1.0 服务端渲染”。Web1.0 的时候前后端不分离，后端提供数据和模板渲染相应 HTML 页面，前端主要提供页面样式和js实现交互动效果。
+渲染流程：  客户端发起页面请求 服务端查询数据并使用相应的模板引擎渲染成 HTML 片段 客户端收到返回 HTML 解析成可见网页内容   优点：  友好的 SEO，每个页面都是服务端返回的完整的 HTML 首屏加载快，页面由后端渲染完成  缺点：  前后端耦合严重，前后端开发相互依赖 交互体验不佳，每个路由都需要页面刷新 服务端负载压力大，渲染任务都由服务端也丧失了客户端作为天然分布式系统的优势  二、客户端渲染（CSR） 随着前端页面复杂程度加剧和 Web2.0 Ajax 技术的发展，就有了前后端分离概念。以 Anglular 为代表的现代前端框架让这种后端提供接口，前端渲染页面的开发方式得到普及。也让服务端和客户端职责得到了明确的分工，让客户端和服务端各自实现更擅长的事情。 渲染流程：
+ 客户端发起请求并接收返回的 HTML 内容 客户端解析网页内容并执行 JS 脚本 JS 利用 Ajax请求后端数据（json/xml） JS 动态将数据渲染在页面中   优点：  前后端分离模式，前端专注于UI，后端专注于逻辑 良好的交互体验，局部进行刷新，可以实现单页应用，预加载等提升页面性能 降低服务器压力，部署比较简单节约服务器成本  缺点：  不利于 SEO，页面数据都是动态生成不利于 SEO 优化 首屏白屏，首次请求几乎空白的 HMTL 页面，TTI受限于数据获取和浏览器渲染的耗时  三、服务端渲染（SSR） 随着单页应用的发展，不友好的 SEO 和首屏渲染白屏等问题亟待解决，于是再次考虑引入服务端渲染。主要逻辑是将 Web1.">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":2,"name":"Posts","item":"https://gikey.github.io/post/"},{"@type":"ListItem","position":3,"name":"React Server Components 介绍","item":"https://gikey.github.io/post/rsc/"}]}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"React Server Components 介绍","name":"React Server Components 介绍","description":"2020年12月21日 React 官方公布了一个新的提案 React Server Component（后面简称：RSC），并做了视频介绍和 demo (如果跑不起来建议尝试docker)演示。React Server Component 还在研发中，目前还是个试验性的功能，主要目的是为了从社区收到一些反馈。离正式发布还需要较长时间，暂时不用立即跟进学习。接下来主要做个简单的介绍。\nWeb 渲染的演化 一、Web1.0 服务端渲染 为了区分目前常说的“服务端渲染”，暂且把没有 Ajax 时代的服务端渲染称为“Web1.0 服务端渲染”。Web1.0 的时候前后端不分离，后端提供数据和模板渲染相应 HTML 页面，前端主要提供页面样式和js实现交互动效果。\n渲染流程：  客户端发起页面请求 服务端查询数据并使用相应的模板引擎渲染成 HTML 片段 客户端收到返回 HTML 解析成可见网页内容   优点：  友好的 SEO，每个页面都是服务端返回的完整的 HTML 首屏加载快，页面由后端渲染完成  缺点：  前后端耦合严重，前后端开发相互依赖 交互体验不佳，每个路由都需要页面刷新 服务端负载压力大，渲染任务都由服务端也丧失了客户端作为天然分布式系统的优势  二、客户端渲染（CSR） 随着前端页面复杂程度加剧和 Web2.0 Ajax 技术的发展，就有了前后端分离概念。以 Anglular 为代表的现代前端框架让这种后端提供接口，前端渲染页面的开发方式得到普及。也让服务端和客户端职责得到了明确的分工，让客户端和服务端各自实现更擅长的事情。 渲染流程：\n 客户端发起请求并接收返回的 HTML 内容 客户端解析网页内容并执行 JS 脚本 JS 利用 Ajax请求后端数据（json/xml） JS 动态将数据渲染在页面中   优点：  前后端分离模式，前端专注于UI，后端专注于逻辑 良好的交互体验，局部进行刷新，可以实现单页应用，预加载等提升页面性能 降低服务器压力，部署比较简单节约服务器成本  缺点：  不利于 SEO，页面数据都是动态生成不利于 SEO 优化 首屏白屏，首次请求几乎空白的 HMTL 页面，TTI受限于数据获取和浏览器渲染的耗时  三、服务端渲染（SSR） 随着单页应用的发展，不友好的 SEO 和首屏渲染白屏等问题亟待解决，于是再次考虑引入服务端渲染。主要逻辑是将 Web1.","keywords":[],"articleBody":"2020年12月21日 React 官方公布了一个新的提案 React Server Component（后面简称：RSC），并做了视频介绍和 demo (如果跑不起来建议尝试docker)演示。React Server Component 还在研发中，目前还是个试验性的功能，主要目的是为了从社区收到一些反馈。离正式发布还需要较长时间，暂时不用立即跟进学习。接下来主要做个简单的介绍。\nWeb 渲染的演化 一、Web1.0 服务端渲染 为了区分目前常说的“服务端渲染”，暂且把没有 Ajax 时代的服务端渲染称为“Web1.0 服务端渲染”。Web1.0 的时候前后端不分离，后端提供数据和模板渲染相应 HTML 页面，前端主要提供页面样式和js实现交互动效果。\n渲染流程：  客户端发起页面请求 服务端查询数据并使用相应的模板引擎渲染成 HTML 片段 客户端收到返回 HTML 解析成可见网页内容   优点：  友好的 SEO，每个页面都是服务端返回的完整的 HTML 首屏加载快，页面由后端渲染完成  缺点：  前后端耦合严重，前后端开发相互依赖 交互体验不佳，每个路由都需要页面刷新 服务端负载压力大，渲染任务都由服务端也丧失了客户端作为天然分布式系统的优势  二、客户端渲染（CSR） 随着前端页面复杂程度加剧和 Web2.0 Ajax 技术的发展，就有了前后端分离概念。以 Anglular 为代表的现代前端框架让这种后端提供接口，前端渲染页面的开发方式得到普及。也让服务端和客户端职责得到了明确的分工，让客户端和服务端各自实现更擅长的事情。 渲染流程：\n 客户端发起请求并接收返回的 HTML 内容 客户端解析网页内容并执行 JS 脚本 JS 利用 Ajax请求后端数据（json/xml） JS 动态将数据渲染在页面中   优点：  前后端分离模式，前端专注于UI，后端专注于逻辑 良好的交互体验，局部进行刷新，可以实现单页应用，预加载等提升页面性能 降低服务器压力，部署比较简单节约服务器成本  缺点：  不利于 SEO，页面数据都是动态生成不利于 SEO 优化 首屏白屏，首次请求几乎空白的 HMTL 页面，TTI受限于数据获取和浏览器渲染的耗时  三、服务端渲染（SSR） 随着单页应用的发展，不友好的 SEO 和首屏渲染白屏等问题亟待解决，于是再次考虑引入服务端渲染。主要逻辑是将 Web1.0 服务端渲染和 CSR 做了一个结合，以单页应用为例：前端服务器获取首屏数据通过服务端渲染成相应HTML返回客户端，之后的数据交互逻辑与客户端渲染一样。 渲染流程：\n 客户端向前端服务器发送页面请求 前端服务器向后端服务器请求相应数据并渲染完整 HTML 返回给客户端 客户端渲染 HTML 页面并执行 JS 脚本，给页面绑定事件，让页面变得可交互 当再次需要数据交互就于CSR一致利用 Ajax 请求服务端 API，拿到返回数据进行动态渲染   优点：  友好的 SEO，首屏不再是空白页面 良好的交互体验，既解决了首屏白屏的问题，也兼顾了 CSR 的优势  缺点：  维护困难，抛弃了部分 SPA 技术带来的技术优势 首屏无法分段渲染   RSC 并不是为了解决 SSR 渲染的问题而出现的， SSR 和 RSC 可以一起使用。\n RSC 到底是啥？ 以官方的介绍为例，有如下这样一个音乐详情页面： 我们的代码基本结构可能是这样：\nfunction ArtistPage({ artistId }) { return ( ArtistDetails artistId={artistId} TopTracks artistId={artistId} / Discography artistId={artistId} / /ArtistDetails ); } 为了保证良好的用户体验，我们会在一个接口中获取所有相关数据，避免随机顺序渲染：\nfunction ArtistPage({ artistId }) { const stuff = fetchAllTheStuffJustInCase(); return ( ArtistDetails artistId={artistId} details={stuff.details}  TopTracks artistId={artistId} topTracks={stuff.topTracks} / Discography artistId={artistId} discography={stuff.discography} / /ArtistDetails ); } 这样每个组件从逻辑上就不那么解耦了，会让组件的可维护性变得非常差。如果后续不再需要 TopTracks 数据了，接口就返回了冗余的数据，或者某个组件增加了一个 props 属性，如果这个组件在其他地方也被用到，这样需要在其他所有地方都要增加这个 props 属性。 其实这个问题可用通过 GraphQL + Relay 的方案解决 于是我们考虑到可以让每个组件单独来实现各自数据获取逻辑：\nfunction ArtistDetails({ artistId, children }) { const detail = fetchDetails(artistId); // ... } function TopTracks({ artistId }) { const topTracks = fetchTopTracks(artistId); // ... } function Discography({ artistId }) { const discography = fetchDiscography(artistId); // ... } 这样在父组件 ArtistDetails 中的实现可能是这样：\nfunction ArtistDetails({ artistId, children }) { const [details, setDetails] = useState(null); useEffect(() = { const detail = fetchArtistDetails(artistId); setArtistInfo(detail); }, [artistId]) if (!details) { return 'loading'; } return ( div ... {children} /div ); } 也就是子组件中获取数据的逻辑必须要等到父组件渲染完毕，这种像瀑布一样一节一节往下流的模式就造成典型的网络瀑布，如果组件的数据源越多组件层级越深，问题越明显。 同时这样也会让体验变差，因为这个组件就需要发送3个 HTTP 请求，浏览器从服务端 fetch 数据是比较贵的 IO，抽象一下就是下面这样： 当然我们也可以让三个组件完全不嵌套平级展示，这样虽然避免了网络瀑布，但是组件的渲染顺序也变得不可控了，交互体验会再次打折扣 我们平时的组件数据交互基本都是这种模式。大胆设想下：如果把容器组件放在服务端，服务端的组件直接与数据交互生成完整组件内容然后返回给客户端，这样既可以解决频繁请求带来的 IO 消耗也解决了 CSR 中的网络瀑布。 到此，我们知道了 React Server Component 就是 在服务端运行的 React 组件。\nRSC 如何运行? 组件类型： 介绍 RSC 运行流程前需要先了解几个新的概念：\n  Server Component   服务器组件是在服务端运行的组件，它们可以直接访问服务器端数据源，比如服务器上的数据库或文件系统，因而获取数据取过程更快、更高效。服务器组件是无状态的，服务器组件可以导入客户端组件，客户端组件不能导入服务服务器组件，必须以 .server.js、.server.jsx 的格式命名。\n  Client Component   客户端组件是只能在客户端上呈现的组件（这就是我们目前使用的 react 组件）。客户端组件不能使用服务器组件。它们通常由服务器组件导入，用于显示应用程序的交互部分。它们不能访问服务器端数据源，它们是有状态的，可以访问浏览器 API，必须以 .client.js、.client.jsx 的格式命名。\n  Shared Component   共享组件是可以在服务端或客户端上呈现的组件，这具体取决于使用它们的组件类型。一般是Server Component 和 Client Component 共有的一些功能组成的组件，同样Shared Component也不能有状态。\n如果上面的 demo 抽象成在完全在客户端渲染的组件树可能是： 其实平时我们可以把组件划分为：依赖数据的容器组件和依赖行为的交互组件，容器组件其实可以运行在服务端交互组件可以运行在客户端。容器组件我们就可以用 Server Component 实现，而依赖行为的交互组件用 Client Component 实现： 运行流程  webpack 利用 react-server-dom-webpack/plugin 编译所有的 .client.js 文件，并生成 react-client-manifest.json 文件  { \"file:///workspace/server-components-demo/src/Root.client.js\": { \"\": { \"id\": \"./src/Root.client.js\", \"chunks\": [ \"main\" ], \"name\": \"\" }, \"*\": { \"id\": \"./src/Root.client.js\", \"chunks\": [ \"main\" ], \"name\": \"*\" }, \"default\": { \"id\": \"./src/Root.client.js\", \"chunks\": [ \"main\" ], \"name\": \"default\" } // ... } Server 端启动服务，利用 react-server-dom-webpack/writer 的 pipeToNodeWritable 将 Server Component 和数据以及 react-client-manifest.json 转为 chunk 数据流返回客户端  const { pipeToNodeWritable } = require('react-server-dom-webpack/writer'); async function renderReactTree(res, props) { await waitForWebpack(); const manifest = readFileSync( path.resolve(__dirname, '../build/react-client-manifest.json'), 'utf8' ); const moduleMap = JSON.parse(manifest); pipeToNodeWritable(React.createElement(ReactApp, props), res, moduleMap); } M1:{\"id\":\"./src/SearchField.client.js\",\"chunks\":[\"client5\"],\"name\":\"\"} M2:{\"id\":\"./src/EditButton.client.js\",\"chunks\":[\"client1\"],\"name\":\"\"} S3:\"react.suspense\" J0:[\"$\",\"div\",null,{\"className\":\"main\",\"children\":[[\"$\",\"section\",null,{\"className\":\"col sidebar\",\"children\":[[\"$\",\"section\",null,{\"className\":\"sidebar-header\",\"children\":[[\"$\",\"img\",null,{\"className\":\"logo\",\"src\":\"logo.svg\",\"width\":\"22px\",\"height\":\"20px\",\"alt\":\"\",\"role\":\"presentation\"}],[\"$\",\"strong\",null,{\"children\":\"React Notes\"}]]}],[\"$\",\"section\",null,{\"className\":\"sidebar-menu\",\"role\":\"menubar\",\"children\":[[\"$\",\"@1\",null,{}],[\"$\",\"@2\",null,{\"noteId\":null,\"children\":\"New2\"}]]}],[\"$\",\"nav\",null,{\"children\":[\"$\",\"$3\",null,{\"fallback\":[\"$\",\"div\",null,{\"children\":[\"$\",\"ul\",null,{\"className\":\"notes-list skeleton-container\",\"children\":[[\"$\",\"li\",null,{\"className\":\"v-stack\",\"children\":[\"$\",\"div\",null,{\"className\":\"sidebar-note-list-item skeleton\",\"style\":{\"height\":\"5em\"}}]}],[\"$\",\"li\",null,{\"className\":\"v-stack\",\"children\":[\"$\",\"div\",null,{\"className\":\"sidebar-note-list-item skeleton\",\"style\":{\"height\":\"5em\"}}]}],[\"$\",\"li\",null,{\"className\":\"v-stack\",\"children\":[\"$\",\"div\",null,{\"className\":\"sidebar-note-list-item skeleton\",\"style\":{\"height\":\"5em\"}}]}]]}]}],\"children\":\"@4\"}]}]]}],[\"$\",\"section\",\"null\",{\"className\":\"col note-viewer\",\"children\":[\"$\",\"$3\",null,{\"fallback\":[\"$\",\"div\",null,{\"className\":\"note skeleton-container\",\"role\":\"progressbar\",\"aria-busy\":\"true\",\"children\":[[\"$\",\"div\",null,{\"className\":\"note-header\",\"children\":[[\"$\",\"div\",null,{\"className\":\"note-title skeleton\",\"style\":{\"height\":\"3rem\",\"width\":\"65%\",\"marginInline\":\"12px 1em\"}}],[\"$\",\"div\",null,{\"className\":\"skeleton skeleton--button\",\"style\":{\"width\":\"8em\",\"height\":\"2.5em\"}}]]}],[\"$\",\"div\",null,{\"className\":\"note-preview\",\"children\":[[\"$\",\"div\",null,{\"className\":\"skeleton v-stack\",\"style\":{\"height\":\"1.5em\"}}],[\"$\",\"div\",null,{\"className\":\"skeleton v-stack\",\"style\":{\"height\":\"1.5em\"}}],[\"$\",\"div\",null,{\"className\":\"skeleton v-stack\",\"style\":{\"height\":\"1.5em\"}}],[\"$\",\"div\",null,{\"className\":\"skeleton v-stack\",\"style\":{\"height\":\"1.5em\"}}],[\"$\",\"div\",null,{\"className\":\"skeleton v-stack\",\"style\":{\"height\":\"1.5em\"}}]]}]]}],\"children\":[\"$\",\"div\",null,{\"className\":\"note--empty-state\",\"children\":[\"$\",\"span\",null,{\"className\":\"note-text--empty-state\",\"children\":\"Click a note on the left to view something! ð¥º\"}]}]}]}]]}] M5:{\"id\":\"./src/SidebarNote.client.js\",\"chunks\":[\"client6\"],\"name\":\"\"} J4:[\"$\",\"ul\",null,{\"className\":\"notes-list\",\"children\":[[\"$\",\"li\",\"3\",{\"children\":[\"$\",\"@5\",null,{\"id\":3,\"title\":\"test\",\"expandedChildren\":[\"$\",\"p\",null,{\"className\":\"sidebar-note-excerpt\",\"children\":\"test demo\"}],\"children\":[\"$\",\"header\",null,{\"className\":\"sidebar-note-header\",\"children\":[[\"$\",\"strong\",null,{\"children\":\"test\"}],[\"$\",\"small\",null,{\"children\":\"12:32 noon\"}]]}]}]}]]}] 客户端利用 react-server-dom-webpack 中 createFromFetch readRoot将获取的数据流反序列化为 React节点。   Server Component 中嵌套的 Client Component 则直接加载客户端.client.js 打包出来的 js 文件\n import { createFromFetch } from \"react-server-dom-webpack\"; function useServerResponse(id) { return createFromFetch(fetch(`/react?id=${id}`)); } function Content() { const [response, setResponse] = useState(); useEffect(() = { setResponse(useServerResponse()); }, []); return response ? ( div{response.readRoot()}/div ) : null; } 整体流程如下： RSC 思考 RSC的思路其实很类似 PHP/ASP 时代的 Web1.0 服务端渲染，很多人认为是一种倒退，“前端好不容易爬到了山顶，却发现 PHP 已经等待多时”。盘点下 RSC 的一些优点和#### 缺点：\n缺点：  职责不清，RSC 的引入使得前后端分离的开发模式受到挑战，再次回到 Web1.0 的时代 维护困难，Server 组件和 Client 组件相互嵌套，代码维护会变得比 CSR 更加困难 增加了服务端压力，服务端需要额外将数据、jsx 转为 RSC 数据流传递给客户端  优点：  天然接近各种IO，访问数据库、文件系统更快、更高效 Zero Bundle Size，RSC 可以大大降低前端项目打包体积 Code Splitting，自动的代码分割 替代前端微服务，RSC 颗粒度是到组件级别，复用性能大大提高  哲学中有个理论叫做：“螺旋式上升”，RSC 并没有开倒车而是在一个更高的维度回来解决了一个老问题，这正是一种先进而优雅的方式。\n相关链接  https://reactjs.org/blog/2020/12/21/data-fetching-with-react-server-components.html https://www.youtube.com/watch?v=TQQPAU21ZUw\u0026feature=emb_title https://github.com/reactjs/server-components-demo https://github.com/reactjs/rfcs/pull/188  ","wordCount":"526","inLanguage":"en","datePublished":"2021-08-16T10:08:13+08:00","dateModified":"2021-08-16T10:08:13+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://gikey.github.io/post/rsc/"},"publisher":{"@type":"Organization","name":"Null","logo":{"@type":"ImageObject","url":"https://gikey.github.io/favicon.ico"}}}</script>
+</head>
+<body id=top>
+<script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add('dark'):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove('dark'):window.matchMedia('(prefers-color-scheme: dark)').matches&&document.body.classList.add('dark')</script>
+<noscript>
+<style type=text/css>#theme-toggle,.top-link{display:none}</style>
+<style>@media(prefers-color-scheme:dark){:root{--theme:#1d1e20;--entry:#2e2e33;--primary:rgba(255, 255, 255, 0.84);--secondary:rgba(255, 255, 255, 0.56);--tertiary:rgba(255, 255, 255, 0.16);--content:rgba(255, 255, 255, 0.74);--hljs-bg:#2e2e33;--code-bg:#37383e;--border:#333}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style>
+</noscript>
+<header class=header>
+<nav class=nav>
+<div class=logo>
+<a href=https://gikey.github.io accesskey=h title="Null (Alt + H)">Null</a>
+<span class=logo-switches>
+<button id=theme-toggle accesskey=t title="(Alt + T)"><svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button>
+</span>
+</div>
+<ul id=menu>
+<li>
+<a href=https://gikey.github.io/ title=Home>
+<span>Home</span>
+</a>
+</li>
+<li>
+<a href=https://gikey.github.io/archives/ title=Archives>
+<span>Archives</span>
+</a>
+</li>
+<li>
+<a href=https://gikey.github.io/tags/ title=Tags>
+<span>Tags</span>
+</a>
+</li>
+<li>
+<a href=https://gikey.github.io/search/ title="Search (Alt + /)" accesskey=/>
+<span>Search</span>
+</a>
+</li>
+</ul>
+</nav>
+</header>
+<main class=main>
+<article class=post-single>
+<header class=post-header>
+<h1 class=post-title>
+React Server Components 介绍
+</h1>
+<div class=post-meta>August 16, 2021
+</div>
+</header>
+<div class=post-content><p>2020年12月21日 React 官方公布了一个新的<a href=https://github.com/reactjs/rfcs/pull/188>提案</a> React Server Component（后面简称：RSC），并做了<a href="https://www.youtube.com/watch?v=TQQPAU21ZUw&feature=emb_title">视频介绍</a>和 <a href=https://github.com/reactjs/server-components-demo>demo</a> (如果跑不起来建议尝试docker)演示。React Server Component 还在研发中，目前还是个试验性的功能，主要目的是为了从社区收到一些反馈。离正式发布还需要较长时间，暂时不用立即跟进学习。接下来主要做个简单的介绍。</p>
+<h2 id=web--渲染的演化>Web 渲染的演化<a hidden class=anchor aria-hidden=true href=#web--渲染的演化>#</a></h2>
+<h3 id=一web10-服务端渲染>一、Web1.0 服务端渲染<a hidden class=anchor aria-hidden=true href=#一web10-服务端渲染>#</a></h3>
+<p>为了区分目前常说的“服务端渲染”，暂且把没有 Ajax 时代的服务端渲染称为“Web1.0 服务端渲染”。Web1.0 的时候前后端不分离，后端提供数据和模板渲染相应 HTML 页面，前端主要提供页面样式和js实现交互动效果。</p>
+<h4 id=渲染流程>渲染流程：<a hidden class=anchor aria-hidden=true href=#渲染流程>#</a></h4>
+<ol>
+<li>客户端发起页面请求</li>
+<li>服务端查询数据并使用相应的模板引擎渲染成 HTML 片段</li>
+<li>客户端收到返回 HTML 解析成可见网页内容
+<img loading=lazy src=https://cdn.xieluping.cn/images/hvcg3mktsag.png alt>
+</li>
+</ol>
+<h4 id=优点>优点：<a hidden class=anchor aria-hidden=true href=#优点>#</a></h4>
+<ul>
+<li>友好的 SEO，每个页面都是服务端返回的完整的 HTML</li>
+<li>首屏加载快，页面由后端渲染完成</li>
+</ul>
+<h4 id=缺点>缺点：<a hidden class=anchor aria-hidden=true href=#缺点>#</a></h4>
+<ul>
+<li>前后端耦合严重，前后端开发相互依赖</li>
+<li>交互体验不佳，每个路由都需要页面刷新</li>
+<li>服务端负载压力大，渲染任务都由服务端也丧失了客户端作为天然分布式系统的优势</li>
+</ul>
+<h3 id=二客户端渲染csrhttpsdevelopersgooglecomwebupdates201902rendering-on-the-web>二、客户端渲染（<a href=https://developers.google.com/web/updates/2019/02/rendering-on-the-web>CSR</a>）<a hidden class=anchor aria-hidden=true href=#二客户端渲染csrhttpsdevelopersgooglecomwebupdates201902rendering-on-the-web>#</a></h3>
+<p>随着前端页面复杂程度加剧和 Web2.0 Ajax 技术的发展，就有了前后端分离概念。以 Anglular 为代表的现代前端框架让这种后端提供接口，前端渲染页面的开发方式得到普及。也让服务端和客户端职责得到了明确的分工，让客户端和服务端各自实现更擅长的事情。
+渲染流程：</p>
+<ol>
+<li>客户端发起请求并接收返回的 HTML 内容</li>
+<li>客户端解析网页内容并执行 JS 脚本</li>
+<li>JS 利用 Ajax请求后端数据（json/xml）</li>
+<li>JS 动态将数据渲染在页面中
+<img loading=lazy src=https://cdn.xieluping.cn/images/v9c9dmh228.png alt>
+</li>
+</ol>
+<h4 id=优点-1>优点：<a hidden class=anchor aria-hidden=true href=#优点-1>#</a></h4>
+<ul>
+<li>前后端分离模式，前端专注于UI，后端专注于逻辑</li>
+<li>良好的交互体验，局部进行刷新，可以实现单页应用，预加载等提升页面性能</li>
+<li>降低服务器压力，部署比较简单节约服务器成本</li>
+</ul>
+<h4 id=缺点-1>缺点：<a hidden class=anchor aria-hidden=true href=#缺点-1>#</a></h4>
+<ul>
+<li>不利于 SEO，页面数据都是动态生成不利于 SEO 优化</li>
+<li>首屏白屏，首次请求几乎空白的 HMTL 页面，TTI受限于<code>数据获取</code>和<code>浏览器渲染</code>的耗时</li>
+</ul>
+<h3 id=三服务端渲染ssr>三、服务端渲染（SSR）<a hidden class=anchor aria-hidden=true href=#三服务端渲染ssr>#</a></h3>
+<p>随着单页应用的发展，不友好的 SEO 和首屏渲染白屏等问题亟待解决，于是再次考虑引入服务端渲染。主要逻辑是将 Web1.0 服务端渲染和 CSR 做了一个结合，以单页应用为例：前端服务器获取首屏数据通过服务端渲染成相应HTML返回客户端，之后的数据交互逻辑与客户端渲染一样。
+渲染流程：</p>
+<ol>
+<li>客户端向前端服务器发送页面请求</li>
+<li>前端服务器向后端服务器请求相应数据并渲染完整 HTML 返回给客户端</li>
+<li>客户端渲染 HTML 页面并执行 JS 脚本，给页面绑定事件，让页面变得可交互</li>
+<li>当再次需要数据交互就于CSR一致利用 Ajax 请求服务端 API，拿到返回数据进行动态渲染
+<img loading=lazy src=https://cdn.xieluping.cn/images/52qreo5vkco.png alt>
+</li>
+</ol>
+<h4 id=优点-2>优点：<a hidden class=anchor aria-hidden=true href=#优点-2>#</a></h4>
+<ul>
+<li>友好的 SEO，首屏不再是空白页面</li>
+<li>良好的交互体验，既解决了首屏白屏的问题，也兼顾了 CSR 的优势</li>
+</ul>
+<h4 id=缺点-2>缺点：<a hidden class=anchor aria-hidden=true href=#缺点-2>#</a></h4>
+<ul>
+<li>维护困难，抛弃了部分 SPA 技术带来的技术优势</li>
+<li>首屏无法分段渲染</li>
+</ul>
+<blockquote>
+<p>RSC 并不是为了解决 SSR 渲染的问题而出现的， SSR 和 RSC 可以一起使用。</p>
+</blockquote>
+<h2 id=rsc-到底是啥>RSC 到底是啥？<a hidden class=anchor aria-hidden=true href=#rsc-到底是啥>#</a></h2>
+<p>以官方的介绍为例，有如下这样一个音乐详情页面：
+<img loading=lazy src=https://cdn.xieluping.cn/images/03qsuaeu0s.png alt>
+我们的代码基本结构可能是这样：</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>ArtistPage</span>({ <span style=color:#a6e22e>artistId</span> }) {
+  <span style=color:#66d9ef>return</span> (
+    <span style=color:#f92672>&lt;</span><span style=color:#a6e22e>ArtistDetails</span> <span style=color:#a6e22e>artistId</span><span style=color:#f92672>=</span>{<span style=color:#a6e22e>artistId</span>}<span style=color:#f92672>&gt;</span>
+      <span style=color:#f92672>&lt;</span><span style=color:#a6e22e>TopTracks</span> <span style=color:#a6e22e>artistId</span><span style=color:#f92672>=</span>{<span style=color:#a6e22e>artistId</span>} <span style=color:#f92672>/&gt;</span>
+      <span style=color:#f92672>&lt;</span><span style=color:#a6e22e>Discography</span> <span style=color:#a6e22e>artistId</span><span style=color:#f92672>=</span>{<span style=color:#a6e22e>artistId</span>} <span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;</span><span style=color:#960050;background-color:#1e0010>/ArtistDetails&gt;</span>
+  );
+}
+</code></pre></div><p>为了保证良好的用户体验，我们会在一个接口中获取所有相关数据，避免随机顺序渲染：</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>ArtistPage</span>({ <span style=color:#a6e22e>artistId</span> }) {
+    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>stuff</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>fetchAllTheStuffJustInCase</span>();
+    <span style=color:#66d9ef>return</span> (
+      <span style=color:#f92672>&lt;</span><span style=color:#a6e22e>ArtistDetails</span>
+        <span style=color:#a6e22e>artistId</span><span style=color:#f92672>=</span>{<span style=color:#a6e22e>artistId</span>}
+        <span style=color:#a6e22e>details</span><span style=color:#f92672>=</span>{<span style=color:#a6e22e>stuff</span>.<span style=color:#a6e22e>details</span>}
+      <span style=color:#f92672>&gt;</span>
+        <span style=color:#f92672>&lt;</span><span style=color:#a6e22e>TopTracks</span> 
+          <span style=color:#a6e22e>artistId</span><span style=color:#f92672>=</span>{<span style=color:#a6e22e>artistId</span>}
+          <span style=color:#a6e22e>topTracks</span><span style=color:#f92672>=</span>{<span style=color:#a6e22e>stuff</span>.<span style=color:#a6e22e>topTracks</span>}
+        <span style=color:#f92672>/&gt;</span>
+        <span style=color:#f92672>&lt;</span><span style=color:#a6e22e>Discography</span>
+          <span style=color:#a6e22e>artistId</span><span style=color:#f92672>=</span>{<span style=color:#a6e22e>artistId</span>}
+          <span style=color:#a6e22e>discography</span><span style=color:#f92672>=</span>{<span style=color:#a6e22e>stuff</span>.<span style=color:#a6e22e>discography</span>}
+        <span style=color:#f92672>/&gt;</span>
+      <span style=color:#f92672>&lt;</span><span style=color:#960050;background-color:#1e0010>/ArtistDetails&gt;</span>
+    );
+  }
+</code></pre></div><p>这样每个组件从逻辑上就不那么解耦了，会让组件的可维护性变得非常差。如果后续不再需要 TopTracks 数据了，接口就返回了冗余的数据，或者某个组件增加了一个 <code>props</code> 属性，如果这个组件在其他地方也被用到，这样需要在其他所有地方都要增加这个 <code>props</code> 属性。
+其实这个问题可用通过 <a href=https://graphql.org/>GraphQL</a> + <a href=https://github.com/facebook/relay>Relay</a> 的方案解决
+于是我们考虑到可以让每个组件单独来实现各自数据获取逻辑：</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>ArtistDetails</span>({ <span style=color:#a6e22e>artistId</span>, <span style=color:#a6e22e>children</span> }) {
+  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>detail</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>fetchDetails</span>(<span style=color:#a6e22e>artistId</span>);
+  <span style=color:#75715e>// ...
+</span><span style=color:#75715e></span>}
+
+<span style=color:#66d9ef>function</span> <span style=color:#a6e22e>TopTracks</span>({ <span style=color:#a6e22e>artistId</span> }) {
+  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>topTracks</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>fetchTopTracks</span>(<span style=color:#a6e22e>artistId</span>);
+  <span style=color:#75715e>// ...
+</span><span style=color:#75715e></span>}
+
+<span style=color:#66d9ef>function</span> <span style=color:#a6e22e>Discography</span>({ <span style=color:#a6e22e>artistId</span> }) {
+  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>discography</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>fetchDiscography</span>(<span style=color:#a6e22e>artistId</span>);
+  <span style=color:#75715e>// ...
+</span><span style=color:#75715e></span>}
+</code></pre></div><p>这样在父组件 ArtistDetails 中的实现可能是这样：</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>ArtistDetails</span>({ <span style=color:#a6e22e>artistId</span>, <span style=color:#a6e22e>children</span> }) {
+    <span style=color:#66d9ef>const</span> [<span style=color:#a6e22e>details</span>, <span style=color:#a6e22e>setDetails</span>] <span style=color:#f92672>=</span> <span style=color:#a6e22e>useState</span>(<span style=color:#66d9ef>null</span>);
+
+    <span style=color:#a6e22e>useEffect</span>(() =&gt; {
+        <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>detail</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>fetchArtistDetails</span>(<span style=color:#a6e22e>artistId</span>);
+        <span style=color:#a6e22e>setArtistInfo</span>(<span style=color:#a6e22e>detail</span>);
+    }, [<span style=color:#a6e22e>artistId</span>])
+
+    <span style=color:#66d9ef>if</span> (<span style=color:#f92672>!</span><span style=color:#a6e22e>details</span>) {
+        <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;loading&#39;</span>;
+    }
+    <span style=color:#66d9ef>return</span> (
+        <span style=color:#f92672>&lt;</span><span style=color:#a6e22e>div</span><span style=color:#f92672>&gt;</span>
+            ...
+            {<span style=color:#a6e22e>children</span>}
+        <span style=color:#f92672>&lt;</span><span style=color:#960050;background-color:#1e0010>/div&gt;</span>
+    );
+}
+</code></pre></div><p>也就是子组件中获取数据的逻辑必须要等到父组件渲染完毕，这种像瀑布一样一节一节往下流的模式就造成典型的<code>网络瀑布</code>，如果组件的数据源越多组件层级越深，问题越明显。
+同时这样也会让体验变差，因为这个组件就需要发送3个 HTTP 请求，浏览器从服务端 fetch 数据是比较贵的 IO，抽象一下就是下面这样：
+<img loading=lazy src=https://cdn.xieluping.cn/images/ah3hpqkpv3g.png alt>
+</p>
+<p>当然我们也可以让三个组件完全不嵌套平级展示，这样虽然避免了<code>网络瀑布</code>，但是组件的渲染顺序也变得不可控了，交互体验会再次打折扣
+我们平时的组件数据交互基本都是这种模式。大胆设想下：如果把<code>容器组件</code>放在服务端，服务端的组件直接与数据交互生成完整组件内容然后返回给客户端，这样既可以解决频繁请求带来的 IO 消耗也解决了 CSR 中的网络瀑布。
+<img loading=lazy src=https://cdn.xieluping.cn/images/g63rosd58po.png alt>
+到此，我们知道了 React Server Component 就是 在服务端运行的 React 组件。</p>
+<h2 id=rsc-如何运行>RSC 如何运行?<a hidden class=anchor aria-hidden=true href=#rsc-如何运行>#</a></h2>
+<h3 id=组件类型>组件类型：<a hidden class=anchor aria-hidden=true href=#组件类型>#</a></h3>
+<p>介绍 RSC 运行流程前需要先了解几个新的概念：</p>
+<ul>
+<li>
+<h4 id=server-component>Server Component<a hidden class=anchor aria-hidden=true href=#server-component>#</a></h4>
+</li>
+</ul>
+<p>服务器组件是在服务端运行的组件，它们可以直接访问服务器端数据源，比如服务器上的数据库或文件系统，因而获取数据取过程更快、更高效。服务器组件是无状态的，服务器组件可以导入客户端组件，客户端组件不能导入服务服务器组件，必须以 .server.js、.server.jsx 的格式命名。</p>
+<ul>
+<li>
+<h4 id=client-component>Client Component<a hidden class=anchor aria-hidden=true href=#client-component>#</a></h4>
+</li>
+</ul>
+<p>客户端组件是只能在客户端上呈现的组件（这就是我们目前使用的 react 组件）。客户端组件不能使用服务器组件。它们通常由服务器组件导入，用于显示应用程序的交互部分。它们不能访问服务器端数据源，它们是有状态的，可以访问浏览器 API，必须以 .client.js、.client.jsx 的格式命名。</p>
+<ul>
+<li>
+<h4 id=shared-component>Shared Component<a hidden class=anchor aria-hidden=true href=#shared-component>#</a></h4>
+</li>
+</ul>
+<p>共享组件是可以在服务端或客户端上呈现的组件，这具体取决于使用它们的组件类型。一般是Server Component 和 Client Component 共有的一些功能组成的组件，同样Shared Component也不能有状态。</p>
+<p>如果上面的 demo 抽象成在完全在客户端渲染的组件树可能是：
+<img loading=lazy src=https://cdn.xieluping.cn/images/ovqtiv8l55.png alt>
+其实平时我们可以把组件划分为：依赖数据的<code>容器组件</code>和依赖行为的<code>交互组件</code>，<code>容器组件</code>其实可以运行在服务端<code>交互组件</code>可以运行在客户端。<code>容器组件</code>我们就可以用 Server Component 实现，而依赖行为的<code>交互组件</code>用 Client Component 实现：
+<img loading=lazy src=https://cdn.xieluping.cn/images/4q1gquqlna.png alt>
+</p>
+<h3 id=运行流程>运行流程<a hidden class=anchor aria-hidden=true href=#运行流程>#</a></h3>
+<ol>
+<li>webpack 利用 react-server-dom-webpack/plugin 编译所有的 .client.js 文件，并生成 react-client-manifest.json 文件</li>
+</ol>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json>{
+  <span style=color:#f92672>&#34;file:///workspace/server-components-demo/src/Root.client.js&#34;</span>: {
+    <span style=color:#f92672>&#34;&#34;</span>: {
+      <span style=color:#f92672>&#34;id&#34;</span>: <span style=color:#e6db74>&#34;./src/Root.client.js&#34;</span>,
+      <span style=color:#f92672>&#34;chunks&#34;</span>: [
+        <span style=color:#e6db74>&#34;main&#34;</span>
+      ],
+      <span style=color:#f92672>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;&#34;</span>
+    },
+    <span style=color:#f92672>&#34;*&#34;</span>: {
+      <span style=color:#f92672>&#34;id&#34;</span>: <span style=color:#e6db74>&#34;./src/Root.client.js&#34;</span>,
+      <span style=color:#f92672>&#34;chunks&#34;</span>: [
+        <span style=color:#e6db74>&#34;main&#34;</span>
+      ],
+      <span style=color:#f92672>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;*&#34;</span>
+    },
+    <span style=color:#f92672>&#34;default&#34;</span>: {
+      <span style=color:#f92672>&#34;id&#34;</span>: <span style=color:#e6db74>&#34;./src/Root.client.js&#34;</span>,
+      <span style=color:#f92672>&#34;chunks&#34;</span>: [
+        <span style=color:#e6db74>&#34;main&#34;</span>
+      ],
+      <span style=color:#f92672>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;default&#34;</span>
+    }
+    <span style=color:#960050;background-color:#1e0010>//</span> <span style=color:#960050;background-color:#1e0010>...</span>
+  }
+</code></pre></div><ol start=2>
+<li>Server 端启动服务，利用 <a href=https://github.com/facebook/react/blob/main/packages/react-server-dom-webpack/src/ReactFlightDOMServerNode.js>react-server-dom-webpack/writer</a> 的 pipeToNodeWritable 将 Server Component 和数据以及 react-client-manifest.json 转为 chunk 数据流返回客户端</li>
+</ol>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js><span style=color:#66d9ef>const</span> { <span style=color:#a6e22e>pipeToNodeWritable</span> } <span style=color:#f92672>=</span> <span style=color:#a6e22e>require</span>(<span style=color:#e6db74>&#39;react-server-dom-webpack/writer&#39;</span>);
+
+<span style=color:#66d9ef>async</span> <span style=color:#66d9ef>function</span> <span style=color:#a6e22e>renderReactTree</span>(<span style=color:#a6e22e>res</span>, <span style=color:#a6e22e>props</span>) {
+  <span style=color:#66d9ef>await</span> <span style=color:#a6e22e>waitForWebpack</span>();
+  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>manifest</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>readFileSync</span>(
+    <span style=color:#a6e22e>path</span>.<span style=color:#a6e22e>resolve</span>(<span style=color:#ae81ff>__</span><span style=color:#a6e22e>dirname</span>, <span style=color:#e6db74>&#39;../build/react-client-manifest.json&#39;</span>),
+    <span style=color:#e6db74>&#39;utf8&#39;</span>
+  );
+  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>moduleMap</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>JSON</span>.<span style=color:#a6e22e>parse</span>(<span style=color:#a6e22e>manifest</span>);
+  <span style=color:#a6e22e>pipeToNodeWritable</span>(<span style=color:#a6e22e>React</span>.<span style=color:#a6e22e>createElement</span>(<span style=color:#a6e22e>ReactApp</span>, <span style=color:#a6e22e>props</span>), <span style=color:#a6e22e>res</span>, <span style=color:#a6e22e>moduleMap</span>);
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>M1:<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;id&#34;</span>:<span style=color:#e6db74>&#34;./src/SearchField.client.js&#34;</span>,<span style=color:#e6db74>&#34;chunks&#34;</span>:<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;client5&#34;</span><span style=color:#f92672>]</span>,<span style=color:#e6db74>&#34;name&#34;</span>:<span style=color:#e6db74>&#34;&#34;</span><span style=color:#f92672>}</span>
+M2:<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;id&#34;</span>:<span style=color:#e6db74>&#34;./src/EditButton.client.js&#34;</span>,<span style=color:#e6db74>&#34;chunks&#34;</span>:<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;client1&#34;</span><span style=color:#f92672>]</span>,<span style=color:#e6db74>&#34;name&#34;</span>:<span style=color:#e6db74>&#34;&#34;</span><span style=color:#f92672>}</span>
+S3:<span style=color:#e6db74>&#34;react.suspense&#34;</span>
+J0:<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;div&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;main&#34;</span>,<span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#f92672>[[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;section&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;col sidebar&#34;</span>,<span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#f92672>[[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;section&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;sidebar-header&#34;</span>,<span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#f92672>[[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;img&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;logo&#34;</span>,<span style=color:#e6db74>&#34;src&#34;</span>:<span style=color:#e6db74>&#34;logo.svg&#34;</span>,<span style=color:#e6db74>&#34;width&#34;</span>:<span style=color:#e6db74>&#34;22px&#34;</span>,<span style=color:#e6db74>&#34;height&#34;</span>:<span style=color:#e6db74>&#34;20px&#34;</span>,<span style=color:#e6db74>&#34;alt&#34;</span>:<span style=color:#e6db74>&#34;&#34;</span>,<span style=color:#e6db74>&#34;role&#34;</span>:<span style=color:#e6db74>&#34;presentation&#34;</span><span style=color:#f92672>}]</span>,<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;strong&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#e6db74>&#34;React Notes&#34;</span><span style=color:#f92672>}]]}]</span>,<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;section&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;sidebar-menu&#34;</span>,<span style=color:#e6db74>&#34;role&#34;</span>:<span style=color:#e6db74>&#34;menubar&#34;</span>,<span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#f92672>[[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;@1&#34;</span>,null,<span style=color:#f92672>{}]</span>,<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;@2&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;noteId&#34;</span>:null,<span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#e6db74>&#34;New2&#34;</span><span style=color:#f92672>}]]}]</span>,<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;nav&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;</span>$3<span style=color:#e6db74>&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;fallback&#34;</span>:<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;div&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;ul&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;notes-list skeleton-container&#34;</span>,<span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#f92672>[[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;li&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;v-stack&#34;</span>,<span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;div&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;sidebar-note-list-item skeleton&#34;</span>,<span style=color:#e6db74>&#34;style&#34;</span>:<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;height&#34;</span>:<span style=color:#e6db74>&#34;5em&#34;</span><span style=color:#f92672>}}]}]</span>,<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;li&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;v-stack&#34;</span>,<span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;div&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;sidebar-note-list-item skeleton&#34;</span>,<span style=color:#e6db74>&#34;style&#34;</span>:<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;height&#34;</span>:<span style=color:#e6db74>&#34;5em&#34;</span><span style=color:#f92672>}}]}]</span>,<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;li&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;v-stack&#34;</span>,<span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;div&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;sidebar-note-list-item skeleton&#34;</span>,<span style=color:#e6db74>&#34;style&#34;</span>:<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;height&#34;</span>:<span style=color:#e6db74>&#34;5em&#34;</span><span style=color:#f92672>}}]}]]}]}]</span>,<span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#e6db74>&#34;@4&#34;</span><span style=color:#f92672>}]}]]}]</span>,<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;section&#34;</span>,<span style=color:#e6db74>&#34;null&#34;</span>,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;col note-viewer&#34;</span>,<span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;</span>$3<span style=color:#e6db74>&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;fallback&#34;</span>:<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;div&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;note skeleton-container&#34;</span>,<span style=color:#e6db74>&#34;role&#34;</span>:<span style=color:#e6db74>&#34;progressbar&#34;</span>,<span style=color:#e6db74>&#34;aria-busy&#34;</span>:<span style=color:#e6db74>&#34;true&#34;</span>,<span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#f92672>[[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;div&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;note-header&#34;</span>,<span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#f92672>[[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;div&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;note-title skeleton&#34;</span>,<span style=color:#e6db74>&#34;style&#34;</span>:<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;height&#34;</span>:<span style=color:#e6db74>&#34;3rem&#34;</span>,<span style=color:#e6db74>&#34;width&#34;</span>:<span style=color:#e6db74>&#34;65%&#34;</span>,<span style=color:#e6db74>&#34;marginInline&#34;</span>:<span style=color:#e6db74>&#34;12px 1em&#34;</span><span style=color:#f92672>}}]</span>,<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;div&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;skeleton skeleton--button&#34;</span>,<span style=color:#e6db74>&#34;style&#34;</span>:<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;width&#34;</span>:<span style=color:#e6db74>&#34;8em&#34;</span>,<span style=color:#e6db74>&#34;height&#34;</span>:<span style=color:#e6db74>&#34;2.5em&#34;</span><span style=color:#f92672>}}]]}]</span>,<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;div&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;note-preview&#34;</span>,<span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#f92672>[[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;div&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;skeleton v-stack&#34;</span>,<span style=color:#e6db74>&#34;style&#34;</span>:<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;height&#34;</span>:<span style=color:#e6db74>&#34;1.5em&#34;</span><span style=color:#f92672>}}]</span>,<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;div&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;skeleton v-stack&#34;</span>,<span style=color:#e6db74>&#34;style&#34;</span>:<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;height&#34;</span>:<span style=color:#e6db74>&#34;1.5em&#34;</span><span style=color:#f92672>}}]</span>,<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;div&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;skeleton v-stack&#34;</span>,<span style=color:#e6db74>&#34;style&#34;</span>:<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;height&#34;</span>:<span style=color:#e6db74>&#34;1.5em&#34;</span><span style=color:#f92672>}}]</span>,<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;div&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;skeleton v-stack&#34;</span>,<span style=color:#e6db74>&#34;style&#34;</span>:<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;height&#34;</span>:<span style=color:#e6db74>&#34;1.5em&#34;</span><span style=color:#f92672>}}]</span>,<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;div&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;skeleton v-stack&#34;</span>,<span style=color:#e6db74>&#34;style&#34;</span>:<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;height&#34;</span>:<span style=color:#e6db74>&#34;1.5em&#34;</span><span style=color:#f92672>}}]]}]]}]</span>,<span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;div&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;note--empty-state&#34;</span>,<span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;span&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;note-text--empty-state&#34;</span>,<span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#e6db74>&#34;Click a note on the left to view something! ð¥º&#34;</span><span style=color:#f92672>}]}]}]}]]}]</span>
+M5:<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;id&#34;</span>:<span style=color:#e6db74>&#34;./src/SidebarNote.client.js&#34;</span>,<span style=color:#e6db74>&#34;chunks&#34;</span>:<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;client6&#34;</span><span style=color:#f92672>]</span>,<span style=color:#e6db74>&#34;name&#34;</span>:<span style=color:#e6db74>&#34;&#34;</span><span style=color:#f92672>}</span>
+J4:<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;ul&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;notes-list&#34;</span>,<span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#f92672>[[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;li&#34;</span>,<span style=color:#e6db74>&#34;3&#34;</span>,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;@5&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;id&#34;</span>:3,<span style=color:#e6db74>&#34;title&#34;</span>:<span style=color:#e6db74>&#34;test&#34;</span>,<span style=color:#e6db74>&#34;expandedChildren&#34;</span>:<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;p&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;sidebar-note-excerpt&#34;</span>,<span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#e6db74>&#34;test demo&#34;</span><span style=color:#f92672>}]</span>,<span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;header&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;className&#34;</span>:<span style=color:#e6db74>&#34;sidebar-note-header&#34;</span>,<span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#f92672>[[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;strong&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#e6db74>&#34;test&#34;</span><span style=color:#f92672>}]</span>,<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;</span>$<span style=color:#e6db74>&#34;</span>,<span style=color:#e6db74>&#34;small&#34;</span>,null,<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;children&#34;</span>:<span style=color:#e6db74>&#34;12:32 noon&#34;</span><span style=color:#f92672>}]]}]}]}]]}]</span>
+</code></pre></div><ol start=3>
+<li>客户端利用 react-server-dom-webpack 中 createFromFetch readRoot将获取的数据流反序列化为 React节点。</li>
+</ol>
+<blockquote>
+<p>Server Component 中嵌套的 Client Component 则直接加载客户端.client.js 打包出来的 js 文件</p>
+</blockquote>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js><span style=color:#66d9ef>import</span> { <span style=color:#a6e22e>createFromFetch</span> } <span style=color:#a6e22e>from</span> <span style=color:#e6db74>&#34;react-server-dom-webpack&#34;</span>;
+
+<span style=color:#66d9ef>function</span> <span style=color:#a6e22e>useServerResponse</span>(<span style=color:#a6e22e>id</span>) {
+  <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>createFromFetch</span>(<span style=color:#a6e22e>fetch</span>(<span style=color:#e6db74>`/react?id=</span><span style=color:#e6db74>${</span><span style=color:#a6e22e>id</span><span style=color:#e6db74>}</span><span style=color:#e6db74>`</span>));
+}
+
+<span style=color:#66d9ef>function</span> <span style=color:#a6e22e>Content</span>() {
+  <span style=color:#66d9ef>const</span> [<span style=color:#a6e22e>response</span>, <span style=color:#a6e22e>setResponse</span>] <span style=color:#f92672>=</span> <span style=color:#a6e22e>useState</span>();
+  
+  <span style=color:#a6e22e>useEffect</span>(() =&gt; {
+    <span style=color:#a6e22e>setResponse</span>(<span style=color:#a6e22e>useServerResponse</span>());
+  }, []);
+
+  <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>response</span> <span style=color:#f92672>?</span> (
+    <span style=color:#f92672>&lt;</span><span style=color:#a6e22e>div</span><span style=color:#f92672>&gt;</span>{<span style=color:#a6e22e>response</span>.<span style=color:#a6e22e>readRoot</span>()}<span style=color:#f92672>&lt;</span><span style=color:#960050;background-color:#1e0010>/div&gt;</span>
+  ) <span style=color:#f92672>:</span> <span style=color:#66d9ef>null</span>;
+}
+</code></pre></div><p>整体流程如下：
+<img loading=lazy src=https://cdn.xieluping.cn/images/65m6ucl55so.png alt>
+<img loading=lazy src=https://cdn.xieluping.cn/images/1e3j1g6seuo.png alt>
+</p>
+<h2 id=rsc-思考>RSC 思考<a hidden class=anchor aria-hidden=true href=#rsc-思考>#</a></h2>
+<p>RSC的思路其实很类似 PHP/ASP 时代的 Web1.0 服务端渲染，很多人认为是一种倒退，“前端好不容易爬到了山顶，却发现 PHP 已经等待多时”。盘点下 RSC 的一些优点和#### 缺点：</p>
+<h4 id=缺点-3>缺点：<a hidden class=anchor aria-hidden=true href=#缺点-3>#</a></h4>
+<ol>
+<li>职责不清，RSC 的引入使得前后端分离的开发模式受到挑战，再次回到 Web1.0 的时代</li>
+<li>维护困难，Server 组件和 Client 组件相互嵌套，代码维护会变得比 CSR 更加困难</li>
+<li>增加了服务端压力，服务端需要额外将数据、jsx 转为 RSC 数据流传递给客户端</li>
+</ol>
+<h4 id=优点-3>优点：<a hidden class=anchor aria-hidden=true href=#优点-3>#</a></h4>
+<ol>
+<li>天然接近各种IO，访问数据库、文件系统更快、更高效</li>
+<li>Zero Bundle Size，RSC 可以大大降低前端项目打包体积</li>
+<li>Code Splitting，自动的代码分割</li>
+<li>替代前端微服务，RSC 颗粒度是到组件级别，复用性能大大提高</li>
+</ol>
+<p>哲学中有个理论叫做：“螺旋式上升”，RSC 并没有开倒车而是在一个更高的维度回来解决了一个老问题，这正是一种先进而优雅的方式。</p>
+<h2 id=相关链接>相关链接<a hidden class=anchor aria-hidden=true href=#相关链接>#</a></h2>
+<ul>
+<li><a href=https://reactjs.org/blog/2020/12/21/data-fetching-with-react-server-components.html>https://reactjs.org/blog/2020/12/21/data-fetching-with-react-server-components.html</a></li>
+<li><a href="https://www.youtube.com/watch?v=TQQPAU21ZUw&feature=emb_title">https://www.youtube.com/watch?v=TQQPAU21ZUw&feature=emb_title</a></li>
+<li><a href=https://github.com/reactjs/server-components-demo>https://github.com/reactjs/server-components-demo</a></li>
+<li><a href=https://github.com/reactjs/rfcs/pull/188>https://github.com/reactjs/rfcs/pull/188</a></li>
+</ul>
+</div>
+<footer class=post-footer>
+</footer>
+</article>
+</main>
+<footer class=footer>
+<span>&copy; 2021 <a href=https://gikey.github.io>Null</a></span>
+</footer>
+<a href=#top aria-label="go to top" title="Go to Top (Alt + G)">
+<button class=top-link id=top-link type=button accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
+</button>
+</a>
+<script>let menu=document.getElementById('menu');menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)},document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener("click",function(b){b.preventDefault();var a=this.getAttribute("href").substr(1);window.matchMedia('(prefers-reduced-motion: reduce)').matches?document.querySelector(`[id='${decodeURIComponent(a)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(a)}']`).scrollIntoView({behavior:"smooth"}),a==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${a}`)})})</script>
+<script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script>
+<script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove('dark'),localStorage.setItem("pref-theme",'light')):(document.body.classList.add('dark'),localStorage.setItem("pref-theme",'dark'))})</script>
+</body>
+</html>

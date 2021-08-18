@@ -1,0 +1,99 @@
+<!doctype html><html lang=en dir=auto>
+<head><meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no">
+<meta name=robots content="index, follow">
+<title>Event | Null</title>
+<meta name=keywords content>
+<meta name=description content>
+<meta name=author content>
+<link rel=canonical href=https://gikey.github.io/tags/event/>
+<link crossorigin=anonymous href=/assets/css/stylesheet.min.6cba0d81b5f3f42bb578d49f402ba4175aa72b43def148780b8ad714c957c6f5.css integrity="sha256-bLoNgbXz9Cu1eNSfQCukF1qnK0Pe8Uh4C4rXFMlXxvU=" rel="preload stylesheet" as=style>
+<link rel=icon href=https://gikey.github.io/favicon.ico>
+<link rel=icon type=image/png sizes=16x16 href=https://gikey.github.io/favicon-16x16.png>
+<link rel=icon type=image/png sizes=32x32 href=https://gikey.github.io/favicon-32x32.png>
+<link rel=apple-touch-icon href=https://gikey.github.io/apple-touch-icon.png>
+<link rel=mask-icon href=https://gikey.github.io/safari-pinned-tab.svg>
+<meta name=theme-color content="#2e2e33">
+<meta name=msapplication-TileColor content="#2e2e33">
+<meta name=generator content="Hugo 0.87.0">
+<link rel=alternate type=application/rss+xml href=https://gikey.github.io/tags/event/index.xml>
+<link rel=stylesheet href=https://gikey.github.io/css/style.css><meta property="og:title" content="Event">
+<meta property="og:description" content>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gikey.github.io/tags/event/">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="Event">
+<meta name=twitter:description content>
+</head>
+<body class=list id=top>
+<script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add('dark'):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove('dark'):window.matchMedia('(prefers-color-scheme: dark)').matches&&document.body.classList.add('dark')</script>
+<noscript>
+<style type=text/css>#theme-toggle,.top-link{display:none}</style>
+<style>@media(prefers-color-scheme:dark){:root{--theme:#1d1e20;--entry:#2e2e33;--primary:rgba(255, 255, 255, 0.84);--secondary:rgba(255, 255, 255, 0.56);--tertiary:rgba(255, 255, 255, 0.16);--content:rgba(255, 255, 255, 0.74);--hljs-bg:#2e2e33;--code-bg:#37383e;--border:#333}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style>
+</noscript>
+<header class=header>
+<nav class=nav>
+<div class=logo>
+<a href=https://gikey.github.io accesskey=h title="Null (Alt + H)">Null</a>
+<span class=logo-switches>
+<button id=theme-toggle accesskey=t title="(Alt + T)"><svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button>
+</span>
+</div>
+<ul id=menu>
+<li>
+<a href=https://gikey.github.io/ title=Home>
+<span>Home</span>
+</a>
+</li>
+<li>
+<a href=https://gikey.github.io/archives/ title=Archives>
+<span>Archives</span>
+</a>
+</li>
+<li>
+<a href=https://gikey.github.io/tags/ title=Tags>
+<span>Tags</span>
+</a>
+</li>
+<li>
+<a href=https://gikey.github.io/search/ title="Search (Alt + /)" accesskey=/>
+<span>Search</span>
+</a>
+</li>
+</ul>
+</nav>
+</header>
+<main class=main>
+<header class=page-header>
+<h1>Event</h1>
+</header>
+<article class="post-entry tag-entry">
+<header class=entry-header>
+<h2>JavaScript 任务和事件循环</h2>
+</header>
+<section class=entry-content>
+<p>js是单线程的，处理任务是一件接着一件处理，所以如果一个任务需要处理很久的话，后面的任务就会被阻塞，所以 JS 通过 Event Loop 事件循环的方式解决了这个问题。
+First 首先来看下面一段代码：
+console.log('script start'); setTimeout(function() { console.log('setTimeout'); }, 0); Promise.resolve().then(function() { console.log('promise1'); }).then(function() { console.log('promise2'); }); 这段代码打印的结果是：'script start', 'promise1', 'promise2', 'setTimeout'
+执行栈 js引擎开始运行代码的时候，会将代码压入执行栈进行执行：
+function a() { console.log('a'); } function b() { a(); } function c() { b(); } c(); 当代码被解析后，函数会依次被压入到栈中 当函数c执行完，开始出栈 事件循环 当执行栈中出现异步代码会怎么样?
+console.log("sync"); $.on('button', 'click', function onClick() { setTimeout(function timer() { console.log('You clicked the button!'); }, 2000); }); setTimeout(function timeout() { console.log("Click the button!...</p>
+</section>
+<footer class=entry-footer>March 8, 2018</footer>
+<a class=entry-link aria-label="post link to JavaScript 任务和事件循环" href=https://gikey.github.io/post/event-loop/></a>
+</article>
+</main>
+<footer class=footer>
+<span>&copy; 2021 <a href=https://gikey.github.io>Null</a></span>
+</footer>
+<a href=#top aria-label="go to top" title="Go to Top (Alt + G)">
+<button class=top-link id=top-link type=button accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
+</button>
+</a>
+<script>let menu=document.getElementById('menu');menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)},document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener("click",function(b){b.preventDefault();var a=this.getAttribute("href").substr(1);window.matchMedia('(prefers-reduced-motion: reduce)').matches?document.querySelector(`[id='${decodeURIComponent(a)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(a)}']`).scrollIntoView({behavior:"smooth"}),a==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${a}`)})})</script>
+<script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script>
+<script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove('dark'),localStorage.setItem("pref-theme",'light')):(document.body.classList.add('dark'),localStorage.setItem("pref-theme",'dark'))})</script>
+</body>
+</html>
