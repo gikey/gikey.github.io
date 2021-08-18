@@ -3,11 +3,11 @@
 <meta http-equiv=x-ua-compatible content="IE=edge">
 <meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no">
 <meta name=robots content="index, follow">
-<title>Tags | Null</title>
+<title>Web Components | Null</title>
 <meta name=keywords content>
 <meta name=description content>
 <meta name=author content>
-<link rel=canonical href=https://gikey.github.io/tags/>
+<link rel=canonical href=https://gikey.github.io/tags/web-components/>
 <link crossorigin=anonymous href=/assets/css/stylesheet.min.6cba0d81b5f3f42bb578d49f402ba4175aa72b43def148780b8ad714c957c6f5.css integrity="sha256-bLoNgbXz9Cu1eNSfQCukF1qnK0Pe8Uh4C4rXFMlXxvU=" rel="preload stylesheet" as=style>
 <link rel=icon href=https://gikey.github.io/favicon.ico>
 <link rel=icon type=image/png sizes=16x16 href=https://gikey.github.io/favicon-16x16.png>
@@ -17,13 +17,13 @@
 <meta name=theme-color content="#2e2e33">
 <meta name=msapplication-TileColor content="#2e2e33">
 <meta name=generator content="Hugo 0.87.0">
-<link rel=alternate type=application/rss+xml href=https://gikey.github.io/tags/index.xml>
-<link rel=stylesheet href=https://gikey.github.io/css/style.css><meta property="og:title" content="Tags">
+<link rel=alternate type=application/rss+xml href=https://gikey.github.io/tags/web-components/index.xml>
+<link rel=stylesheet href=https://gikey.github.io/css/style.css><meta property="og:title" content="Web Components">
 <meta property="og:description" content>
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://gikey.github.io/tags/">
+<meta property="og:url" content="https://gikey.github.io/tags/web-components/">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="Tags">
+<meta name=twitter:title content="Web Components">
 <meta name=twitter:description content>
 </head>
 <body class=list id=top>
@@ -54,7 +54,7 @@
 </li>
 <li>
 <a href=https://gikey.github.io/tags/ title=Tags>
-<span class=active>Tags</span>
+<span>Tags</span>
 </a>
 </li>
 <li>
@@ -67,22 +67,21 @@
 </header>
 <main class=main>
 <header class=page-header>
-<h1>Tags</h1>
+<h1>Web Components</h1>
 </header>
-<ul class=terms-tags>
-<li>
-<a href=https://gikey.github.io/tags/angularjs/>AngularJS <sup><strong><sup>1</sup></strong></sup> </a>
-</li>
-<li>
-<a href=https://gikey.github.io/tags/javascript/>JavaScript <sup><strong><sup>2</sup></strong></sup> </a>
-</li>
-<li>
-<a href=https://gikey.github.io/tags/react/>React <sup><strong><sup>1</sup></strong></sup> </a>
-</li>
-<li>
-<a href=https://gikey.github.io/tags/web-components/>Web Components <sup><strong><sup>1</sup></strong></sup> </a>
-</li>
-</ul>
+<article class="post-entry tag-entry">
+<header class=entry-header>
+<h2>基于 Web Components 跨框架组件开发</h2>
+</header>
+<section class=entry-content>
+<p>什么是 Web Components Web Component 并非单一的技术，而是由一系列 W3C 定义的浏览器标准组成，使得开发者可以构建出浏览器原生支持的组件。这些标准包括：
+Custom Elements：带有特定行为且用户自命名的 HTML 元素 Shadow DOM：对标签和样式的一层 DOM 包装 HTML Templates：可复用的 HTML 标签，提供了和用户自定义标签相结合的接口 Custom Elements Web component 提供了自定义标签的方法，可以通过 CustomElementRegistry.define() 方法用来注册一个 custom element，该方法接受以下参数：
+表示所创建的元素名称的符合 DOMString 标准的字符串。custom element 的名称不能是单个单词，且其中必须要有短横线。 用于定义元素行为的类 。 可选参数，一个包含 extends 属性的配置对象，是可选参数。它指定了所创建的元素继承自哪个内置元素，可以继承任何内置元素。 customElements.define('my-element', WordCount, { extends: 'p' }); custom elements 可以分为两种：
+Autonomous custom elements 是独立的元素，它不继承其他内建的HTML元素。可以直接写成HTML标签的形式，或者是在js中使用：document.createElement("my-element")。 Customized built-in elements 继承自基本的HTML元素。在创建时，你必须指定所需扩展的元素（正如上面例子所示），使用时，需要先写出基本的元素标签，并通过 is 属性指定custom element的名称&lt;p is="my-element">, 或者 document.createElement("p", { is: "my-element" })。 Shadow DOM Shadow DOM 可以将标记结构、样式和行为隐藏起来，并与页面上的其他代码相隔离，保证不同的部分不会混在一起，可使代码更加干净、整洁。Shadow DOM 允许将隐藏的 DOM 树附加到常规的 DOM 树中——它以 shadow root 节点为起始根节点，在这个根节点的下方，可以是任意元素，和普通的 DOM 元素一样。 Shadow host：一个常规 DOM节点，Shadow DOM 会被附加到这个节点上。 Shadow tree：Shadow DOM内部的DOM树。 Shadow boundary：Shadow DOM结束的地方，也是常规 DOM开始的地方。 Shadow root: Shadow tree的根节点。 &lt;my-element name="web component">&lt;/my-element > &lt;script> class MyElement extends HTMLElement { connectedCallback() { const shadow = this....</p>
+</section>
+<footer class=entry-footer>August 18, 2021</footer>
+<a class=entry-link aria-label="post link to 基于 Web Components 跨框架组件开发" href=https://gikey.github.io/post/wc/></a>
+</article>
 </main>
 <footer class=footer>
 <span>&copy; 2021 <a href=https://gikey.github.io>Null</a></span>

@@ -3,11 +3,11 @@
 <meta http-equiv=x-ua-compatible content="IE=edge">
 <meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no">
 <meta name=robots content="index, follow">
-<title>Event | Null</title>
+<title>React | Null</title>
 <meta name=keywords content>
 <meta name=description content>
 <meta name=author content>
-<link rel=canonical href=https://gikey.github.io/tags/event/>
+<link rel=canonical href=https://gikey.github.io/tags/react/>
 <link crossorigin=anonymous href=/assets/css/stylesheet.min.6cba0d81b5f3f42bb578d49f402ba4175aa72b43def148780b8ad714c957c6f5.css integrity="sha256-bLoNgbXz9Cu1eNSfQCukF1qnK0Pe8Uh4C4rXFMlXxvU=" rel="preload stylesheet" as=style>
 <link rel=icon href=https://gikey.github.io/favicon.ico>
 <link rel=icon type=image/png sizes=16x16 href=https://gikey.github.io/favicon-16x16.png>
@@ -17,13 +17,13 @@
 <meta name=theme-color content="#2e2e33">
 <meta name=msapplication-TileColor content="#2e2e33">
 <meta name=generator content="Hugo 0.87.0">
-<link rel=alternate type=application/rss+xml href=https://gikey.github.io/tags/event/index.xml>
-<link rel=stylesheet href=https://gikey.github.io/css/style.css><meta property="og:title" content="Event">
+<link rel=alternate type=application/rss+xml href=https://gikey.github.io/tags/react/index.xml>
+<link rel=stylesheet href=https://gikey.github.io/css/style.css><meta property="og:title" content="React">
 <meta property="og:description" content>
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://gikey.github.io/tags/event/">
+<meta property="og:url" content="https://gikey.github.io/tags/react/">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="Event">
+<meta name=twitter:title content="React">
 <meta name=twitter:description content>
 </head>
 <body class=list id=top>
@@ -67,22 +67,20 @@
 </header>
 <main class=main>
 <header class=page-header>
-<h1>Event</h1>
+<h1>React</h1>
 </header>
 <article class="post-entry tag-entry">
 <header class=entry-header>
-<h2>JavaScript 任务和事件循环</h2>
+<h2>React Server Components 介绍</h2>
 </header>
 <section class=entry-content>
-<p>js是单线程的，处理任务是一件接着一件处理，所以如果一个任务需要处理很久的话，后面的任务就会被阻塞，所以 JS 通过 Event Loop 事件循环的方式解决了这个问题。
-First 首先来看下面一段代码：
-console.log('script start'); setTimeout(function() { console.log('setTimeout'); }, 0); Promise.resolve().then(function() { console.log('promise1'); }).then(function() { console.log('promise2'); }); 这段代码打印的结果是：'script start', 'promise1', 'promise2', 'setTimeout'
-执行栈 js引擎开始运行代码的时候，会将代码压入执行栈进行执行：
-function a() { console.log('a'); } function b() { a(); } function c() { b(); } c(); 当代码被解析后，函数会依次被压入到栈中 当函数c执行完，开始出栈 事件循环 当执行栈中出现异步代码会怎么样?
-console.log("sync"); $.on('button', 'click', function onClick() { setTimeout(function timer() { console.log('You clicked the button!'); }, 2000); }); setTimeout(function timeout() { console.log("Click the button!...</p>
+<p>2020年12月21日 React 官方公布了一个新的提案 React Server Component（后面简称：RSC），并做了视频介绍和 demo (如果跑不起来建议尝试docker)演示。React Server Component 还在研发中，目前还是个试验性的功能，主要目的是为了从社区收到一些反馈。离正式发布还需要较长时间，暂时不用立即跟进学习。接下来主要做个简单的介绍。
+Web 渲染的演化 一、Web1.0 服务端渲染 为了区分目前常说的“服务端渲染”，暂且把没有 Ajax 时代的服务端渲染称为“Web1.0 服务端渲染”。Web1.0 的时候前后端不分离，后端提供数据和模板渲染相应 HTML 页面，前端主要提供页面样式和js实现交互动效果。
+渲染流程： 客户端发起页面请求 服务端查询数据并使用相应的模板引擎渲染成 HTML 片段 客户端收到返回 HTML 解析成可见网页内容 优点： 友好的 SEO，每个页面都是服务端返回的完整的 HTML 首屏加载快，页面由后端渲染完成 缺点： 前后端耦合严重，前后端开发相互依赖 交互体验不佳，每个路由都需要页面刷新 服务端负载压力大，渲染任务都由服务端也丧失了客户端作为天然分布式系统的优势 二、客户端渲染（CSR） 随着前端页面复杂程度加剧和 Web2.0 Ajax 技术的发展，就有了前后端分离概念。以 Anglular 为代表的现代前端框架让这种后端提供接口，前端渲染页面的开发方式得到普及。也让服务端和客户端职责得到了明确的分工，让客户端和服务端各自实现更擅长的事情。 渲染流程：
+客户端发起请求并接收返回的 HTML 内容 客户端解析网页内容并执行 JS 脚本 JS 利用 Ajax请求后端数据（json/xml） JS 动态将数据渲染在页面中 优点： 前后端分离模式，前端专注于UI，后端专注于逻辑 良好的交互体验，局部进行刷新，可以实现单页应用，预加载等提升页面性能 降低服务器压力，部署比较简单节约服务器成本 缺点： 不利于 SEO，页面数据都是动态生成不利于 SEO 优化 首屏白屏，首次请求几乎空白的 HMTL 页面，TTI受限于数据获取和浏览器渲染的耗时 三、服务端渲染（SSR） 随着单页应用的发展，不友好的 SEO 和首屏渲染白屏等问题亟待解决，于是再次考虑引入服务端渲染。主要逻辑是将 Web1....</p>
 </section>
-<footer class=entry-footer>March 8, 2018</footer>
-<a class=entry-link aria-label="post link to JavaScript 任务和事件循环" href=https://gikey.github.io/post/event-loop/></a>
+<footer class=entry-footer>August 16, 2021</footer>
+<a class=entry-link aria-label="post link to React Server Components 介绍" href=https://gikey.github.io/post/rsc/></a>
 </article>
 </main>
 <footer class=footer>
