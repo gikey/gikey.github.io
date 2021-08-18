@@ -5,3 +5,27 @@
 .first-entry {
     min-height: 200px;
 }
+
+.post-content code {
+    font-size: 0.9em;
+}
+
+.post-content blockquote {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.dark .post-content blockquote {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.list .post-entry {
+    transition: background-color .3s;
+}
+
+.list .post-entry:hover {
+    background-color: #fafafa;
+}
+
+.dark.list .post-entry:hover {
+    background-color: #2d2d2d;
+}
