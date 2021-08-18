@@ -1,0 +1,7 @@
+:root {
+    --main-width: 920px;
+    --radius: 4px;
+}
+.first-entry {
+    min-height: 200px;
+}
