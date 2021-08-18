@@ -1,7 +1,6 @@
 baseURL = 'https://gikey.github.io'
 languageCode = 'zh-Hans'
 title = 'Null'
-subtitle = 'hello'
 theme = 'PaperMod'
 buildFuture = true
 buildExpired = true
