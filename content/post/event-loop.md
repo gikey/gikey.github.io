@@ -2,7 +2,7 @@
 title: "JavaScript 任务和事件循环"
 date: 2018-03-08T17:33:31+08:00
 draft: false
-tags: ["Event"]
+tags: ["JavaScript"]
 ---
 
 js是单线程的，处理任务是一件接着一件处理，所以如果一个任务需要处理很久的话，后面的任务就会被阻塞，所以 JS 通过 Event Loop 事件循环的方式解决了这个问题。

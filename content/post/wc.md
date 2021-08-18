@@ -2,6 +2,7 @@
 title: "基于 Web Components 跨框架组件开发"
 date: 2021-08-18T11:55:12+08:00
 draft: false
+tags: ["Web Components"]
 ---
 
 ## 什么是 Web Components

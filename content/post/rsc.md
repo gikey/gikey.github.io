@@ -2,6 +2,7 @@
 title: "React Server Components 介绍"
 date: 2021-08-16T10:08:13+08:00
 draft: false
+tags: ["React"]
 ---
 
 

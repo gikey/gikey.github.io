@@ -2,6 +2,7 @@
 title: "AngularJS Directive 隔离 Scope 数据交互"
 date: 2017-03-08T11:39:09+08:00
 draft: false
+tags: ["AngularJS"]
 ---
 
 ## 什么是隔离 Scope

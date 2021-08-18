@@ -2,6 +2,7 @@
 title: "JavaScript instanceof 操作符"
 date: 2017-08-18T12:51:54+08:00
 draft: false
+tags: ["JavaScript"]
 ---
 
 ## instanceof 简介
