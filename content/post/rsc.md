@@ -257,3 +257,5 @@ RSC的思路其实很类似 PHP/ASP 时代的 Web1.0 服务端渲染，很多人
 - https://github.com/reactjs/server-components-demo
 - https://github.com/reactjs/rfcs/pull/188
 
+
+**转载请注明出处和[本文链接](https://www.xieluping.cn/post/rsc/)**

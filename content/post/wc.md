@@ -571,3 +571,6 @@ export class MyCounter extends LitElement {
 * https://vaadin.com/learn/tutorials/lit-element/state-management-with-redux
 * https://github.com/obetomuniz/awesome-webcomponents
 * https://github.com/nepaul/awesome-web-components
+
+
+**转载请注明出处和[本文链接](https://www.xieluping.cn/post/wc/)**
