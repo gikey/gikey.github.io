@@ -16,7 +16,7 @@
 <link rel=mask-icon href=https://www.xieluping.cn/safari-pinned-tab.svg>
 <meta name=theme-color content="#2e2e33">
 <meta name=msapplication-TileColor content="#2e2e33">
-<meta name=generator content="Hugo 0.87.0">
+<meta name=generator content="Hugo 0.88.1">
 <link rel=alternate type=application/rss+xml href=https://www.xieluping.cn/post/index.xml>
 <link rel=stylesheet href=https://www.xieluping.cn/css/style.css><meta property="og:title" content="Posts">
 <meta property="og:description" content>
@@ -70,6 +70,18 @@
 <header class=page-header>
 <h1>Posts</h1>
 </header>
+<article class=post-entry>
+<header class=entry-header>
+<h2>JavaScript instanceof 操作符</h2>
+</header>
+<section class=entry-content>
+<p>instanceof 简介 在 JavaScript 中，判断一个变量的类型通常会用 typeof 运算符，在使用 typeof 运算符时采用引用类型存储值会出现一个问题，无论引用的是什么类型的对象，它都返回 “object”。例如：
+var arr = new Array(); console.log( typeof arr ); // object 如果想要确定原型和实例之间的关系就需要用到 instanceof 操作符， 例如：
+var arr = new Array(); var Fn = function() {}; var foo = new Fn(); console.log( arr instanceof Array ); // true console.log( arr instanceof Object ); // true console.log( foo instanceof Fn); // true console.log( foo instanceof Function ); // false console.log( foo instanceof Object ); // true Function instanceof Function ?...</p>
+</section>
+<footer class=entry-footer>August 18, 2017</footer>
+<a class=entry-link aria-label="post link to JavaScript instanceof 操作符" href=https://www.xieluping.cn/post/instanceof/></a>
+</article>
 <article class=post-entry>
 <header class=entry-header>
 <h2>微信 jssdk 分享</h2>

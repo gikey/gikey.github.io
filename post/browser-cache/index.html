@@ -26,7 +26,7 @@ WEB缓存体系 在实际WEB开发过程中，缓存技术会涉及到不同层�
 <link rel=mask-icon href=https://www.xieluping.cn/safari-pinned-tab.svg>
 <meta name=theme-color content="#2e2e33">
 <meta name=msapplication-TileColor content="#2e2e33">
-<meta name=generator content="Hugo 0.87.0">
+<meta name=generator content="Hugo 0.88.1">
 <link rel=stylesheet href=https://www.xieluping.cn/css/style.css><meta property="og:title" content="浏览器缓存机制">
 <meta property="og:description" content="前言 在前端开发中，性能一直都是被大家所重视的一点，然而判断一个网站的性能最直观的就是看网页打开的速度。其中提高网页反应速度的一个方式就是使用缓存。缓存技术一直一来在WEB技术体系中扮演非常重要角色，是快速且有效地提升性能的手段。 一个优秀的缓存策略可以缩短网页请求资源的距离，减少延迟，并且由于缓存文件可以重复利用，还可以减少带宽，降低网络负荷。 所以，缓存技术是无数WEB开发从业人员在工作过程中不可避免的一大问题。在产品开发的时候我们总是想办法避免缓存产生，而在产品发布之时又在想策略管理缓存提升网页的访问速度。了解浏览器的缓存命中原理，是开发WEB应用的基础，本文着眼于此，学习浏览器缓存的相关知识，总结缓存避免和缓存管理的方法，结合具体的场景说明缓存的相关问题。希望能对有需要的人有所帮助。
 WEB缓存体系 在实际WEB开发过程中，缓存技术会涉及到不同层、不同端，比如：用户层、系统层、代理层、前端、后端、服务端等，每一层的缓存目标都是一致的，就是尽快返回请求数据、减少延迟，但每层使用的技术实现是各有不同，面对不同层、不同端的优劣，选用不同的技术来提升系统响应效率。所以，我们首先看下各层的缓存都有哪些技术，都缓存哪些数据，从整体上，对WEB的缓存技术进行了解，如下图所示：

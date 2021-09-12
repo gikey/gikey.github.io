@@ -3,11 +3,11 @@
 <meta http-equiv=x-ua-compatible content="IE=edge">
 <meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no">
 <meta name=robots content="index, follow">
-<title>React | Null</title>
+<title>TypeScript | Null</title>
 <meta name=keywords content>
 <meta name=description content>
 <meta name=author content>
-<link rel=canonical href=https://www.xieluping.cn/tags/react/>
+<link rel=canonical href=https://www.xieluping.cn/tags/typescript/>
 <link crossorigin=anonymous href=/assets/css/stylesheet.min.6cba0d81b5f3f42bb578d49f402ba4175aa72b43def148780b8ad714c957c6f5.css integrity="sha256-bLoNgbXz9Cu1eNSfQCukF1qnK0Pe8Uh4C4rXFMlXxvU=" rel="preload stylesheet" as=style>
 <link rel=icon href=https://www.xieluping.cn/favicon.ico>
 <link rel=icon type=image/png sizes=16x16 href=https://www.xieluping.cn/favicon-16x16.png>
@@ -17,13 +17,13 @@
 <meta name=theme-color content="#2e2e33">
 <meta name=msapplication-TileColor content="#2e2e33">
 <meta name=generator content="Hugo 0.88.1">
-<link rel=alternate type=application/rss+xml href=https://www.xieluping.cn/tags/react/index.xml>
-<link rel=stylesheet href=https://www.xieluping.cn/css/style.css><meta property="og:title" content="React">
+<link rel=alternate type=application/rss+xml href=https://www.xieluping.cn/tags/typescript/index.xml>
+<link rel=stylesheet href=https://www.xieluping.cn/css/style.css><meta property="og:title" content="TypeScript">
 <meta property="og:description" content>
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://www.xieluping.cn/tags/react/">
+<meta property="og:url" content="https://www.xieluping.cn/tags/typescript/">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="React">
+<meta name=twitter:title content="TypeScript">
 <meta name=twitter:description content>
 </head>
 <body class=list id=top>
@@ -67,20 +67,20 @@
 </header>
 <main class=main>
 <header class=page-header>
-<h1>React</h1>
+<h1>TypeScript</h1>
 </header>
 <article class="post-entry tag-entry">
 <header class=entry-header>
-<h2>React Server Components 介绍</h2>
+<h2>TypeScript 中 is 类型保护</h2>
 </header>
 <section class=entry-content>
-<p>2020年12月21日 React 官方公布了一个新的提案 React Server Component（后面简称：RSC），并做了视频介绍和 demo (如果跑不起来建议尝试docker)演示。React Server Component 还在研发中，目前还是个试验性的功能，主要目的是为了从社区收到一些反馈。离正式发布还需要较长时间，暂时不用立即跟进学习。接下来主要做个简单的介绍。
-Web 渲染的演化 一、Web1.0 服务端渲染 为了区分目前常说的“服务端渲染”，暂且把没有 Ajax 时代的服务端渲染称为“Web1.0 服务端渲染”。Web1.0 的时候前后端不分离，后端提供数据和模板渲染相应 HTML 页面，前端主要提供页面样式和js实现交互动效果。
-渲染流程： 客户端发起页面请求 服务端查询数据并使用相应的模板引擎渲染成 HTML 片段 客户端收到返回 HTML 解析成可见网页内容 优点： 友好的 SEO，每个页面都是服务端返回的完整的 HTML 首屏加载快，页面由后端渲染完成 缺点： 前后端耦合严重，前后端开发相互依赖 交互体验不佳，每个路由都需要页面刷新 服务端负载压力大，渲染任务都由服务端也丧失了客户端作为天然分布式系统的优势 二、客户端渲染（CSR） 随着前端页面复杂程度加剧和 Web2.0 Ajax 技术的发展，就有了前后端分离概念。以 Anglular 为代表的现代前端框架让这种后端提供接口，前端渲染页面的开发方式得到普及。也让服务端和客户端职责得到了明确的分工，让客户端和服务端各自实现更擅长的事情。 渲染流程：
-客户端发起请求并接收返回的 HTML 内容 客户端解析网页内容并执行 JS 脚本 JS 利用 Ajax请求后端数据（json/xml） JS 动态将数据渲染在页面中 优点： 前后端分离模式，前端专注于UI，后端专注于逻辑 良好的交互体验，局部进行刷新，可以实现单页应用，预加载等提升页面性能 降低服务器压力，部署比较简单节约服务器成本 缺点： 不利于 SEO，页面数据都是动态生成不利于 SEO 优化 首屏白屏，首次请求几乎空白的 HMTL 页面，TTI受限于数据获取和浏览器渲染的耗时 三、服务端渲染（SSR） 随着单页应用的发展，不友好的 SEO 和首屏渲染白屏等问题亟待解决，于是再次考虑引入服务端渲染。主要逻辑是将 Web1....</p>
+<p>前言 在阅读 utility-types 源码中发现了一段代码：
+// export type Falsy = false | '' | 0 | null | undefined; export const isFalsy = (val: unknown): val is Falsy => !val; 这里的返回类型不应该是 boolean 吗？ 为什么要使用 val is Falsy？
+type guard 看到网上有这样一个例子：
+function isString(test: any): boolean { return typeof test === "string"; } function example(foo: any){ if(isString(foo)){ console.log("it is a string" + foo); console.log(foo.length); // string function } } example("hello world"); 在这种情况下，返回类型定义为 boolean 和 test is string 其实没有区别。但是如果这个时候不小心在 if 中调用了一个不存在的方法会怎么样呢？例如：...</p>
 </section>
-<footer class=entry-footer>August 16, 2021</footer>
-<a class=entry-link aria-label="post link to React Server Components 介绍" href=https://www.xieluping.cn/post/rsc/></a>
+<footer class=entry-footer>September 12, 2021</footer>
+<a class=entry-link aria-label="post link to TypeScript 中 is 类型保护" href=https://www.xieluping.cn/post/typescript-is/></a>
 </article>
 </main>
 <footer class=footer>
