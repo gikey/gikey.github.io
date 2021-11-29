@@ -21,7 +21,7 @@ jsapi_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_90u5h9nbSlYy3-Sl-Hh
 <link rel=mask-icon href=https://www.xieluping.cn/safari-pinned-tab.svg>
 <meta name=theme-color content="#2e2e33">
 <meta name=msapplication-TileColor content="#2e2e33">
-<meta name=generator content="Hugo 0.88.1">
+<meta name=generator content="Hugo 0.89.4">
 <link rel=stylesheet href=https://www.xieluping.cn/css/style.css><meta property="og:title" content="微信 jssdk 分享">
 <meta property="og:description" content="服务端 1. 获取 access_token access_token 是公众号的全局唯一接口调用凭据，公众号调用各接口时都需使用 access_token。通过get请求 https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET ，正常返回：
 { &#34;access_token&#34;: &#34;ACCESS_TOKEN&#34;, &#34;expires_in&#34;: 7200 } 2. 获取 jsapi_ticket api_ticket 是用于调用微信卡券 JS API 的临时票据，需要通过 access_token 来获取，api_ticket 和 accss_token 一样有效期都为7200s。由于获取api_ticket 的api 调用次数非常有限，频繁刷新 api_ticket 会导致 api 调用受限，影响自身业务，开发者需在自己的服务存储与更新 api_ticket。 通过 get 请求 https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=wx_card ，正常返回：
@@ -151,7 +151,10 @@ jsapi_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_90u5h9nbSlYy3-Sl-Hh
 </article>
 </main>
 <footer class=footer>
-<span>&copy; 2021 <a href=https://www.xieluping.cn>Null</a></span>
+<span>
+&copy; 2021 <a href=https://www.xieluping.cn>Null</a> &nbsp;
+<a href=https://beian.miit.gov.cn>京ICP备16025656号-1</a>
+</span>
 </footer>
 <a href=#top aria-label="go to top" title="Go to Top (Alt + G)">
 <button class=top-link id=top-link type=button accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>

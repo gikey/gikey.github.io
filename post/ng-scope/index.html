@@ -22,7 +22,7 @@ app.controller(&#34;myController&#34;, function ($scope) { $scope.name = &#34;he
 <link rel=mask-icon href=https://www.xieluping.cn/safari-pinned-tab.svg>
 <meta name=theme-color content="#2e2e33">
 <meta name=msapplication-TileColor content="#2e2e33">
-<meta name=generator content="Hugo 0.88.1">
+<meta name=generator content="Hugo 0.89.4">
 <link rel=stylesheet href=https://www.xieluping.cn/css/style.css><meta property="og:title" content="AngularJS Directive 隔离 Scope 数据交互">
 <meta property="og:description" content="什么是隔离 Scope AngularJS 的 directive 默认能共享父 scope 中定义的属性，例如在模版中直接使用父 scope 中的对象和属性。通常使用这种直接共享的方式可以实现一些简单的 directive 功能。当你需要创建一个可重复使用的 directive，只是偶尔需要访问或者修改父 scope 的数据，就需要使用隔离 scope。当使用隔离 scope 的时候，directive 会创建一个没有依赖父 scope 的 scope，并提供一些访问父 scope 的方式。
 为什么使用隔离 Scope 当你想要写一个可重复使用的 directive，不能再依赖父 scope，这时候就需要使用隔离 scope 代替。共享 scope 可以直接共享父 scope，而隔离 scope 无法共享父scope。下图解释共享 scope 和隔离 scope 的区别：
@@ -286,7 +286,10 @@ AngularJS Directive 隔离 Scope 数据交互
 </article>
 </main>
 <footer class=footer>
-<span>&copy; 2021 <a href=https://www.xieluping.cn>Null</a></span>
+<span>
+&copy; 2021 <a href=https://www.xieluping.cn>Null</a> &nbsp;
+<a href=https://beian.miit.gov.cn>京ICP备16025656号-1</a>
+</span>
 </footer>
 <a href=#top aria-label="go to top" title="Go to Top (Alt + G)">
 <button class=top-link id=top-link type=button accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
