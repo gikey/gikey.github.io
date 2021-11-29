@@ -2,7 +2,10 @@
     {{- if .Site.Copyright }}
     <span>{{ .Site.Copyright | markdownify }}</span>
     {{- else }}
-    <span>&copy; {{ now.Year }} <a href="{{ "" | absLangURL }}">{{ .Site.Title }}</a></span>
+    <span>
+        &copy; {{ now.Year }} <a href="{{ "" | absLangURL }}">{{ .Site.Title }}</a> &nbsp;
+        <a href="https://beian.miit.gov.cn">京ICP备16025656号-1</a>
+    </span>
     {{- end }}
     <!-- <span>
         Powered by
